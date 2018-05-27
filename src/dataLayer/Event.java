@@ -41,6 +41,7 @@ public class Event implements Comparable<Event>, Serializable
 		this.date = date;
 	}
 
+	
 	public String getDescription()
 	{
 		return description;
@@ -61,19 +62,33 @@ public class Event implements Comparable<Event>, Serializable
 		this.place = place;
 	}
 	
+	public String getStringDate()
+	{
+		String dateDescription = "";
+		
+		dateDescription += date.get(Calendar.YEAR) + "-";
+		dateDescription += date.get(Calendar.MONTH) + "-";		
+		dateDescription += date.get(Calendar.DAY_OF_MONTH) + " ";
+		dateDescription += date.get(Calendar.HOUR_OF_DAY) + ":";
+		dateDescription += date.get(Calendar.MINUTE) + ":";
+		dateDescription += date.get(Calendar.SECOND);
+		
+		return dateDescription;
+	}
+	
 	public String toString()
 	{
-		String dataDescription = "";
+		String dateDescription = "";
 		
-		dataDescription += date.get(Calendar.DAY_OF_MONTH) + ".";
-		dataDescription += date.get(Calendar.MONTH) + ".";		
-		dataDescription += date.get(Calendar.YEAR) + "   ";
+		dateDescription += date.get(Calendar.DAY_OF_MONTH) + ".";
+		dateDescription += date.get(Calendar.MONTH) + ".";		
+		dateDescription += date.get(Calendar.YEAR) + "   ";
 
-		dataDescription += date.get(Calendar.HOUR_OF_DAY) + ":";
-		dataDescription += date.get(Calendar.MINUTE);
+		dateDescription += date.get(Calendar.HOUR_OF_DAY) + ":";
+		dateDescription += date.get(Calendar.MINUTE);
 		
 		
-		return name + "\nDate: " + dataDescription + "\nPlace: " + place + "\nDescription: " + description;
+		return name + "\nDate: " + dateDescription + "\nPlace: " + place + "\nDescription: " + description;
 	}
 	
 	
