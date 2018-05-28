@@ -52,12 +52,12 @@ public class DataService
 			throw new DataServiceException("Event not found");
 	}
 
-	public TreeMap<Integer, Event> getEventsMap()
+	public TreeMap<Integer, Event> getAllEvents()
 	{
 		return dataContext.eventsMap;
 	}
 	
-	public void addpeopleMapToEvent(int id, Person...peopleList) throws DataServiceException
+	public void addPeopleToEvent(int id, Person...peopleList) throws DataServiceException
 	{
 		for(Person person: peopleList)
 			this.getEvent(id).addPerson(person);
@@ -107,7 +107,7 @@ public class DataService
 			throw new DataServiceException("Person not found");	
 	}
 	
-	public TreeMap<Integer, Person> getPeopleMap()
+	public TreeMap<Integer, Person> getAllPeople()
 	{
 		return dataContext.peopleMap;
 	}
