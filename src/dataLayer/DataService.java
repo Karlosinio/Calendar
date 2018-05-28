@@ -1,91 +1,115 @@
 package dataLayer;
 
-import java.sql.*;
+import java.util.TreeMap;
 
 public class DataService
 {
-	// connection string
-	private static final String connectionUrl = "jdbc:sqlserver://localhost:1433;" + "databaseName=calendar;integratedSecurity=true;";
+	private DataContext dataContext = new DataContext();
 	
-    // JDBC connection object  
-	private Connection con = null;  
-
-	public DataService()
-	{
-	}
-	
-	private void connect()
-	{
-		try
-	    {  
-			// establish the connection 
-			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");  
-			con = DriverManager.getConnection(connectionUrl);   
-	    }
-		catch (Exception e)
-	    {
-			
-			e.printStackTrace();
-		}   	
-	}
-	
-	private void disconnect()
-	{
-		if (con != null)
-		{
-			try
-			{
-				con.close();
-			}
-			catch(Exception e) {}  
-		}
-	}
+	private int eventCounter = 0;	
+	private int peopleCounter = 0;
 
 	
 	public void createEvent(Event event)
 	{
-		connect();
-
-		String querry = "INSERT INTO events VALUES(?, ?, ?, ?);";
-
-		try (PreparedStatement stmt = con.prepareStatement(querry))
-		{
-			stmt.setString(1, event.getName());
-			stmt.setString(2, event.getStringDate());
-			stmt.setString(3, event.getDescription());
-			stmt.setString(4, event.getPlace());	
-			
-			stmt.executeUpdate();	
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-
-		disconnect();
+		dataContext.eventsMap.put(eventCounter, event);
+		eventCounter++;
 	}
 
-	public void deleteEvent(Event event)
+	public Event getEvent(int id) throws DataServiceException
 	{
-		connect();
-		
-		String querry = "DELETE FROM events WHERE name = ? AND dat = ? AND descrip = ? AND place = ?;";
+		if(dataContext.eventsMap.containsKey(id))
+			return dataContext.eventsMap.get(id);
 
-		try (PreparedStatement stmt = con.prepareStatement(querry))
-		{
-			stmt.setString(1, event.getName());
-			stmt.setString(2, event.getStringDate());
-			stmt.setString(3, event.getDescription());
-			stmt.setString(4, event.getPlace());	
-			
-			stmt.executeUpdate();		
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		
-		disconnect();
+		else
+			throw new DataServiceException("Event not found (wrong ID)");
+	}
+
+	public void updateEvent(int id, Event event) throws DataServiceException
+	{
+		if(dataContext.eventsMap.containsKey(id))
+			dataContext.eventsMap.put(id, event);
+
+		else
+			throw new DataServiceException("Event not found (wrong ID)");		
 	}
 	
+	public void deleteEvent(int id) throws DataServiceException 
+	{
+		if(dataContext.eventsMap.containsKey(id))
+			dataContext.eventsMap.remove(id);
+
+		else
+			throw new DataServiceException("Event not found (wrong ID)");	
+	}
+	
+	public void deleteEvent(Event event) throws DataServiceException 
+	{
+		if(dataContext.eventsMap.containsValue(event))
+			dataContext.eventsMap.values().remove(event);
+
+		else
+			throw new DataServiceException("Event not found");
+	}
+
+	public TreeMap<Integer, Event> getEventsMap()
+	{
+		return dataContext.eventsMap;
+	}
+	
+	public void addpeopleMapToEvent(int id, Person...peopleList) throws DataServiceException
+	{
+		for(Person person: peopleList)
+			this.getEvent(id).addPerson(person);
+	}
+	
+	
+	
+	public void createPerson(Person person)
+	{
+		dataContext.peopleMap.put(peopleCounter, person);
+		peopleCounter++;
+	}
+
+	public Person getPerson(int id) throws DataServiceException
+	{
+		if(dataContext.peopleMap.containsKey(id))
+			return dataContext.peopleMap.get(id);
+
+		else
+			throw new DataServiceException("Person not found (wrong ID)");	
+	}
+	
+	public void updatePerson(int id, Person person) throws DataServiceException
+	{
+		if(dataContext.peopleMap.containsKey(id))
+			dataContext.peopleMap.put(id, person);
+
+		else
+			throw new DataServiceException("Person not found (wrong ID)");		
+	}
+
+	public void deletePerson(int id) throws DataServiceException
+	{
+		if(dataContext.peopleMap.containsKey(id))
+			dataContext.peopleMap.remove(id);
+		
+		else 
+			throw new DataServiceException("Person not found (wrong ID)");	
+	}
+	
+	public void deletePerson(Person person) throws DataServiceException
+	{
+		if(dataContext.peopleMap.containsValue(person))
+			dataContext.peopleMap.values().remove(person);
+
+		else
+			throw new DataServiceException("Person not found");	
+	}
+	
+	public TreeMap<Integer, Person> getPeopleMap()
+	{
+		return dataContext.peopleMap;
+	}
+
 }
