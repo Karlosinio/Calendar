@@ -69,6 +69,7 @@ public class mainWindow extends JFrame
 	public mainWindow()
 	{
 		logicLayer = new LogicLayer();
+		LogicLayer logicLayer = new LogicLayer();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 850, 499);
@@ -112,6 +113,7 @@ public class mainWindow extends JFrame
 		/////////////////////////////////////////////////////
 		
 		initEventsTest();
+		//initEventsTest();
 		
 		JList<Event> list = new JList(eventsList);
 		scrollPane_1.setViewportView(list);
@@ -189,11 +191,13 @@ public class mainWindow extends JFrame
 	}
 	
 	private void initEventsTest()
+	private void initEventsTest() throws DataLayerException
 	{
 		Calendar cl = GregorianCalendar.getInstance();
 		cl.set(2018, 1, 1, 23, 59, 0);
 		
 		eventsList.addElement(new Event("Klusek ", cl, " ubra� ", " Kino "));
+		//eventsList.addElement(new Event("Klusek ", cl, " ubra� ", " Kino "));
 	}
 
 }

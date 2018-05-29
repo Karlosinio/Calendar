@@ -10,6 +10,7 @@ public class Main
 	{
 		ll = new LogicLayer();
 		MainWindow.OpenWindow();
+		mainWindow.OpenWindow();
 
 	}
 
