@@ -36,11 +36,11 @@ public class AddNewEvent extends JDialog
 	private JSpinner spinner_1;
 	private JSpinner spinner_2;
 
-	public static void NewScreen(LogicLayer logicLayer)
+	public static void OpenWindow()
 	{
 		try
 		{
-			AddNewEvent dialog = new AddNewEvent(logicLayer);
+			AddNewEvent dialog = new AddNewEvent();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e)
@@ -49,17 +49,17 @@ public class AddNewEvent extends JDialog
 		}
 	}
 	
-	public AddNewEvent(LogicLayer logicLayer)
+	public AddNewEvent()
 	{
 		setTitle("Add Event");
-		setBounds(100, 100, 425, 225);
+		setBounds(100, 100, 450, 225);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
-		gbl_contentPanel.columnWidths = new int[]{0, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_contentPanel.columnWidths = new int[]{0, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
-		gbl_contentPanel.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPanel.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
 		{
@@ -75,8 +75,8 @@ public class AddNewEvent extends JDialog
 			textField = new JTextField();
 			GridBagConstraints gbc_textField = new GridBagConstraints();
 			gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textField.gridwidth = 9;
-			gbc_textField.insets = new Insets(0, 0, 5, 5);
+			gbc_textField.gridwidth = 11;
+			gbc_textField.insets = new Insets(0, 0, 5, 0);
 			gbc_textField.gridx = 2;
 			gbc_textField.gridy = 1;
 			contentPanel.add(textField, gbc_textField);
@@ -104,8 +104,9 @@ public class AddNewEvent extends JDialog
 		{
 			JLabel lblHour = new JLabel("Hour:");
 			GridBagConstraints gbc_lblHour = new GridBagConstraints();
+			gbc_lblHour.anchor = GridBagConstraints.EAST;
 			gbc_lblHour.insets = new Insets(0, 0, 5, 5);
-			gbc_lblHour.gridx = 7;
+			gbc_lblHour.gridx = 8;
 			gbc_lblHour.gridy = 2;
 			contentPanel.add(lblHour, gbc_lblHour);
 		}
@@ -113,16 +114,19 @@ public class AddNewEvent extends JDialog
 			spinner_1 = new JSpinner();
 			spinner_1.setModel(new SpinnerNumberModel(12, 0, 23, 1));
 			GridBagConstraints gbc_spinner = new GridBagConstraints();
+			gbc_spinner.gridwidth = 2;
+			gbc_spinner.anchor = GridBagConstraints.WEST;
 			gbc_spinner.insets = new Insets(0, 0, 5, 5);
-			gbc_spinner.gridx = 8;
+			gbc_spinner.gridx = 9;
 			gbc_spinner.gridy = 2;
 			contentPanel.add(spinner_1, gbc_spinner);
 		}
 		{
 			JLabel lblMinute = new JLabel("Minute:");
 			GridBagConstraints gbc_lblMinute = new GridBagConstraints();
+			gbc_lblMinute.anchor = GridBagConstraints.EAST;
 			gbc_lblMinute.insets = new Insets(0, 0, 5, 5);
-			gbc_lblMinute.gridx = 9;
+			gbc_lblMinute.gridx = 11;
 			gbc_lblMinute.gridy = 2;
 			contentPanel.add(lblMinute, gbc_lblMinute);
 		}
@@ -130,8 +134,9 @@ public class AddNewEvent extends JDialog
 			spinner_2 = new JSpinner();
 			spinner_2.setModel(new SpinnerNumberModel(0, 0, 55, 5));
 			GridBagConstraints gbc_spinner = new GridBagConstraints();
-			gbc_spinner.insets = new Insets(0, 0, 5, 5);
-			gbc_spinner.gridx = 10;
+			gbc_spinner.anchor = GridBagConstraints.WEST;
+			gbc_spinner.insets = new Insets(0, 0, 5, 0);
+			gbc_spinner.gridx = 12;
 			gbc_spinner.gridy = 2;
 			contentPanel.add(spinner_2, gbc_spinner);
 		}
@@ -147,9 +152,9 @@ public class AddNewEvent extends JDialog
 		{
 			textField_1 = new JTextField();
 			GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-			gbc_textField_1.gridwidth = 9;
+			gbc_textField_1.gridwidth = 11;
 			gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textField_1.insets = new Insets(0, 0, 5, 5);
+			gbc_textField_1.insets = new Insets(0, 0, 5, 0);
 			gbc_textField_1.gridx = 2;
 			gbc_textField_1.gridy = 3;
 			contentPanel.add(textField_1, gbc_textField_1);
@@ -169,8 +174,8 @@ public class AddNewEvent extends JDialog
 			textField_2.setColumns(10);
 			GridBagConstraints gbc_textField_2 = new GridBagConstraints();
 			gbc_textField_2.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textField_2.gridwidth = 9;
-			gbc_textField_2.insets = new Insets(0, 0, 5, 5);
+			gbc_textField_2.gridwidth = 11;
+			gbc_textField_2.insets = new Insets(0, 0, 5, 0);
 			gbc_textField_2.gridx = 2;
 			gbc_textField_2.gridy = 4;
 			contentPanel.add(textField_2, gbc_textField_2);
@@ -188,7 +193,7 @@ public class AddNewEvent extends JDialog
 			textField_3 = new JTextField();
 			textField_3.setColumns(10);
 			GridBagConstraints gbc_textField_3 = new GridBagConstraints();
-			gbc_textField_3.gridwidth = 7;
+			gbc_textField_3.gridwidth = 9;
 			gbc_textField_3.insets = new Insets(0, 0, 0, 5);
 			gbc_textField_3.fill = GridBagConstraints.HORIZONTAL;
 			gbc_textField_3.gridx = 2;
@@ -196,12 +201,18 @@ public class AddNewEvent extends JDialog
 			contentPanel.add(textField_3, gbc_textField_3);
 		}
 		{
-			JButton btnAddPerson = new JButton("Add Person");
+			JButton btnAddPerson = new JButton("Select People");
+			btnAddPerson.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e)
+				{
+					PeopleList.OpenWindow();
+				}
+			});
 			GridBagConstraints gbc_btnAddPerson = new GridBagConstraints();
-			gbc_btnAddPerson.insets = new Insets(0, 0, 0, 5);
 			gbc_btnAddPerson.anchor = GridBagConstraints.EAST;
 			gbc_btnAddPerson.gridwidth = 2;
-			gbc_btnAddPerson.gridx = 9;
+			gbc_btnAddPerson.gridx = 11;
 			gbc_btnAddPerson.gridy = 5;
 			contentPanel.add(btnAddPerson, gbc_btnAddPerson);
 		}
@@ -224,7 +235,7 @@ public class AddNewEvent extends JDialog
 							calendar.set(Calendar.HOUR_OF_DAY, spinner_1.getComponentCount());
 							calendar.set(Calendar.MINUTE, spinner_2.getComponentCount());
 							
-							logicLayer.createEvent(textField.getName(), calendar, textField_1.getText(), textField_2.getText());
+							Main.ll.createEvent(textField.getName(), calendar, textField_1.getText(), textField_2.getText());
 						}
 						catch(Exception e)
 						{
