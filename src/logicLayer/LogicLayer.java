@@ -115,24 +115,7 @@ public class LogicLayer
 	
 		return eventsList;
 	}
-	
-	public DefaultListModel<Event> getAllEventsFromDate(Date date)
-	{
-		DefaultListModel<Event> eventsList = new DefaultListModel<Event>();
 		
-		for(Event event : this.getAllEvents().values() )
-		{			
-			if (event.getDate().get(Calendar.YEAR) == date.getYear() && 
-				event.getDate().get(Calendar.MONTH)	== date.getMonth() && 
-				event.getDate().get(Calendar.DATE) == date.getDate())
-			{
-				eventsList.addElement(event);
-			}
-		}
-	
-		return eventsList;
-	}
-	
 	/////////////////////////////////////////////////////
 	// People
 	/////////////////////////////////////////////////////
