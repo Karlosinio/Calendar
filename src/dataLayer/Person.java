@@ -5,11 +5,19 @@ public class Person
 	private String firstName;
 	private String lastName;
 	
-	public Person(String firstName, String lastName)
+	public Person(String firstName, String lastName) throws DataLayerException
 	{
 		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
+		
+		if(firstName.isEmpty() || lastName.isEmpty())
+			throw new DataLayerException("Values cannot be empty");	
+			
+		else
+		{			
+			this.firstName = firstName;
+			this.lastName = lastName;	
+		}
+		
 	}
 	
 	public String getFirstName()

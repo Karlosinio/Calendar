@@ -3,7 +3,7 @@ package dataLayer;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.HashSet;
+import java.util.ArrayList;
 
 @SuppressWarnings("serial")
 public class Event implements Comparable<Event>, Serializable
@@ -12,7 +12,7 @@ public class Event implements Comparable<Event>, Serializable
 	private Calendar date = GregorianCalendar.getInstance();
 	private String description;
 	private String place;
-	private HashSet<Person> peopleList = new HashSet<Person>();
+	private ArrayList<Person> peopleList = new ArrayList<Person>();
 		
 	public Event(String name, Calendar date, String description, String place)
 	{
@@ -63,12 +63,12 @@ public class Event implements Comparable<Event>, Serializable
 		this.place = place;
 	}
 	
-	public HashSet<Person> getPeopleList()
+	public ArrayList<Person> getPeopleList()
 	{
 		return peopleList;
 	}
 
-	public void setPeopleList(HashSet<Person> peopleList)
+	public void setPeopleList(ArrayList<Person> peopleList)
 	{
 		this.peopleList = peopleList;
 	}

@@ -63,10 +63,9 @@ public class DataService
 			this.getEvent(id).addPerson(person);
 	}
 	
-	
-	
+		
 	public void createPerson(Person person)
-	{
+	{			
 		dataContext.peopleMap.put(peopleCounter, person);
 		peopleCounter++;
 	}
