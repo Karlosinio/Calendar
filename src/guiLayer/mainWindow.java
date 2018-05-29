@@ -33,15 +33,12 @@ import java.awt.GridLayout;
 @SuppressWarnings("serial")
 public class MainWindow extends JFrame
 {
-
-	private LogicLayer logicLayer;
-	
 	private JPanel contentPane;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args)
+	public static void OpenWindow()
 	{
 		EventQueue.invokeLater(new Runnable()
 		{
@@ -63,7 +60,7 @@ public class MainWindow extends JFrame
 	 * Create the frame.
 	 */
 	public MainWindow()
-	{
+	{		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 850, 499);
 		contentPane = new JPanel();
@@ -78,49 +75,41 @@ public class MainWindow extends JFrame
 		
 		JCalendar calendar = new JCalendar();
 		GridBagConstraints gbc_calendar = new GridBagConstraints();
-		gbc_calendar.gridheight = 9;
-		gbc_calendar.gridwidth = 11;
+		gbc_calendar.gridheight = 13;
+		gbc_calendar.gridwidth = 15;
 		gbc_calendar.insets = new Insets(0, 0, 5, 5);
 		gbc_calendar.fill = GridBagConstraints.BOTH;
 		gbc_calendar.gridx = 1;
 		gbc_calendar.gridy = 1;
 		contentPane.add(calendar, gbc_calendar);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-		gbc_scrollPane.gridwidth = 5;
-		gbc_scrollPane.gridheight = 9;
-		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
-		gbc_scrollPane.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane.gridx = 13;
-		gbc_scrollPane.gridy = 1;
-		contentPane.add(scrollPane, gbc_scrollPane);
 				
 				JButton button = new JButton("Add Event");
 				button.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mousePressed(MouseEvent arg0)
 					{
-						AddNewEvent.NewScreen(logicLayer);
+						AddNewEvent.OpenWindow();
 						
 					}
 				});
+						
+						JScrollPane scrollPane = new JScrollPane();
+						GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+						gbc_scrollPane.gridwidth = 5;
+						gbc_scrollPane.gridheight = 10;
+						gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
+						gbc_scrollPane.fill = GridBagConstraints.BOTH;
+						gbc_scrollPane.gridx = 17;
+						gbc_scrollPane.gridy = 3;
+						contentPane.add(scrollPane, gbc_scrollPane);
 				
 						GridBagConstraints gbc_button = new GridBagConstraints();
-						gbc_button.gridwidth = 3;
+						gbc_button.fill = GridBagConstraints.HORIZONTAL;
+						gbc_button.gridwidth = 4;
 						gbc_button.insets = new Insets(0, 0, 5, 5);
-						gbc_button.gridx = 1;
-						gbc_button.gridy = 11;
+						gbc_button.gridx = 23;
+						gbc_button.gridy = 1;
 						contentPane.add(button, gbc_button);
-				
-				JButton btnAddPeople = new JButton("Add People");
-				GridBagConstraints gbc_btnAddPeople = new GridBagConstraints();
-				gbc_btnAddPeople.anchor = GridBagConstraints.WEST;
-				gbc_btnAddPeople.gridwidth = 5;
-				gbc_btnAddPeople.insets = new Insets(0, 0, 5, 5);
-				gbc_btnAddPeople.gridx = 1;
-				gbc_btnAddPeople.gridy = 13;
-				contentPane.add(btnAddPeople, gbc_btnAddPeople);
 	}
 
 }
