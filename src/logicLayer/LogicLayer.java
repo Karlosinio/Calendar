@@ -33,7 +33,7 @@ public class LogicLayer
 		}
 		catch (DataServiceException e)
 		{
-			throw new LogicLayerException("Event not found (wrong ID)");
+			throw new LogicLayerException(e.getMessage());
 		}
 	}
 	
@@ -45,7 +45,7 @@ public class LogicLayer
 		}
 		catch (DataServiceException e)
 		{
-			throw new LogicLayerException("Event not found (wrong ID)");
+			throw new LogicLayerException(e.getMessage());
 		}		
 	}
 	
@@ -57,7 +57,7 @@ public class LogicLayer
 		}
 		catch (DataServiceException e)
 		{
-			throw new LogicLayerException("Event not found (wrong ID)");
+			throw new LogicLayerException(e.getMessage());
 		}
 	}
 	
@@ -69,7 +69,7 @@ public class LogicLayer
 		}
 		catch (DataServiceException e)
 		{
-			throw new LogicLayerException("Event not found (wrong ID)");
+			throw new LogicLayerException(e.getMessage());
 		}
 	}
 
@@ -81,7 +81,7 @@ public class LogicLayer
 		}
 		catch (DataServiceException e)
 		{
-			throw new LogicLayerException("Person not found (wrong ID)");
+			throw new LogicLayerException(e.getMessage());
 		}
 	}
 	
@@ -119,7 +119,7 @@ public class LogicLayer
 		}
 		catch (DataLayerException e)
 		{
-			throw new LogicLayerException("Event not found (wrong ID)");
+			throw new LogicLayerException(e.getMessage());
 		}					
 	}
 	
@@ -131,7 +131,7 @@ public class LogicLayer
 		}
 		catch (DataServiceException e)
 		{
-			throw new LogicLayerException("Event not found (wrong ID)");
+			throw new LogicLayerException(e.getMessage());
 		}
 	}
 	
@@ -143,7 +143,7 @@ public class LogicLayer
 		}
 		catch (DataServiceException e)
 		{
-			throw new LogicLayerException("Event not found (wrong ID)");
+			throw new LogicLayerException(e.getMessage());
 		}		
 	}
 	
@@ -155,7 +155,7 @@ public class LogicLayer
 		}
 		catch (DataServiceException e)
 		{
-			throw new LogicLayerException("Event not found (wrong ID)");
+			throw new LogicLayerException(e.getMessage());
 		}
 	}
 	
@@ -167,7 +167,7 @@ public class LogicLayer
 		}
 		catch (DataServiceException e)
 		{
-			throw new LogicLayerException("Event not found (wrong ID)");
+			throw new LogicLayerException(e.getMessage());
 		}
 	}
 	
