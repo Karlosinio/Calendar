@@ -28,6 +28,7 @@ public class ExceptionWindow extends JDialog
 		try
 		{
 			dialog = new ExceptionWindow(msg);
+			dialog.setResizable(false);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e)

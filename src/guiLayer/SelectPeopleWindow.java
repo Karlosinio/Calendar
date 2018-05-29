@@ -22,6 +22,9 @@ import javax.swing.JList;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JScrollPane;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.ScrollPaneConstants;
 
 @SuppressWarnings("serial")
 public class SelectPeopleWindow extends JDialog
@@ -41,6 +44,7 @@ public class SelectPeopleWindow extends JDialog
 		{
 			dialog = new SelectPeopleWindow();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setResizable(false);
 			dialog.setVisible(true);
 		} catch (Exception e)
 		{
@@ -52,7 +56,6 @@ public class SelectPeopleWindow extends JDialog
 	/**
 	 * Create the dialog.
 	 */
-	@SuppressWarnings("rawtypes")
 	public SelectPeopleWindow()
 	{		
 		setTitle("Select People");
@@ -71,6 +74,8 @@ public class SelectPeopleWindow extends JDialog
 				DefaultListModel modelList = Main.ll.getAllPeopleDLM();
 				
 				JScrollPane scrollPane = new JScrollPane();
+				scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+				scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 				GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 				gbc_scrollPane.fill = GridBagConstraints.BOTH;
 				gbc_scrollPane.gridwidth = 3;
