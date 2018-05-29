@@ -14,12 +14,18 @@ public class Event implements Comparable<Event>, Serializable
 	private String place;
 	private ArrayList<Person> peopleList = new ArrayList<Person>();
 		
-	public Event(String name, Calendar date, String description, String place)
+	public Event(String name, Calendar date, String description, String place) throws DataLayerException
 	{
-		this.name = name;
-		this.date = date;
-		this.description = description;
-		this.place = place;
+		if (name.isEmpty())
+			throw new DataLayerException("Name cannot be empty");
+			
+		else
+		{			
+			this.name = name;
+			this.date = date;
+			this.description = description;
+			this.place = place;
+		}
 	}
 	
 	public String getName()

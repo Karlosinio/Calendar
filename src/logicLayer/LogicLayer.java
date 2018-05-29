@@ -20,9 +20,17 @@ public class LogicLayer
 	// Events
 	/////////////////////////////////////////////////////
 	
-	public void createEvent(String name, Calendar date, String description, String place)
+	public void createEvent(String name, Calendar date, String description, String place) throws LogicLayerException
 	{
-		data.createEvent(new Event (name, date, description, place));
+		try
+		{
+			data.createEvent(new Event (name, date, description, place));
+		}
+		catch (DataLayerException e)
+		{
+			throw new LogicLayerException(e.getMessage());
+		}
+		
 	}
 	
 	public Event getEvent(int id) throws LogicLayerException
