@@ -24,14 +24,13 @@ import java.awt.event.MouseEvent;
 import javax.swing.JScrollPane;
 
 @SuppressWarnings("serial")
-public class PeopleList extends JDialog
+public class SelectPeopleWindow extends JDialog
 {
-	private static PeopleList dialog;
+	private static SelectPeopleWindow dialog;
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textField;
 	private JTextField textField_1;
-	private DefaultListModel modelList;
 
 	/**
 	 * Launch the application.
@@ -40,7 +39,7 @@ public class PeopleList extends JDialog
 	{
 		try
 		{
-			dialog = new PeopleList();
+			dialog = new SelectPeopleWindow();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e)
@@ -53,7 +52,8 @@ public class PeopleList extends JDialog
 	/**
 	 * Create the dialog.
 	 */
-	public PeopleList()
+	@SuppressWarnings("rawtypes")
+	public SelectPeopleWindow()
 	{		
 		setTitle("Select People");
 		setBounds(100, 100, 300, 350);
@@ -67,8 +67,9 @@ public class PeopleList extends JDialog
 		gbl_contentPanel.rowWeights = new double[]{1.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);	
 		{
-			modelList = Main.ll.getAllPeopleDLM();
 			{
+				DefaultListModel modelList = Main.ll.getAllPeopleDLM();
+				
 				JScrollPane scrollPane = new JScrollPane();
 				GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 				gbc_scrollPane.fill = GridBagConstraints.BOTH;
@@ -113,7 +114,7 @@ public class PeopleList extends JDialog
 						textField.setText(null);
 						textField_1.setText(null);		
 						dialog.dispose();
-						PeopleList.OpenWindow();
+						SelectPeopleWindow.OpenWindow();
 					}
 					catch(LogicLayerException e)
 					{

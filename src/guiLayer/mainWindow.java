@@ -88,7 +88,7 @@ public class MainWindow extends JFrame
 					@Override
 					public void mousePressed(MouseEvent arg0)
 					{
-						AddNewEvent.OpenWindow();
+						NewEventWindow.OpenWindow();
 						
 					}
 				});

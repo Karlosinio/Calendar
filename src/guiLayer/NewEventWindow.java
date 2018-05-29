@@ -24,8 +24,9 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 @SuppressWarnings("serial")
-public class AddNewEvent extends JDialog
+public class NewEventWindow extends JDialog
 {
+	private static NewEventWindow dialog;
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textField;
@@ -40,7 +41,7 @@ public class AddNewEvent extends JDialog
 	{
 		try
 		{
-			AddNewEvent dialog = new AddNewEvent();
+			dialog = new NewEventWindow();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e)
@@ -49,7 +50,7 @@ public class AddNewEvent extends JDialog
 		}
 	}
 	
-	public AddNewEvent()
+	public NewEventWindow()
 	{
 		setTitle("Add Event");
 		setBounds(100, 100, 450, 225);
@@ -206,7 +207,7 @@ public class AddNewEvent extends JDialog
 				@Override
 				public void mousePressed(MouseEvent e)
 				{
-					PeopleList.OpenWindow();
+					SelectPeopleWindow.OpenWindow();
 				}
 			});
 			GridBagConstraints gbc_btnAddPerson = new GridBagConstraints();
@@ -224,10 +225,9 @@ public class AddNewEvent extends JDialog
 				JButton okButton = new JButton("Add Event");
 				okButton.addMouseListener(new MouseAdapter() {
 					@Override
-					public void mouseClicked(MouseEvent arg0)
+					public void mousePressed(MouseEvent arg0)
 					{
 						Calendar calendar = GregorianCalendar.getInstance();
-
 						try
 						{
 							calendar = dateChooser.getCalendar();							
@@ -235,11 +235,13 @@ public class AddNewEvent extends JDialog
 							calendar.set(Calendar.HOUR_OF_DAY, spinner_1.getComponentCount());
 							calendar.set(Calendar.MINUTE, spinner_2.getComponentCount());
 							
-							Main.ll.createEvent(textField.getName(), calendar, textField_1.getText(), textField_2.getText());
+							Main.ll.createEvent(textField.getText(), calendar, textField_1.getText(), textField_2.getText());
+							
+							dialog.dispose();
 						}
 						catch(Exception e)
 						{
-							// kod co w przypadku, gdy jakies pole bedzie mialo bledna wartosc
+							ExceptionWindow.OpenWindow(e.getMessage());
 						}
 						
 					
