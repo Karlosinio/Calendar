@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TreeMap;
 
+import javax.swing.DefaultListModel;
+
 import dataLayer.DataService;
 import dataLayer.DataServiceException;
 import dataLayer.Event;
@@ -69,11 +71,6 @@ public class LogicLayer
 			throw new LogicLayerException("Event not found (wrong ID)");
 		}
 	}
-	
-	public TreeMap<Integer, Event> getAllEvents()
-	{
-		return data.getAllEvents();
-	}
 
 	public void addPeopleToEvent(int id, Person...people) throws LogicLayerException
 	{
@@ -87,9 +84,25 @@ public class LogicLayer
 		}
 	}
 	
-	public ArrayList<Event> getAllEventsFromDate(Calendar date)
+	public TreeMap<Integer, Event> getAllEvents()
 	{
-		ArrayList<Event> eventsList = new ArrayList<Event>();
+		return data.getAllEvents();
+	}
+
+	public DefaultListModel<Event> getAllEvents1()
+	{
+		DefaultListModel<Event> eventsList = new DefaultListModel<Event>();
+		
+		for(Event event : this.getAllEvents().values() )
+			eventsList.addElement(event);
+	
+		return eventsList;
+	}
+	
+	
+	public DefaultListModel<Event> getAllEventsFromDate(Calendar date)
+	{
+		DefaultListModel<Event> eventsList = new DefaultListModel<Event>();
 		
 		for(Event event : this.getAllEvents().values() )
 		{			
@@ -97,7 +110,7 @@ public class LogicLayer
 				event.getDate().get(Calendar.MONTH)	== date.get(Calendar.MONTH) && 
 				event.getDate().get(Calendar.DATE) == date.get(Calendar.DATE))
 			{
-				eventsList.add(event);
+				eventsList.addElement(event);
 			}
 		}
 	
