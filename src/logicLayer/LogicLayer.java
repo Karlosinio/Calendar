@@ -6,6 +6,7 @@ import java.util.TreeMap;
 
 import javax.swing.DefaultListModel;
 
+import dataLayer.DataLayerException;
 import dataLayer.DataService;
 import dataLayer.DataServiceException;
 import dataLayer.Event;
@@ -88,21 +89,10 @@ public class LogicLayer
 	{
 		return data.getAllEvents();
 	}
-
-	public DefaultListModel<Event> getAllEvents1()
+	
+	public ArrayList<Event> getAllEventsFromDate(Calendar date)
 	{
-		DefaultListModel<Event> eventsList = new DefaultListModel<Event>();
-		
-		for(Event event : this.getAllEvents().values() )
-			eventsList.addElement(event);
-	
-		return eventsList;
-	}
-	
-	
-	public DefaultListModel<Event> getAllEventsFromDate(Calendar date)
-	{
-		DefaultListModel<Event> eventsList = new DefaultListModel<Event>();
+		ArrayList<Event> eventsList = new ArrayList<Event>();
 		
 		for(Event event : this.getAllEvents().values() )
 		{			
@@ -110,7 +100,7 @@ public class LogicLayer
 				event.getDate().get(Calendar.MONTH)	== date.get(Calendar.MONTH) && 
 				event.getDate().get(Calendar.DATE) == date.get(Calendar.DATE))
 			{
-				eventsList.addElement(event);
+				eventsList.add(event);
 			}
 		}
 	
@@ -121,9 +111,16 @@ public class LogicLayer
 	// People
 	/////////////////////////////////////////////////////
 	
-	public void createPerson(String firstName, String lastName)
+	public void createPerson(String firstName, String lastName) throws LogicLayerException
 	{
-		data.createPerson(new Person(firstName, lastName));
+		try
+		{
+			data.createPerson(new Person(firstName, lastName));
+		}
+		catch (DataLayerException e)
+		{
+			throw new LogicLayerException("Event not found (wrong ID)");
+		}					
 	}
 	
 	public Person getPerson(int id) throws LogicLayerException
@@ -179,6 +176,16 @@ public class LogicLayer
 		return data.getAllPeople();
 	}
 	
+	
+	public DefaultListModel getAllPeopleDLM()
+	{
+		DefaultListModel list = new DefaultListModel();
+		
+		for(Person person : this.getAllPeople().values() )
+			list.addElement(person.toString());
+		
+		return list;
+	}
 	
 	
 	/////////////////////////////////////////////////////
