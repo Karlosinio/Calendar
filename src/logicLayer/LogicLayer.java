@@ -2,6 +2,7 @@ package logicLayer;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.TreeMap;
 
 import javax.swing.DefaultListModel;
@@ -109,6 +110,23 @@ public class LogicLayer
 				event.getDate().get(Calendar.DATE) == date.get(Calendar.DATE))
 			{
 				eventsList.add(event);
+			}
+		}
+	
+		return eventsList;
+	}
+	
+	public DefaultListModel<Event> getAllEventsFromDate(Date date)
+	{
+		DefaultListModel<Event> eventsList = new DefaultListModel<Event>();
+		
+		for(Event event : this.getAllEvents().values() )
+		{			
+			if (event.getDate().get(Calendar.YEAR) == date.getYear() && 
+				event.getDate().get(Calendar.MONTH)	== date.getMonth() && 
+				event.getDate().get(Calendar.DATE) == date.getDate())
+			{
+				eventsList.addElement(event);
 			}
 		}
 	
