@@ -12,6 +12,8 @@ import java.awt.GridBagConstraints;
 import javax.swing.JLabel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class ExceptionWindow extends JDialog
 {
@@ -40,20 +42,19 @@ public class ExceptionWindow extends JDialog
 	public ExceptionWindow(String msg)
 	{
 		setTitle("Error");
-		setBounds(100, 100, 300, 150);
+		setBounds(100, 100, 300, 111);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{265, 0};
-		gbl_contentPanel.rowHeights = new int[]{65, 0};
+		gbl_contentPanel.rowHeights = new int[]{22, 0};
 		gbl_contentPanel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
 		gbl_contentPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
 		{
 			JLabel lblNewLabel = new JLabel(msg);
 			GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-			gbc_lblNewLabel.anchor = GridBagConstraints.NORTH;
 			gbc_lblNewLabel.gridx = 0;
 			gbc_lblNewLabel.gridy = 0;
 			contentPanel.add(lblNewLabel, gbc_lblNewLabel);
@@ -69,6 +70,14 @@ public class ExceptionWindow extends JDialog
 			buttonPane.setLayout(gbl_buttonPane);
 			{
 				JButton okButton = new JButton("OK");
+				okButton.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyPressed(KeyEvent e) {
+						if (e.getKeyCode()==KeyEvent.VK_ENTER || e.getKeyCode()==KeyEvent.VK_ESCAPE){
+							dialog.dispose();
+						}
+					}
+				});
 				okButton.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mousePressed(MouseEvent arg0) {
