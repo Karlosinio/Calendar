@@ -21,6 +21,9 @@ import javax.swing.JTextField;
 import javax.swing.JList;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.JScrollPane;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -57,7 +60,16 @@ public class SelectPeopleWindow extends JDialog
 	 * Create the dialog.
 	 */
 	public SelectPeopleWindow()
-	{		
+	{	
+		addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowClosing(WindowEvent e)
+            {	NewEventWindow.OpenWindow();
+            }
+        });
+		
+		
 		setTitle("Select People");
 		setBounds(100, 100, 300, 350);
 		getContentPane().setLayout(new BorderLayout());
