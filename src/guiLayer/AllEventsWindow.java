@@ -87,7 +87,6 @@ public class AllEventsWindow extends JDialog
 		
 		for (Event event : eventsList.values() )
 		{
-			System.out.println(event.toString());
 			dlm.addElement(event.toString());
 		}
 		
