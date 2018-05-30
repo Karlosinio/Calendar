@@ -1,8 +1,10 @@
 package dataLayer;
 
+import java.io.Serializable;
 import java.util.TreeMap;
 
-public class DataService
+@SuppressWarnings("serial")
+public class DataService implements Serializable
 {
 	private DataContext dataContext = new DataContext();
 	
