@@ -15,17 +15,27 @@ import dataLayer.Person;
 
 public class LogicLayer
 {
-	DataService data = new DataService();
+	DataService dataService = new DataService();
+	
+	public void setDataService(DataService dataService)
+	{
+		this.dataService = dataService;
+	}
+
+	public DataService getDataService()
+	{
+		return dataService;
+	}
 	
 	/////////////////////////////////////////////////////
 	// Events
 	/////////////////////////////////////////////////////
-	
+
 	public void createEvent(String name, Calendar date, String description, String place) throws LogicLayerException
 	{
 		try
 		{
-			data.createEvent(new Event (name, date, description, place));
+			dataService.createEvent(new Event (name, date, description, place));
 		}
 		catch (DataLayerException e)
 		{
@@ -38,7 +48,7 @@ public class LogicLayer
 	{
 		try
 		{
-			return data.getEvent(id);
+			return dataService.getEvent(id);
 		}
 		catch (DataServiceException e)
 		{
@@ -50,7 +60,7 @@ public class LogicLayer
 	{
 		try
 		{
-			data.updateEvent(id, event);
+			dataService.updateEvent(id, event);
 		}
 		catch (DataServiceException e)
 		{
@@ -62,7 +72,7 @@ public class LogicLayer
 	{
 		try
 		{
-			data.deleteEvent(id);
+			dataService.deleteEvent(id);
 		}
 		catch (DataServiceException e)
 		{
@@ -74,7 +84,7 @@ public class LogicLayer
 	{
 		try
 		{
-			data.deleteEvent(event);
+			dataService.deleteEvent(event);
 		}
 		catch (DataServiceException e)
 		{
@@ -86,7 +96,7 @@ public class LogicLayer
 	{
 		try
 		{
-			data.addPeopleToEvent(id, people);
+			dataService.addPeopleToEvent(id, people);
 		}
 		catch (DataServiceException e)
 		{
@@ -96,7 +106,7 @@ public class LogicLayer
 	
 	public TreeMap<Integer, Event> getAllEvents()
 	{
-		return data.getAllEvents();
+		return dataService.getAllEvents();
 	}
 	
 	public ArrayList<Event> getAllEventsFromDate(Calendar date)
@@ -124,7 +134,7 @@ public class LogicLayer
 	{
 		try
 		{
-			data.createPerson(new Person(firstName, lastName));
+			dataService.createPerson(new Person(firstName, lastName));
 		}
 		catch (DataLayerException e)
 		{
@@ -136,7 +146,7 @@ public class LogicLayer
 	{
 		try
 		{
-			return data.getPerson(id);
+			return dataService.getPerson(id);
 		}
 		catch (DataServiceException e)
 		{
@@ -148,7 +158,7 @@ public class LogicLayer
 	{
 		try
 		{
-			data.updatePerson(id, person);
+			dataService.updatePerson(id, person);
 		}
 		catch (DataServiceException e)
 		{
@@ -160,7 +170,7 @@ public class LogicLayer
 	{
 		try
 		{
-			data.deletePerson(id);
+			dataService.deletePerson(id);
 		}
 		catch (DataServiceException e)
 		{
@@ -172,7 +182,7 @@ public class LogicLayer
 	{
 		try
 		{
-			data.deletePerson(p);
+			dataService.deletePerson(p);
 		}
 		catch (DataServiceException e)
 		{
@@ -182,7 +192,7 @@ public class LogicLayer
 	
 	public TreeMap<Integer, Person> getAllPeople()
 	{
-		return data.getAllPeople();
+		return dataService.getAllPeople();
 	}
 	
 	
@@ -196,7 +206,7 @@ public class LogicLayer
 		return list;
 	}
 	
-	
+	/*
 	/////////////////////////////////////////////////////
 	// Exporters
 	/////////////////////////////////////////////////////
@@ -224,5 +234,5 @@ public class LogicLayer
 	{
 		this.importData(fileName, new XMLImporter());
 	}
-
+	*/
 }
