@@ -98,17 +98,33 @@ public class Event implements Comparable<Event>, Serializable
 		return dateDescription;
 	}
 	
+	public String getTime()
+	{
+		String time = new String();
+		
+		time += getDate().get(Calendar.HOUR_OF_DAY) + ":";
+		
+		if (getDate().get(Calendar.MINUTE) < 10) 
+			time += "0";
+		time += getDate().get(Calendar.MINUTE);
+		
+		return time;
+	}
+	
 	public String toString()
 	{
-		String dateDescription = "";
+		return getTime() + "  -  " + getName();
+	}
+	
+	public String toLongString()
+	{
+		String dateDescription = new String();
 		
 		dateDescription += date.get(Calendar.DAY_OF_MONTH) + ".";
 		dateDescription += date.get(Calendar.MONTH) + ".";		
 		dateDescription += date.get(Calendar.YEAR) + "   ";
 
-		dateDescription += date.get(Calendar.HOUR_OF_DAY) + ":";
-		dateDescription += date.get(Calendar.MINUTE);
-		
+		dateDescription += getTime();
 		
 		return name + "\nDate: " + dateDescription + "\nPlace: " + place + "\nDescription: " + description;
 	}
