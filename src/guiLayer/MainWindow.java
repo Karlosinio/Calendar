@@ -139,7 +139,7 @@ public class MainWindow extends JFrame {
 				try {
 					XMLSerializer.exportData("autosave.xml", Main.ll.getDataService());
 				} catch (ExportException e) {
-					ExceptionWindow.OpenWindow(e.getMessage());
+					ExceptionWindow.openWindow(e.getMessage());
 				} finally {
 					frame.dispose();
 				}
@@ -253,7 +253,7 @@ public class MainWindow extends JFrame {
 		btnAllPeople.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				AllEventsWindow.OpenWindow();
+				AllEventsWindow.openWindow();
 			}
 		});
 		btnAllPeople.setBounds(923, 587, 180, 75);
@@ -274,7 +274,7 @@ public class MainWindow extends JFrame {
 				}
 				catch (LogicLayerException e)
 				{
-					ExceptionWindow.OpenWindow(e.getMessage());
+					ExceptionWindow.openWindow(e.getMessage());
 				}
 			}
 		});
@@ -286,7 +286,7 @@ public class MainWindow extends JFrame {
 		btnCreateEvent.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				NewEventWindow.OpenWindow();
+				NewEventWindow.openWindow();
 				frame.dispose();
 			}
 		});
@@ -301,7 +301,7 @@ public class MainWindow extends JFrame {
 			public void mousePressed(MouseEvent arg0) {
 				if (list.getSelectedValue() != null)
 				{
-					NewEventWindow.OpenWindow(list.getSelectedValue());
+					NewEventWindow.openWindow(list.getSelectedValue());
 					frame.dispose();				
 				}
 

@@ -23,7 +23,7 @@ public class ExceptionWindow extends JDialog
 	/**
 	 * Launch the application.
 	 */
-	public static void OpenWindow(String msg)
+	public static void openWindow(String msg)
 	{
 		try
 		{

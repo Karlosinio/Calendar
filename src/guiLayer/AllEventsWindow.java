@@ -39,7 +39,7 @@ public class AllEventsWindow extends JDialog
 	/**
 	 * Launch the application.
 	 */
-	public static void OpenWindow()
+	public static void openWindow()
 	{
 		try
 		{

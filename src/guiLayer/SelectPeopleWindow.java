@@ -41,7 +41,7 @@ public class SelectPeopleWindow extends JDialog
 	/**
 	 * Launch the application.
 	 */
-	public static void OpenWindow()
+	public static void openWindow()
 	{
 		try
 		{
@@ -65,7 +65,7 @@ public class SelectPeopleWindow extends JDialog
         {
             @Override
             public void windowClosing(WindowEvent e)
-            {	NewEventWindow.OpenWindow();
+            {	NewEventWindow.openWindow();
             }
         });
 		
@@ -131,11 +131,11 @@ public class SelectPeopleWindow extends JDialog
 						textField.setText(null);
 						textField_1.setText(null);		
 						dialog.dispose();
-						SelectPeopleWindow.OpenWindow();
+						SelectPeopleWindow.openWindow();
 					}
 					catch(LogicLayerException e)
 					{
-						ExceptionWindow.OpenWindow(e.getMessage());
+						ExceptionWindow.openWindow(e.getMessage());
 					}
 				}
 			});
@@ -174,7 +174,7 @@ public class SelectPeopleWindow extends JDialog
 					@Override
 					public void mousePressed(MouseEvent arg0) {
 						dialog.dispose();
-						NewEventWindow.OpenWindow();
+						NewEventWindow.openWindow();
 					}
 				});
 				okButton.setActionCommand("OK");

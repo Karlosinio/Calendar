@@ -18,7 +18,7 @@ public class Main
 		}
 		catch (LogicLayerException e)
 		{
-			ExceptionWindow.OpenWindow(e.getMessage());
+			ExceptionWindow.openWindow(e.getMessage());
 		}
 		finally
 		{			

@@ -68,7 +68,7 @@ public class NewEventWindow extends JDialog
 	private DefaultListModel modelList = Main.ll.getAllPeopleDLM();
 	private static ArrayList<Person> peopleArray = new ArrayList<Person>();
 	
-	public static void OpenWindow()
+	public static void openWindow()
 	{
 		try
 		{
@@ -84,7 +84,7 @@ public class NewEventWindow extends JDialog
 	}
 	
 	
-	public static void OpenWindow(Event event)
+	public static void openWindow(Event event)
 	{
 		try
 		{
@@ -114,7 +114,7 @@ public class NewEventWindow extends JDialog
 		}
 		catch(Exception e)
 		{
-			ExceptionWindow.OpenWindow(e.getMessage());
+			ExceptionWindow.openWindow(e.getMessage());
 		}
 		
 		return calendar;
@@ -242,7 +242,7 @@ public class NewEventWindow extends JDialog
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				dialog.dispose();
-				SelectPeopleWindow.OpenWindow();
+				SelectPeopleWindow.openWindow();
 			}
 		});
 		btnAddNewPeople.setBounds(413, 177, 125, 25);
