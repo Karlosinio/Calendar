@@ -24,6 +24,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.TreeMap;
+import java.util.ArrayList;
 
 import javax.swing.JList;
 import javax.swing.JScrollPane;
@@ -31,12 +33,17 @@ import javax.swing.JScrollPane;
 
 import com.toedter.calendar.JCalendar;
 
+import dataLayer.Event;
 import dataLayer.Person;
+import logicLayer.LogicLayerException;
 
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultListModel;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 @SuppressWarnings("serial")
 public class NewEventWindow extends JDialog
@@ -48,10 +55,17 @@ public class NewEventWindow extends JDialog
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JCalendar jCalendar;
+	JLabel lblName = new JLabel("Name:");
 	
 	private JSpinner spinner_1;
 	private JSpinner spinner_2;
+	private JButton button;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	
+	private JList list = new JList();
+	private TreeMap<Integer, Person> people = Main.ll.getAllPeople();
+	private DefaultListModel modelList = Main.ll.getAllPeopleDLM();
+	private ArrayList<Person> peopleArray = new ArrayList<Person>();
 	
 	public static void OpenWindow()
 	{
@@ -91,7 +105,7 @@ public class NewEventWindow extends JDialog
 			contentPanel.add(jCalendar);
 		}
 		{
-			JLabel lblName = new JLabel("Name:");
+			
 			lblName.setBounds(260, 16, 38, 16);
 			contentPanel.add(lblName);
 		}
@@ -128,18 +142,18 @@ public class NewEventWindow extends JDialog
 			label.setBounds(255, 127, 43, 16);
 			contentPanel.add(label);
 		}
-
 		{
-			JButton button = new JButton("Select People");
-			button.addMouseListener(new MouseAdapter() {
+
+			JButton btnAddNewPeople = new JButton("Add new people");
+			btnAddNewPeople.addMouseListener(new MouseAdapter() {
 				@Override
-				public void mousePressed(MouseEvent e) {
+				public void mouseClicked(MouseEvent e) {
 					dialog.dispose();
 					SelectPeopleWindow.OpenWindow();
 				}
 			});
-			button.setBounds(413, 177, 125, 25);
-			contentPanel.add(button);
+			btnAddNewPeople.setBounds(413, 177, 125, 25);
+			contentPanel.add(btnAddNewPeople);
 		}
 		{
 			JScrollPane scrollPane = new JScrollPane();
@@ -148,7 +162,21 @@ public class NewEventWindow extends JDialog
 			scrollPane.setBounds(303, 124, 235, 45);
 			contentPanel.add(scrollPane);
 			{
-				JList<Person> list = new JList<Person>();
+							
+				JList list = new JList(modelList);	
+				
+				// adding people to event
+				list.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						for(Person person : people.values())
+						{
+							if(person.toString().equals((String)list.getSelectedValue()))
+								peopleArray.add(person);
+						}
+					}
+				});
+				
 				scrollPane.setViewportView(list);
 			}
 		}
@@ -169,9 +197,9 @@ public class NewEventWindow extends JDialog
 
 							calendar.set(Calendar.HOUR_OF_DAY, (Integer) spinner_1.getValue());
 							calendar.set(Calendar.MINUTE, (Integer) spinner_2.getValue());
-							
-							Main.ll.createEvent(textField.getText(), calendar, textField_1.getText(), textField_2.getText());
-							
+		
+							Main.ll.createEventWithPeople(textField.getText(), calendar, textField_1.getText(), textField_2.getText(), peopleArray);							
+						
 							dialog.dispose();
 							MainWindow.OpenWindow();
 						}
@@ -179,10 +207,9 @@ public class NewEventWindow extends JDialog
 						{
 							ExceptionWindow.OpenWindow(e.getMessage());
 						}
-						
-					
 					}
 				});
+				
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
@@ -200,6 +227,7 @@ public class NewEventWindow extends JDialog
 				buttonPane.add(cancelButton);
 			}
 		}
+	
 		{
 			JLabel label = new JLabel("Hour:");
 			label.setBounds(22, 11, 32, 16);
@@ -258,5 +286,6 @@ public class NewEventWindow extends JDialog
 		buttonGroup.add(rdbtnDay);
 		rdbtnDay.setBounds(464, 209, 59, 25);
 		contentPanel.add(rdbtnDay);
+		
 	}
 }

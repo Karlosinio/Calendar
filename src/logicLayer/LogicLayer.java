@@ -44,6 +44,19 @@ public class LogicLayer
 		
 	}
 	
+	public void createEventWithPeople(String name, Calendar date, String description, String place, ArrayList<Person> people) throws LogicLayerException
+	{
+		try
+		{
+			dataService.createEvent(new Event (name, date, description, place, people));
+		}
+		catch (DataLayerException e)
+		{
+			throw new LogicLayerException(e.getMessage());
+		}
+		
+	}
+	
 	public Event getEvent(int id) throws LogicLayerException
 	{
 		try

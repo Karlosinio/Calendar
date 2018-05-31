@@ -28,6 +28,23 @@ public class Event implements Comparable<Event>, Serializable
 		}
 	}
 	
+	public Event(String name, Calendar date, String description, String place, ArrayList<Person> people) throws DataLayerException
+	{
+		if (name.isEmpty())
+			throw new DataLayerException("Name cannot be empty");
+			
+		else
+		{			
+			this.name = name;
+			this.date = date;
+			this.description = description;
+			this.place = place;
+			
+			for(Person person: people)
+			peopleList.add(person);
+		}
+	}
+	
 	public String getName()
 	{
 		return name;
