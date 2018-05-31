@@ -33,6 +33,7 @@ import javax.swing.JScrollPane;
 
 import com.toedter.calendar.JCalendar;
 
+import dataLayer.DataLayerException;
 import dataLayer.Event;
 import dataLayer.Person;
 import logicLayer.LogicLayerException;
@@ -66,6 +67,8 @@ public class NewEventWindow extends JDialog
 	private TreeMap<Integer, Person> people = Main.ll.getAllPeople();
 	private DefaultListModel modelList = Main.ll.getAllPeopleDLM();
 	private ArrayList<Person> peopleArray = new ArrayList<Person>();
+	
+	
 	
 	public static void OpenWindow()
 	{
@@ -165,14 +168,25 @@ public class NewEventWindow extends JDialog
 							
 				JList list = new JList(modelList);	
 				
-				// adding people to event
-				list.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
+				list.addListSelectionListener(new ListSelectionListener() {
+					public void valueChanged(ListSelectionEvent e) {
+						String str = new String();
+						
 						for(Person person : people.values())
 						{
+							for(int i=0; i<peopleArray.size(); i++)
+							{
+								str += peopleArray.get(i).toString() + " ";
+							}
+							
 							if(person.toString().equals((String)list.getSelectedValue()))
-								peopleArray.add(person);
+							{
+								if(str.contains(person.toString()))
+									continue;
+								
+								else
+									peopleArray.add(person);
+							}						
 						}
 					}
 				});
