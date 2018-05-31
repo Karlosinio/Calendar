@@ -2,7 +2,6 @@ package logicLayer;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.TreeMap;
 
 import javax.swing.DefaultListModel;
@@ -128,9 +127,9 @@ public class LogicLayer
 		
 		for(Event event : this.getAllEvents().values() )
 		{			
-			if (event.getDate().get(Calendar.YEAR) == date.get(Calendar.YEAR) && 
-				event.getDate().get(Calendar.MONTH)	== date.get(Calendar.MONTH) && 
-				event.getDate().get(Calendar.DATE) == date.get(Calendar.DATE))
+			if (event.getCalendar().get(Calendar.YEAR) == date.get(Calendar.YEAR) && 
+				event.getCalendar().get(Calendar.MONTH)	== date.get(Calendar.MONTH) && 
+				event.getCalendar().get(Calendar.DATE) == date.get(Calendar.DATE))
 			{
 				eventsList.add(event);
 			}
