@@ -6,9 +6,12 @@ import dataLayer.DataLayerException;
 import dataLayer.Event;
 import dataLayer.Person;
 import logicLayer.ExportException;
+import logicLayer.LogicLayerException;
 import logicLayer.XMLSerializer;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+
 import javax.swing.border.EmptyBorder;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -30,13 +33,14 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class MainWindow extends JFrame {
 	private JPanel contentPane;
 	private static MainWindow frame;
 	private static JCalendar jCalendar;
-	private JButton btnNewButton;
 	private JLabel lblName;
 	private JLabel lblDescription;
 	private JLabel lblPlace;
@@ -53,7 +57,7 @@ public class MainWindow extends JFrame {
 	private JList<Event> list;
 	private JScrollPane scrollPane_1;
 	private JList<Person> list_1;
-	private JButton btnAllEvents;
+	private JButton btnAllPeople;
 
 	private static ArrayList<Event> eventsList;
 	private static DefaultListModel<Event> eventsDLM;
@@ -61,11 +65,11 @@ public class MainWindow extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void OpenWindow() {
+	public static void openWindow(Calendar calendar) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					frame = new MainWindow();
+					frame = new MainWindow(calendar);
 					frame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					frame.setResizable(false);
 					frame.setVisible(true);
@@ -110,7 +114,8 @@ public class MainWindow extends JFrame {
 		scrollPane_1.setViewportView(list);
 	}
 
-	void clearEventFields() {
+	void clearEventFields()
+	{
 		tpName.setText("");
 		tpDescription.setText("");
 		tpPlace.setText("");
@@ -119,20 +124,22 @@ public class MainWindow extends JFrame {
 		JList j = new JList(clean);
 		scrollPane_1.setViewportView(j);
 	}
-
+	
+	
 	/**
 	 * Create the frame.
 	 * 
 	 * @throws DataLayerException
 	 */
-	public MainWindow() throws DataLayerException {
+	public MainWindow(Calendar calendar) throws DataLayerException
+	{
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent we) {
 				try {
 					XMLSerializer.exportData("autosave.xml", Main.ll.getDataService());
 				} catch (ExportException e) {
-					ExceptionWindow.OpenWindow(e.getMessage());
+					ExceptionWindow.openWindow(e.getMessage());
 				} finally {
 					frame.dispose();
 				}
@@ -147,6 +154,10 @@ public class MainWindow extends JFrame {
 		contentPane.setLayout(null);
 
 		jCalendar = new JCalendar();
+		
+		if (calendar != null)
+			jCalendar.setCalendar(calendar);
+		
 		jCalendar.setBounds(45, 43, 581, 375);
 		contentPane.add(jCalendar);
 
@@ -165,7 +176,7 @@ public class MainWindow extends JFrame {
 
 		scrollPane = new JScrollPane();
 
-		scrollPane.setBounds(701, 73, 402, 345);
+		scrollPane.setBounds(701, 73, 402, 415);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		contentPane.add(scrollPane);
@@ -193,11 +204,12 @@ public class MainWindow extends JFrame {
 		contentPane.add(tpTime);
 
 		lblReminder = new JLabel("Reminder:");
-		lblReminder.setBounds(713, 466, 60, 16);
+		lblReminder.setBounds(415, 495, 60, 16);
 		contentPane.add(lblReminder);
 
 		tpReminder = new JTextPane();
-		tpReminder.setBounds(778, 463, 325, 22);
+		tpReminder.setEditable(false);
+		tpReminder.setBounds(480, 495, 146, 22);
 		contentPane.add(tpReminder);
 
 		lblDescription = new JLabel("Description:");
@@ -237,29 +249,68 @@ public class MainWindow extends JFrame {
 		// dml.addElement(event.toString());
 		// }
 
-		btnAllEvents = new JButton("All Events");
-		btnAllEvents.addMouseListener(new MouseAdapter() {
+		btnAllPeople = new JButton("All People");
+		btnAllPeople.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				AllEventsWindow.OpenWindow();
+				AllEventsWindow.openWindow();
 			}
 		});
-		btnAllEvents.setBounds(701, 530, 402, 25);
-		btnAllEvents.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		contentPane.add(btnAllEvents);
-
-		btnNewButton = new JButton("Add Event");
-		btnNewButton.setBounds(701, 560, 402, 102);
-		btnNewButton.addMouseListener(new MouseAdapter() {
+		btnAllPeople.setBounds(923, 587, 180, 75);
+		btnAllPeople.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		contentPane.add(btnAllPeople);
+		
+		JButton btnDeleteEvent = new JButton("Delete Event");
+		btnDeleteEvent.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnDeleteEvent.setBounds(701, 502, 180, 75);
+		btnDeleteEvent.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				NewEventWindow.OpenWindow();
+				try
+				{
+					Main.ll.deleteEvent(list.getSelectedValue());
+					dateSelection();
+					clearEventFields();
+				}
+				catch (LogicLayerException e)
+				{
+					ExceptionWindow.openWindow(e.getMessage());
+				}
+			}
+		});
+		contentPane.add(btnDeleteEvent);
+		
+		JButton btnCreateEvent = new JButton("Create Event");
+		btnCreateEvent.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnCreateEvent.setBounds(923, 502, 180, 75);
+		btnCreateEvent.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				NewEventWindow.openWindow();
 				frame.dispose();
 			}
 		});
 
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		contentPane.add(btnNewButton);
+		contentPane.add(btnCreateEvent);
+		
+		JButton btnEditEvent = new JButton("Edit Event");
+		btnEditEvent.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnEditEvent.setBounds(701, 587, 180, 75);
+		btnEditEvent.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				if (list.getSelectedValue() != null)
+				{
+					NewEventWindow.openWindow(list.getSelectedValue());
+					frame.dispose();				
+				}
+
+			}
+		});
+		
+		
+		
+		contentPane.add(btnEditEvent);
 
 	}
 }

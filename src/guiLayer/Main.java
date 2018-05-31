@@ -8,9 +8,6 @@ public class Main
 {
 	public static LogicLayer ll;
 
-	
-	
-	
 	public static void main(String[] args)
 	{
 		ll = new LogicLayer();
@@ -21,11 +18,11 @@ public class Main
 		}
 		catch (LogicLayerException e)
 		{
-			ExceptionWindow.OpenWindow(e.getMessage());
+			ExceptionWindow.openWindow(e.getMessage());
 		}
 		finally
 		{			
-			MainWindow.OpenWindow();
+			MainWindow.openWindow(null);
 		}
 		
 	}

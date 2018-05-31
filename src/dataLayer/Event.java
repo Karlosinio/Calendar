@@ -55,12 +55,12 @@ public class Event implements Comparable<Event>, Serializable
 		this.name = name;
 	}
 
-	public Calendar getDate()
+	public Calendar getCalendar()
 	{
 		return date;
 	}
 
-	public void setDate(Calendar date)
+	public void setCalendar(Calendar date)
 	{
 		this.date = date;
 	}
@@ -115,15 +115,37 @@ public class Event implements Comparable<Event>, Serializable
 		return dateDescription;
 	}
 	
+	public int getHour()
+	{
+		return getCalendar().get(Calendar.HOUR_OF_DAY);
+	}
+	
+	public int getMinute()
+	{
+		return getCalendar().get(Calendar.MINUTE);
+	}
+	
+	public void setHour(int hour)
+	{
+		date.set(Calendar.HOUR_OF_DAY, hour);
+	}
+	
+	public void setMinute(int minute)
+	{
+		date.set(Calendar.MINUTE, minute);
+	}
+	
 	public String getTime()
 	{
 		String time = new String();
-		
-		time += getDate().get(Calendar.HOUR_OF_DAY) + ":";
-		
-		if (getDate().get(Calendar.MINUTE) < 10) 
+
+		if (getCalendar().get(Calendar.HOUR_OF_DAY) < 10) 
 			time += "0";
-		time += getDate().get(Calendar.MINUTE);
+		time += getCalendar().get(Calendar.HOUR_OF_DAY) + ":";
+		
+		if (getCalendar().get(Calendar.MINUTE) < 10) 
+			time += "0";
+		time += getCalendar().get(Calendar.MINUTE);
 		
 		return time;
 	}

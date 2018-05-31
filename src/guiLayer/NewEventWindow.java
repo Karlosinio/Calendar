@@ -52,49 +52,95 @@ public class NewEventWindow extends JDialog
 	private static NewEventWindow dialog;
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JCalendar jCalendar;
-	JLabel lblName = new JLabel("Name:");
+	private static JTextField tfName;
+	private static JTextField tfDescription;
+	private static JTextField tfPlace;
+
+	private static JCalendar jCalendar;
 	
-	private JSpinner spinner_1;
-	private JSpinner spinner_2;
+	
+	private static JSpinner spinnerHour;
+	private static JSpinner spinnerMinute;
 	private JButton button;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	
 	private JList list = new JList();
 	private TreeMap<Integer, Person> people = Main.ll.getAllPeople();
 	private DefaultListModel modelList = Main.ll.getAllPeopleDLM();
-	private ArrayList<Person> peopleArray = new ArrayList<Person>();
+	private static ArrayList<Person> peopleArray = new ArrayList<Person>();
 	
-	
-	
-	public static void OpenWindow()
+	public static void openWindow()
 	{
 		try
 		{
-			dialog = new NewEventWindow();
+			dialog = new NewEventWindow(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setResizable(false);
 			dialog.setVisible(true);
-		} catch (Exception e)
+		}
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
 	}
 	
 	
-	public NewEventWindow()
+	public static void openWindow(Event event)
+	{
+		try
+		{
+			dialog = new NewEventWindow(event);
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setResizable(false);
+			dialog.setVisible(true);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}	
+	}
+	
+	public static Calendar createEvent()
+	{
+		Calendar calendar = GregorianCalendar.getInstance();
+
+		try
+		{
+			calendar = jCalendar.getCalendar();							
+
+			calendar.set(Calendar.HOUR_OF_DAY, (int) spinnerHour.getValue());
+			calendar.set(Calendar.MINUTE, (int) spinnerMinute.getValue());
+
+			Main.ll.createEventWithPeople(tfName.getText(), calendar, tfDescription.getText(), tfPlace.getText(), peopleArray);							
+		}
+		catch(Exception e)
+		{
+			ExceptionWindow.openWindow(e.getMessage());
+		}
+		
+		return calendar;
+	}
+	
+	public static Calendar createEvent(Event event)
+	{
+		event.setName(tfName.getText());
+		event.setDescription(tfDescription.getText());
+		event.setPlace(tfPlace.getText());
+		
+		event.setCalendar(jCalendar.getCalendar());
+		event.setHour((int) spinnerHour.getValue());
+		event.setMinute((int) spinnerMinute.getValue());	
+		
+		return event.getCalendar();
+	}
+	
+	public NewEventWindow(Event event)
 	{	
 		addWindowListener(new WindowAdapter()
-        {
-            @Override
+        {	@Override
             public void windowClosing(WindowEvent e)
-            {	MainWindow.OpenWindow();
-            }
+            {	MainWindow.openWindow(null);	}
         });
-		
 		
 		setTitle("Add Event");
 		setBounds(100, 100, 575, 326);
@@ -102,71 +148,7 @@ public class NewEventWindow extends JDialog
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
-		{
-			jCalendar = new JCalendar();
-			jCalendar.setBounds(22, 43, 180, 159);
-			contentPanel.add(jCalendar);
-		}
-		{
-			
-			lblName.setBounds(260, 16, 38, 16);
-			contentPanel.add(lblName);
-		}
-		{
-			textField = new JTextField();
-			textField.setBounds(303, 13, 235, 22);
-			contentPanel.add(textField);
-			textField.setColumns(10);
-		}
-		{
-			JLabel lblDescription = new JLabel("Description:");
-			lblDescription.setBounds(230, 73, 68, 16);
-			contentPanel.add(lblDescription);
-		}
-		{
-			textField_1 = new JTextField();
-			textField_1.setBounds(303, 70, 235, 22);
-			contentPanel.add(textField_1);
-			textField_1.setColumns(10);
-		}
-		{
-			JLabel lblPlace = new JLabel("Place:");
-			lblPlace.setBounds(263, 100, 35, 16);
-			contentPanel.add(lblPlace);
-		}
-		{
-			textField_2 = new JTextField();
-			textField_2.setBounds(303, 97, 235, 22);
-			textField_2.setColumns(10);
-			contentPanel.add(textField_2);
-		}
-		{
-			JLabel label = new JLabel("People:");
-			label.setBounds(255, 127, 43, 16);
-			contentPanel.add(label);
-		}
-		{
 
-			JButton btnAddNewPeople = new JButton("Add new people");
-			btnAddNewPeople.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					dialog.dispose();
-					SelectPeopleWindow.OpenWindow();
-				}
-			});
-			btnAddNewPeople.setBounds(413, 177, 125, 25);
-			contentPanel.add(btnAddNewPeople);
-		}
-		{
-			JScrollPane scrollPane = new JScrollPane();
-			scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-			scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-			scrollPane.setBounds(303, 124, 235, 45);
-			contentPanel.add(scrollPane);
-			{
-							
-				JList list = new JList(modelList);	
 				
 				list.addListSelectionListener(new ListSelectionListener() {
 					public void valueChanged(ListSelectionEvent e) {
@@ -193,77 +175,81 @@ public class NewEventWindow extends JDialog
 				
 				scrollPane.setViewportView(list);
 			}
-		}
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton okButton = new JButton("Add Event");
-				okButton.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mousePressed(MouseEvent arg0)
-					{
-						Calendar calendar = GregorianCalendar.getInstance();
-						try
-						{
-							calendar = jCalendar.getCalendar();							
+		});
+		btnAddNewPeople.setBounds(413, 177, 125, 25);
+		contentPanel.add(btnAddNewPeople);
 
-							calendar.set(Calendar.HOUR_OF_DAY, (Integer) spinner_1.getValue());
-							calendar.set(Calendar.MINUTE, (Integer) spinner_2.getValue());
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBounds(303, 124, 235, 45);
+		contentPanel.add(scrollPane);
+
+							
+		JList listPeople = new JList(modelList);	
 		
-							Main.ll.createEventWithPeople(textField.getText(), calendar, textField_1.getText(), textField_2.getText(), peopleArray);							
-						
-							dialog.dispose();
-							MainWindow.OpenWindow();
-						}
-						catch(Exception e)
-						{
-							ExceptionWindow.OpenWindow(e.getMessage());
-						}
-					}
-				});
-				
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+		// adding people to event
+		listPeople.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				for(Person person : people.values())
+				{
+					if(person.toString().equals((String)listPeople.getSelectedValue()))
+						peopleArray.add(person);
+				}
 			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mousePressed(MouseEvent arg0) {
-						dialog.dispose();
-						MainWindow.OpenWindow();
-					}
-				});
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
+		});
+		
+		scrollPane.setViewportView(listPeople);
+
+
+		JPanel buttonPane = new JPanel();
+		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		getContentPane().add(buttonPane, BorderLayout.SOUTH);
+		
+		JButton okButton = new JButton("Add Event");
+		okButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent arg0)
+			{			
+				if (event != null)
+				{
+					createEvent(event);
+					MainWindow.openWindow(event.getCalendar());
+				}
+					
+				else
+				{
+					createEvent();
+					MainWindow.openWindow(jCalendar.getCalendar());
+				}
+					
+				dialog.dispose();				
 			}
-		}
-	
-		{
-			JLabel label = new JLabel("Hour:");
-			label.setBounds(22, 11, 32, 16);
-			contentPanel.add(label);
-		}
-		{
-			spinner_1 = new JSpinner();
-			spinner_1.setModel(new SpinnerNumberModel(12, 0, 23, 1));
-			spinner_1.setBounds(59, 8, 38, 22);
-			contentPanel.add(spinner_1);
-		}
-		{
-			JLabel label = new JLabel("Minute:");
-			label.setBounds(120, 11, 43, 16);
-			contentPanel.add(label);
-		}
-		{
-			spinner_2 = new JSpinner();
-			spinner_2.setModel(new SpinnerNumberModel(0, 0, 55, 5));
-			spinner_2.setBounds(164, 8, 38, 22);
-			contentPanel.add(spinner_2);
-		}
+		});
+		
+		okButton.setActionCommand("OK");
+		buttonPane.add(okButton);
+		getRootPane().setDefaultButton(okButton);
+		
+
+		JButton cancelButton = new JButton("Cancel");
+		cancelButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				dialog.dispose();
+				MainWindow.openWindow(null);
+			}
+		});
+		cancelButton.setActionCommand("Cancel");
+		buttonPane.add(cancelButton);
+
+
+
+		
+		/////////////////////////////////////////////////////
+		// Reminders: radio buttons
+		/////////////////////////////////////////////////////
 		
 		JLabel lblReminder = new JLabel("Reminder:");
 		lblReminder.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -301,5 +287,20 @@ public class NewEventWindow extends JDialog
 		rdbtnDay.setBounds(464, 209, 59, 25);
 		contentPanel.add(rdbtnDay);
 		
-	}
+		/////////////////////////////////////////////////////
+		// Set fields for edited event
+		/////////////////////////////////////////////////////
+		
+		if (event != null)
+		{
+			okButton.setText("Change Event");
+			spinnerHour.setValue(event.getHour());
+			spinnerMinute.setValue(event.getMinute());
+			jCalendar.setCalendar(event.getCalendar());
+			tfName.setText(event.getName());
+			tfDescription.setText(event.getDescription());
+			tfPlace.setText(event.getPlace());
+		}
+	}	
+
 }
