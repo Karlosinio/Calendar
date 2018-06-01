@@ -33,7 +33,6 @@ import javax.swing.JScrollPane;
 
 import com.toedter.calendar.JCalendar;
 
-import dataLayer.DataLayerException;
 import dataLayer.Event;
 import dataLayer.Person;
 import logicLayer.LogicLayerException;
@@ -150,30 +149,100 @@ public class NewEventWindow extends JDialog
 		contentPanel.setLayout(null);
 
 				
-				list.addListSelectionListener(new ListSelectionListener() {
-					public void valueChanged(ListSelectionEvent e) {
-						String str = new String();
-						
-						for(Person person : people.values())
-						{
-							for(int i=0; i<peopleArray.size(); i++)
-							{
-								str += peopleArray.get(i).toString() + " ";
-							}
-							
-							if(person.toString().equals((String)list.getSelectedValue()))
-							{
-								if(str.contains(person.toString()))
-									continue;
-								
-								else
-									peopleArray.add(person);
-							}						
-						}
-					}
-				});
-				
-				scrollPane.setViewportView(list);
+		/////////////////////////////////////////////////////
+		// Hour: label & spinner
+		/////////////////////////////////////////////////////
+		
+		JLabel lblHour = new JLabel("Hour:");
+		lblHour.setBounds(22, 11, 32, 16);
+		contentPanel.add(lblHour);
+
+		spinnerHour = new JSpinner();
+		spinnerHour.setModel(new SpinnerNumberModel(12, 0, 23, 1));
+		spinnerHour.setBounds(59, 8, 38, 22);
+		contentPanel.add(spinnerHour);
+
+		
+		/////////////////////////////////////////////////////
+		// Minute: label & spinner
+		/////////////////////////////////////////////////////
+
+		JLabel lblMinute = new JLabel("Minute:");
+		lblMinute.setBounds(120, 11, 43, 16);
+		contentPanel.add(lblMinute);
+
+		spinnerMinute = new JSpinner();
+		spinnerMinute.setModel(new SpinnerNumberModel(0, 0, 55, 5));
+		spinnerMinute.setBounds(164, 8, 38, 22);
+		contentPanel.add(spinnerMinute);		
+		
+		
+		/////////////////////////////////////////////////////
+		// Calendar: setting date
+		/////////////////////////////////////////////////////	
+		
+		jCalendar = new JCalendar();
+		jCalendar.setBounds(22, 43, 180, 159);
+		contentPanel.add(jCalendar);
+
+		
+		/////////////////////////////////////////////////////
+		// Name: label & text field
+		/////////////////////////////////////////////////////
+		
+		JLabel lblName = new JLabel("Name:");
+		lblName.setBounds(260, 16, 38, 16);
+		contentPanel.add(lblName);
+		
+		tfName = new JTextField();
+		tfName.setBounds(303, 13, 235, 22);
+		tfName.setColumns(10);
+		contentPanel.add(tfName);
+
+		
+		/////////////////////////////////////////////////////
+		// Description: label & text field
+		/////////////////////////////////////////////////////
+		
+		JLabel lblDescription = new JLabel("Description:");
+		lblDescription.setBounds(230, 73, 68, 16);
+		contentPanel.add(lblDescription);
+
+		tfDescription = new JTextField();
+		tfDescription.setBounds(303, 70, 235, 22);
+		tfDescription.setColumns(10);
+		contentPanel.add(tfDescription);
+		
+		
+		/////////////////////////////////////////////////////
+		// Place: label & text field
+		/////////////////////////////////////////////////////
+		
+		JLabel lblPlace = new JLabel("Place:");
+		lblPlace.setBounds(263, 100, 35, 16);
+		contentPanel.add(lblPlace);
+
+		tfPlace = new JTextField();
+		tfPlace.setBounds(303, 97, 235, 22);
+		tfPlace.setColumns(10);
+		contentPanel.add(tfPlace);
+
+		
+		/////////////////////////////////////////////////////
+		// People: label, list (with scroll pane) & button
+		/////////////////////////////////////////////////////
+		
+		JLabel label = new JLabel("People:");
+		label.setBounds(255, 127, 43, 16);
+		contentPanel.add(label);
+
+
+		JButton btnAddNewPeople = new JButton("Add new people");
+		btnAddNewPeople.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				dialog.dispose();
+				SelectPeopleWindow.openWindow();
 			}
 		});
 		btnAddNewPeople.setBounds(413, 177, 125, 25);
