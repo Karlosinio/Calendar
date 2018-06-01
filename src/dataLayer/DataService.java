@@ -1,116 +1,84 @@
 package dataLayer;
 
 import java.io.Serializable;
-import java.util.TreeMap;
+import java.util.ArrayList;
 
 @SuppressWarnings("serial")
 public class DataService implements Serializable
 {
 	private DataContext dataContext = new DataContext();
-	
-	private int eventCounter = 0;	
-	private int peopleCounter = 0;
 
+	/////////////////////////////////////////////////////
+	// Events
+	/////////////////////////////////////////////////////
 	
 	public void createEvent(Event event)
 	{
-		dataContext.eventsMap.put(eventCounter, event);
-		eventCounter++;
+		dataContext.eventsList.add(event);
 	}
 
-	public Event getEvent(int id) throws DataServiceException
+	public void updateEvent(Event initialEvent, Event finalEvent) throws DataServiceException
 	{
-		if(dataContext.eventsMap.containsKey(id))
-			return dataContext.eventsMap.get(id);
-
+		if(dataContext.eventsList.contains(initialEvent))
+		{
+			dataContext.eventsList.set(dataContext.eventsList.indexOf(initialEvent), finalEvent);
+		}
 		else
-			throw new DataServiceException("Event not found (wrong ID)");
-	}
-
-	public void updateEvent(int id, Event event) throws DataServiceException
-	{
-		if(dataContext.eventsMap.containsKey(id))
-			dataContext.eventsMap.put(id, event);
-
-		else
-			throw new DataServiceException("Event not found (wrong ID)");		
-	}
-	
-	public void deleteEvent(int id) throws DataServiceException 
-	{
-		if(dataContext.eventsMap.containsKey(id))
-			dataContext.eventsMap.remove(id);
-
-		else
-			throw new DataServiceException("Event not found (wrong ID)");	
+			throw new DataServiceException("Event not found");		
 	}
 	
 	public void deleteEvent(Event event) throws DataServiceException 
 	{
-		if(dataContext.eventsMap.containsValue(event))
-			dataContext.eventsMap.values().remove(event);
+		if(dataContext.eventsList.contains(event))
+			dataContext.eventsList.remove(event);
 
 		else
 			throw new DataServiceException("Event not found");
 	}
 
-	public TreeMap<Integer, Event> getAllEvents()
+	public ArrayList<Event> getAllEvents()
 	{
-		return dataContext.eventsMap;
+		return dataContext.eventsList;
 	}
 	
-	public void addPeopleToEvent(int id, Person...peopleList) throws DataServiceException
+	public void addPeopleToEvent(Event event, Person...peopleList) throws DataServiceException
 	{
 		for(Person person: peopleList)
-			this.getEvent(id).addPerson(person);
+			dataContext.eventsList.get(dataContext.eventsList.indexOf(event)).addPerson(person);
 	}
 	
-		
+	
+	/////////////////////////////////////////////////////
+	// People
+	/////////////////////////////////////////////////////
+	
 	public void createPerson(Person person)
 	{			
-		dataContext.peopleMap.put(peopleCounter, person);
-		peopleCounter++;
-	}
-
-	public Person getPerson(int id) throws DataServiceException
-	{
-		if(dataContext.peopleMap.containsKey(id))
-			return dataContext.peopleMap.get(id);
-
-		else
-			throw new DataServiceException("Person not found (wrong ID)");	
+		dataContext.peopleList.add(person);
 	}
 	
-	public void updatePerson(int id, Person person) throws DataServiceException
+	public void updatePerson(Person initialPerson, Person finalPerson) throws DataServiceException
 	{
-		if(dataContext.peopleMap.containsKey(id))
-			dataContext.peopleMap.put(id, person);
+		if(dataContext.peopleList.contains(initialPerson))
+			dataContext.peopleList.set(dataContext.peopleList.indexOf(initialPerson), finalPerson);
 
 		else
-			throw new DataServiceException("Person not found (wrong ID)");		
+			throw new DataServiceException("Person not found");		
 	}
 
-	public void deletePerson(int id) throws DataServiceException
-	{
-		if(dataContext.peopleMap.containsKey(id))
-			dataContext.peopleMap.remove(id);
-		
-		else 
-			throw new DataServiceException("Person not found (wrong ID)");	
-	}
 	
 	public void deletePerson(Person person) throws DataServiceException
 	{
-		if(dataContext.peopleMap.containsValue(person))
-			dataContext.peopleMap.values().remove(person);
+		if(dataContext.peopleList.contains(person))
+			dataContext.peopleList.remove(person);
 
 		else
 			throw new DataServiceException("Person not found");	
 	}
 	
-	public TreeMap<Integer, Person> getAllPeople()
+	public ArrayList<Person> getAllPeople()
 	{
-		return dataContext.peopleMap;
+		return dataContext.peopleList;
 	}
 
 }

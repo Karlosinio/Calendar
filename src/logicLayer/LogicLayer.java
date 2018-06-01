@@ -56,40 +56,16 @@ public class LogicLayer
 		
 	}
 	
-	public Event getEvent(int id) throws LogicLayerException
+	public void updateEvent(Event initialEvent, Event finalEvent) throws LogicLayerException
 	{
 		try
 		{
-			return dataService.getEvent(id);
-		}
-		catch (DataServiceException e)
-		{
-			throw new LogicLayerException(e.getMessage());
-		}
-	}
-	
-	public void updateEvent(int id, Event event) throws LogicLayerException
-	{
-		try
-		{
-			dataService.updateEvent(id, event);
+			dataService.updateEvent(initialEvent, finalEvent);
 		}
 		catch (DataServiceException e)
 		{
 			throw new LogicLayerException(e.getMessage());
 		}		
-	}
-	
-	public void deleteEvent(int id) throws LogicLayerException
-	{
-		try
-		{
-			dataService.deleteEvent(id);
-		}
-		catch (DataServiceException e)
-		{
-			throw new LogicLayerException(e.getMessage());
-		}
 	}
 	
 	public void deleteEvent(Event event) throws LogicLayerException
@@ -104,11 +80,11 @@ public class LogicLayer
 		}
 	}
 
-	public void addPeopleToEvent(int id, Person...people) throws LogicLayerException
+	public void addPeopleToEvent(Event event, Person...people) throws LogicLayerException
 	{
 		try
 		{
-			dataService.addPeopleToEvent(id, people);
+			dataService.addPeopleToEvent(event, people);
 		}
 		catch (DataServiceException e)
 		{
@@ -116,7 +92,7 @@ public class LogicLayer
 		}
 	}
 	
-	public TreeMap<Integer, Event> getAllEvents()
+	public ArrayList<Event> getAllEvents()
 	{
 		return dataService.getAllEvents();
 	}
@@ -125,7 +101,7 @@ public class LogicLayer
 	{
 		ArrayList<Event> eventsList = new ArrayList<Event>();
 		
-		for(Event event : this.getAllEvents().values() )
+		for(Event event : this.getAllEvents() )
 		{			
 			if (event.getCalendar().get(Calendar.YEAR) == date.get(Calendar.YEAR) && 
 				event.getCalendar().get(Calendar.MONTH)	== date.get(Calendar.MONTH) && 
@@ -154,23 +130,11 @@ public class LogicLayer
 		}					
 	}
 	
-	public Person getPerson(int id) throws LogicLayerException
+	public void updatePerson(Person initialPerson, Person finalPerson) throws LogicLayerException
 	{
 		try
 		{
-			return dataService.getPerson(id);
-		}
-		catch (DataServiceException e)
-		{
-			throw new LogicLayerException(e.getMessage());
-		}
-	}
-	
-	public void updatePerson(int id, Person person) throws LogicLayerException
-	{
-		try
-		{
-			dataService.updatePerson(id, person);
+			dataService.updatePerson(initialPerson, finalPerson);
 		}
 		catch (DataServiceException e)
 		{
@@ -178,11 +142,11 @@ public class LogicLayer
 		}		
 	}
 	
-	public void deletePerson(int id) throws LogicLayerException
+	public void deletePerson(Person person) throws LogicLayerException
 	{
 		try
 		{
-			dataService.deletePerson(id);
+			dataService.deletePerson(person);
 		}
 		catch (DataServiceException e)
 		{
@@ -190,19 +154,7 @@ public class LogicLayer
 		}
 	}
 	
-	public void deletePerson(Person p) throws LogicLayerException
-	{
-		try
-		{
-			dataService.deletePerson(p);
-		}
-		catch (DataServiceException e)
-		{
-			throw new LogicLayerException(e.getMessage());
-		}
-	}
-	
-	public TreeMap<Integer, Person> getAllPeople()
+	public ArrayList<Person> getAllPeople()
 	{
 		return dataService.getAllPeople();
 	}
@@ -212,7 +164,7 @@ public class LogicLayer
 	{
 		DefaultListModel list = new DefaultListModel();
 		
-		for(Person person : this.getAllPeople().values() )
+		for(Person person : this.getAllPeople())
 			list.addElement(person.toString());
 		
 		return list;

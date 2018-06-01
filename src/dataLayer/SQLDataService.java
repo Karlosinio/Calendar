@@ -2,6 +2,7 @@ package dataLayer;
 
 import java.sql.*;
 
+@SuppressWarnings("serial")
 public class SQLDataService extends DataService
 {
 	// connection string

@@ -1,11 +1,11 @@
 package dataLayer;
 
 import java.io.Serializable;
-import java.util.TreeMap;
+import java.util.ArrayList;
 
 @SuppressWarnings("serial")
 public class DataContext implements Serializable
 {
-	TreeMap<Integer, Event> eventsMap = new TreeMap<Integer, Event>();
-	TreeMap<Integer, Person> peopleMap = new TreeMap<Integer, Person>();
+	ArrayList<Event> eventsList = new ArrayList<Event>();
+	ArrayList<Person> peopleList = new ArrayList<Person>();
 }

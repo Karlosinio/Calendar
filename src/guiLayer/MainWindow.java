@@ -35,6 +35,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JMenuBar;
 
 @SuppressWarnings("serial")
 public class MainWindow extends JFrame {
@@ -80,7 +81,8 @@ public class MainWindow extends JFrame {
 		});
 	}
 
-	void dateSelection() {
+	void dateSelection()
+	{
 		eventsList = Main.ll.getAllEventsFromDate(jCalendar.getCalendar());
 		eventsDLM = new DefaultListModel<Event>();
 
@@ -97,7 +99,8 @@ public class MainWindow extends JFrame {
 		scrollPane.setViewportView(list);
 	}
 
-	void eventSelection(Event event) {
+	void eventSelection(Event event)
+	{
 		tpName.setText(event.getName());
 		tpDescription.setText(event.getDescription());
 		tpPlace.setText(event.getPlace());
@@ -147,7 +150,7 @@ public class MainWindow extends JFrame {
 		});
 
 		setTitle("Calendar");
-		setBounds(100, 100, 1201, 750);
+		setBounds(0, -18, 1200, 775);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -158,11 +161,11 @@ public class MainWindow extends JFrame {
 		if (calendar != null)
 			jCalendar.setCalendar(calendar);
 		
-		jCalendar.setBounds(45, 43, 581, 375);
+		jCalendar.setBounds(44, 58, 581, 375);
 		contentPane.add(jCalendar);
 
 		lblNewLabel = new JLabel("Events list:");
-		lblNewLabel.setBounds(853, 43, 98, 25);
+		lblNewLabel.setBounds(852, 58, 98, 25);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		contentPane.add(lblNewLabel);
 
@@ -176,7 +179,7 @@ public class MainWindow extends JFrame {
 
 		scrollPane = new JScrollPane();
 
-		scrollPane.setBounds(701, 73, 402, 415);
+		scrollPane.setBounds(700, 88, 402, 415);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		contentPane.add(scrollPane);
@@ -186,56 +189,56 @@ public class MainWindow extends JFrame {
 		dateSelection();
 
 		lblName = new JLabel("Name:");
-		lblName.setBounds(95, 466, 38, 16);
+		lblName.setBounds(74, 484, 38, 16);
 		contentPane.add(lblName);
 
 		tpName = new JTextPane();
 		tpName.setEditable(false);
-		tpName.setBounds(138, 463, 258, 22);
+		tpName.setBounds(117, 481, 258, 22);
 		contentPane.add(tpName);
 
 		lblTime = new JLabel("Time:");
-		lblTime.setBounds(441, 466, 34, 16);
+		lblTime.setBounds(420, 484, 34, 16);
 		contentPane.add(lblTime);
 
 		tpTime = new JTextPane();
 		tpTime.setEditable(false);
-		tpTime.setBounds(480, 463, 146, 22);
+		tpTime.setBounds(459, 481, 146, 22);
 		contentPane.add(tpTime);
 
 		lblReminder = new JLabel("Reminder:");
-		lblReminder.setBounds(415, 495, 60, 16);
+		lblReminder.setBounds(394, 514, 60, 16);
 		contentPane.add(lblReminder);
 
 		tpReminder = new JTextPane();
 		tpReminder.setEditable(false);
-		tpReminder.setBounds(480, 495, 146, 22);
+		tpReminder.setBounds(459, 511, 146, 22);
 		contentPane.add(tpReminder);
 
 		lblDescription = new JLabel("Description:");
-		lblDescription.setBounds(65, 534, 68, 16);
+		lblDescription.setBounds(44, 544, 68, 16);
 		contentPane.add(lblDescription);
 
 		tpDescription = new JTextPane();
 		tpDescription.setEditable(false);
-		tpDescription.setBounds(138, 530, 488, 25);
+		tpDescription.setBounds(117, 541, 488, 22);
 		contentPane.add(tpDescription);
 
 		lblPlace = new JLabel("Place:");
-		lblPlace.setBounds(98, 563, 35, 16);
+		lblPlace.setBounds(77, 574, 35, 16);
 		contentPane.add(lblPlace);
 
 		tpPlace = new JTextPane();
 		tpPlace.setEditable(false);
-		tpPlace.setBounds(138, 560, 488, 22);
+		tpPlace.setBounds(117, 571, 488, 22);
 		contentPane.add(tpPlace);
 
 		lblPeople = new JLabel("People:");
-		lblPeople.setBounds(90, 587, 43, 16);
+		lblPeople.setBounds(69, 604, 43, 16);
 		contentPane.add(lblPeople);
 
 		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(138, 587, 488, 75);
+		scrollPane_1.setBounds(117, 601, 488, 75);
 		scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		contentPane.add(scrollPane_1);
@@ -256,13 +259,13 @@ public class MainWindow extends JFrame {
 				AllEventsWindow.openWindow();
 			}
 		});
-		btnAllPeople.setBounds(923, 587, 180, 75);
+		btnAllPeople.setBounds(922, 606, 180, 75);
 		btnAllPeople.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		contentPane.add(btnAllPeople);
 		
 		JButton btnDeleteEvent = new JButton("Delete Event");
 		btnDeleteEvent.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnDeleteEvent.setBounds(701, 502, 180, 75);
+		btnDeleteEvent.setBounds(700, 516, 180, 75);
 		btnDeleteEvent.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
@@ -282,7 +285,7 @@ public class MainWindow extends JFrame {
 		
 		JButton btnCreateEvent = new JButton("Create Event");
 		btnCreateEvent.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnCreateEvent.setBounds(923, 502, 180, 75);
+		btnCreateEvent.setBounds(922, 516, 180, 75);
 		btnCreateEvent.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
@@ -295,7 +298,7 @@ public class MainWindow extends JFrame {
 		
 		JButton btnEditEvent = new JButton("Edit Event");
 		btnEditEvent.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnEditEvent.setBounds(701, 587, 180, 75);
+		btnEditEvent.setBounds(700, 606, 180, 75);
 		btnEditEvent.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
@@ -311,6 +314,10 @@ public class MainWindow extends JFrame {
 		
 		
 		contentPane.add(btnEditEvent);
+		
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBounds(0, 0, 1222, 26);
+		contentPane.add(menuBar);
 
 	}
 }

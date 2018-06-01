@@ -64,7 +64,7 @@ public class NewEventWindow extends JDialog
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	
 	private JList list = new JList();
-	private TreeMap<Integer, Person> people = Main.ll.getAllPeople();
+	private ArrayList<Person> people = Main.ll.getAllPeople();
 	private DefaultListModel modelList = Main.ll.getAllPeopleDLM();
 	private static ArrayList<Person> peopleArray = new ArrayList<Person>();
 	
@@ -261,7 +261,7 @@ public class NewEventWindow extends JDialog
 		listPeople.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				for(Person person : people.values())
+				for(Person person : people)
 				{
 					if(person.toString().equals((String)listPeople.getSelectedValue()))
 						peopleArray.add(person);

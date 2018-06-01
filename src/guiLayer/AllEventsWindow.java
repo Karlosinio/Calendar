@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.JList;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.TreeMap;
 
 import javax.swing.JScrollPane;
@@ -81,11 +82,11 @@ public class AllEventsWindow extends JDialog
 		gbc_scrollPane.gridy = 0;
 		contentPanel.add(scrollPane, gbc_scrollPane);
 
-		TreeMap<Integer, Event> eventsList = Main.ll.getAllEvents();
+		ArrayList<Event> eventsList = Main.ll.getAllEvents();
 		
 		DefaultListModel dlm = new DefaultListModel();
 		
-		for (Event event : eventsList.values() )
+		for (Event event : eventsList )
 		{
 			dlm.addElement(event.toString());
 		}
