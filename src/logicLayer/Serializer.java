@@ -2,11 +2,17 @@ package logicLayer;
 
 import dataLayer.DataService;
 
-public interface Serializer
+public abstract class Serializer
 {
-	public static void exportData(String fileName, DataService data) throws ExportException
+	public void exportData(String fileName, DataService data) throws ExportException
 	{}
 
-	public static DataService importData(String fileName) throws ImportException
-	{	return null; }
+	public DataService importData(String fileName) throws ImportException
+	{	return null; 	}
+	
+	public String toString()
+	{	return null;	}
+	
+	public String getFileFormat()
+	{	return null;	}
 }

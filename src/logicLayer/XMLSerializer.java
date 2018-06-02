@@ -10,9 +10,9 @@ import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 import dataLayer.DataService;
 
-public class XMLSerializer implements Serializer
+public class XMLSerializer extends Serializer
 {
-	public static void exportData(String fileName, DataService data) throws ExportException
+	public void exportData(String fileName, DataService data) throws ExportException
 	{
 		XStream xstream = new XStream(new StaxDriver());
 		
@@ -27,7 +27,7 @@ public class XMLSerializer implements Serializer
 	}
 
 	
-	public static DataService importData(String fileName) throws ImportException
+	public DataService importData(String fileName) throws ImportException
 	{
 		FileInputStream fileInput = null;
 		XStream xstream = new XStream(new StaxDriver());
@@ -44,5 +44,15 @@ public class XMLSerializer implements Serializer
 		DataService data = (DataService)xstream.fromXML(fileInput);
 		
 		return data;
+	}
+	
+	public String toString()
+	{
+		return "XML";
+	}
+	
+	public String getFileFormat()
+	{
+		return ".xml";
 	}
 }
