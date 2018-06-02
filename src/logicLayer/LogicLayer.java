@@ -2,6 +2,7 @@ package logicLayer;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+
 import javax.swing.DefaultListModel;
 
 import dataLayer.DataLayerException;
@@ -9,11 +10,13 @@ import dataLayer.DataService;
 import dataLayer.DataServiceException;
 import dataLayer.Event;
 import dataLayer.Person;
+import dataLayer.Settings;
 
 public class LogicLayer
 {
 	DataService dataService = new DataService();
-	
+	Settings settings = new Settings();
+		
 	public void setDataService(DataService dataService)
 	{
 		this.dataService = dataService;
@@ -23,10 +26,71 @@ public class LogicLayer
 	{
 		return dataService;
 	}
+
+	/////////////////////////////////////////////////////
+	// Settings
+	/////////////////////////////////////////////////////
+	
+	public Settings getSettings()
+	{
+		return settings;
+	}
+
+	public String getFileName()
+	{
+		return settings.getFileName();
+	}
+	
+	public Serializer getSerializer()
+	{
+		return settings.getSerializer();
+	}
+	
+	public String getFileFormat()
+	{
+		return this.getSerializer().getFileFormat();
+	}
+	
+	public void setFileName(String fileName)
+	{
+		settings.setFileName(fileName);
+	}
+	
+	public void setSerializer(Serializer serializer )
+	{
+		settings.setSerializer(serializer);
+	}
+	
+	public void setSettings(Settings settings)
+	{
+		this.settings = settings;
+	}	
+	
+	public String getDefaultFileName()
+	{
+		return "save";
+	}
+	
+	public Serializer getDefaultSerializer()
+	{
+		return new XMLSerializer();
+	}
+	
+	public void setDefaultSettings()
+	{
+		settings.setFileName(this.getDefaultFileName());
+		settings.setSerializer(this.getDefaultSerializer());
+	}
+	
+	public String getFinalFileName()
+	{
+		return this.getFileName() + this.getFileFormat();
+	}
 	
 	/////////////////////////////////////////////////////
 	// Events
 	/////////////////////////////////////////////////////
+
 
 	public void createEvent(Event event) throws LogicLayerException
 	{
@@ -84,6 +148,22 @@ public class LogicLayer
 		}
 	}
 
+	public void deleteOldEvents(Calendar calendar) throws LogicLayerException
+	{
+		try
+		{
+			for (Event event : dataService.getAllEvents())
+			{
+				if (0 > event.getCalendar().compareTo(calendar))
+					dataService.deleteEvent(event);				
+			}
+		}
+		catch (DataServiceException e)
+		{
+			throw new LogicLayerException(e.getMessage());
+		}
+	}
+	
 	public void addPeopleToEvent(Event event, Person...people) throws LogicLayerException
 	{
 		try

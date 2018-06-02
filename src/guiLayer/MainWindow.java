@@ -35,6 +35,7 @@ import logicLayer.LogicLayerException;
 import logicLayer.XMLSerializer;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JSeparator;
 
 
 @SuppressWarnings("serial")
@@ -65,6 +66,14 @@ public class MainWindow extends JFrame
 	private JScrollPane spPeople;
 	private JLabel lblPeople;
 	private JList<Person> listPeople;
+	private JMenuItem mntmExportToData;
+	private JMenuItem mntmImportFromDatabase;
+	private JMenu mnEvents;
+	private JMenuItem mntmShowAllEvents;
+	private JMenuItem mntmDeleteOldEvents;
+	private JMenuItem mntmShowFiltredEvents;
+	private JSeparator separator;
+	private JMenuItem mntmExportToFormat;
 
 
 	/**
@@ -133,9 +142,12 @@ public class MainWindow extends JFrame
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent we) {
-				try {
-					XMLSerializer.exportData("autosave.xml", Main.ll.getDataService());
-				} catch (ExportException e) {
+				try
+				{
+					Main.ll.getSerializer().exportData(Main.ll.getFileName(), Main.ll.getDataService());
+				}
+				catch (ExportException e)
+				{
 					ExceptionWindow.openWindow(e.getMessage());
 				} finally {
 					frame.dispose();
@@ -158,8 +170,46 @@ public class MainWindow extends JFrame
 		menuBar.setBounds(0, 0, 1222, 26);
 		contentPane.add(menuBar);
 		
-		JMenu mnSettings = new JMenu("New menu");
+		JMenu mnSettings = new JMenu("File");
 		menuBar.add(mnSettings);
+		
+		mntmExportToData = new JMenuItem("Export to...");
+		mnSettings.add(mntmExportToData);
+		
+		mntmImportFromDatabase = new JMenuItem("Import from...");
+		mnSettings.add(mntmImportFromDatabase);
+		
+		separator = new JSeparator();
+		mnSettings.add(separator);
+		
+		mntmExportToFormat = new JMenuItem("Settings");
+		mntmExportToFormat.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				SettingsWindow.openWindow();
+			}
+		});
+		mnSettings.add(mntmExportToFormat);
+		
+		mnEvents = new JMenu("Events");
+		menuBar.add(mnEvents);
+		
+		mntmShowAllEvents = new JMenuItem("Show all events");
+		mnEvents.add(mntmShowAllEvents);
+		
+		mntmShowFiltredEvents = new JMenuItem("Show filtred events");
+		mnEvents.add(mntmShowFiltredEvents);
+		
+		mntmDeleteOldEvents = new JMenuItem("Delete old events");
+		mntmDeleteOldEvents.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e)
+			{
+				frame.dispose();
+				DeleteEventsWindow.openWindow();
+			}
+		});
+		mnEvents.add(mntmDeleteOldEvents);
 		
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
@@ -314,6 +364,10 @@ public class MainWindow extends JFrame
 					NewEventWindow.openWindow(listEvents.getSelectedValue());
 					frame.dispose();				
 				}
+				else
+				{
+					ExceptionWindow.openWindow("Event not selected");
+				}
 			}
 		});
 		contentPane.add(btnEditEvent);
@@ -337,7 +391,7 @@ public class MainWindow extends JFrame
 				}
 				catch (LogicLayerException e)
 				{
-					ExceptionWindow.openWindow(e.getMessage());
+					ExceptionWindow.openWindow("Event not selected");
 				}
 			}
 		});
