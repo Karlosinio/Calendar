@@ -1,32 +1,23 @@
 package guiLayer;
 
 import java.awt.BorderLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.FlowLayout;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-import javax.swing.JPanel;
+import java.awt.Label;
+import java.awt.TextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
 
 import logicLayer.BinarySerializer;
 import logicLayer.Serializer;
 import logicLayer.XMLSerializer;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-
-
-import javax.swing.JComboBox;
-
-import java.awt.TextField;
-import java.awt.Label;
-import java.awt.Button;
 
 @SuppressWarnings("serial")
 public class SettingsWindow extends JDialog
@@ -84,30 +75,16 @@ public class SettingsWindow extends JDialog
 
 		btnResetToDefault.setBounds(12, 13, 358, 25);
 		contentPanel.add(btnResetToDefault);
-		
-	
-		comboBox = new JComboBox<Serializer>();
-		comboBox.setBounds(108, 72, 98, 24);
-		comboBox.addItem(new XMLSerializer());
-		comboBox.addItem(new BinarySerializer());
-		contentPanel.add(comboBox);
-		comboBox.addItemListener(new ItemListener()
-		{
-	        public void itemStateChanged(ItemEvent arg0)
-	        {
-				serializer = (Serializer) comboBox.getSelectedItem();
-				tfLocation.setText(fileName + serializer.getFileFormat());
-	        }
-	    });
 				
-		Label lblLocation = new Label("Location:");
-		lblLocation.setBounds(12, 44, 60, 24);
-		contentPanel.add(lblLocation);
+		Label lblFileName = new Label("File name:");
+		lblFileName.setBounds(12, 44, 60, 24);
+		contentPanel.add(lblFileName);
 		
 		tfLocation = new TextField(fileName + serializer.getFileFormat());
 		tfLocation.setBounds(78, 44, 294, 24);
 		contentPanel.add(tfLocation);
-			
+		
+		/*
 		Button btnSelectLocationbutton = new Button("Select location");
 		btnSelectLocationbutton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -120,11 +97,34 @@ public class SettingsWindow extends JDialog
 		});
 		btnSelectLocationbutton.setBounds(242, 72, 128, 24);
 		contentPanel.add(btnSelectLocationbutton);
+		*/
 		
-		Label label_1 = new Label("Default format:");
-		label_1.setBounds(12, 72, 90, 24);
-		contentPanel.add(label_1);
+		Label lblFormat = new Label("Default format:");
+		lblFormat.setBounds(12, 72, 90, 24);
+		contentPanel.add(lblFormat);
 	
+		comboBox = new JComboBox<Serializer>();
+		comboBox.setBounds(108, 72, 98, 24);
+		comboBox.addItem(new XMLSerializer());
+		comboBox.addItem(new BinarySerializer());
+		contentPanel.add(comboBox);
+		comboBox.addItemListener(new ItemListener()
+		{
+	        public void itemStateChanged(ItemEvent arg0)
+	        {
+	        	fileName = tfLocation.getText().split("\\.")[0];
+				serializer = (Serializer) comboBox.getSelectedItem();
+				tfLocation.setText(fileName + serializer.getFileFormat());
+	        }
+	    });
+		
+		if(serializer instanceof BinarySerializer)
+			comboBox.setSelectedIndex(1);
+	
+		/////////////////////////////////////////////////////
+		// Ok / Cancel Pane
+		/////////////////////////////////////////////////////
+		
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
@@ -134,6 +134,8 @@ public class SettingsWindow extends JDialog
 			@Override
 			public void mousePressed(MouseEvent e)
 			{
+				Main.ll.setFileName(tfLocation.getText().split("\\.")[0]);
+				Main.ll.setSerializer((Serializer) comboBox.getSelectedItem());
 				dialog.dispose();
 			}
 		});
@@ -141,8 +143,15 @@ public class SettingsWindow extends JDialog
 		buttonPane.add(okButton);
 		getRootPane().setDefaultButton(okButton);
 		
-		JButton button = new JButton("Cancel");
-		button.setActionCommand("Cancel");
-		buttonPane.add(button);
+		JButton cancelButton = new JButton("Cancel");
+		cancelButton.setActionCommand("Cancel");
+		cancelButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e)
+			{
+				dialog.dispose();
+			}
+		});
+		buttonPane.add(cancelButton);
 	}
 }

@@ -1,5 +1,6 @@
 package guiLayer;
 
+import logicLayer.ExportException;
 import logicLayer.LogicLayer;
 import logicLayer.LogicLayerException;
 import logicLayer.XMLSettingsSerializer;
@@ -19,7 +20,14 @@ public class Main
 		catch (LogicLayerException e)
 		{
 			ll.setDefaultSettings();
-			ExceptionWindow.openWindow(e.getMessage());
+			try
+			{
+				XMLSettingsSerializer.exportData(ll.getSettings());
+			}
+			catch (ExportException e1)
+			{
+				ExceptionWindow.openWindow(e1.getMessage());
+			}
 		}
 		
 		try

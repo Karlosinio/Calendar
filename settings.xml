@@ -1,1 +1,1 @@
-<?xml version="1.0" ?><dataLayer.Settings><fileName>autosave</fileName><serializer class="logicLayer.XMLSerializer"></serializer></dataLayer.Settings>
+<?xml version="1.0" ?><dataLayer.Settings><fileName>autosavve</fileName><serializer class="logicLayer.BinarySerializer"></serializer></dataLayer.Settings>

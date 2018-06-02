@@ -68,7 +68,7 @@ public class LogicLayer
 	
 	public String getDefaultFileName()
 	{
-		return "save";
+		return "autosave";
 	}
 	
 	public Serializer getDefaultSerializer()
@@ -176,19 +176,6 @@ public class LogicLayer
 		}
 	}
 	
-	public void addPeopleToEvent(Event event, DefaultListModel<Person> people) throws LogicLayerException
-	{
-/*		try
-		{
-//			for(Person person : people)
-//				list.addElement(person);
-		}
-		catch (DataServiceException e)
-		{
-			throw new LogicLayerException(e.getMessage());
-		} */
-	}
-	
 	public ArrayList<Event> getAllEvents()
 	{
 		return dataService.getAllEvents();
@@ -215,11 +202,14 @@ public class LogicLayer
 	{
 		DefaultListModel<Event> eventsList = new DefaultListModel<Event>();
 		
-		for(Event event : this.getAllEventsFromDate(date) )
+		ArrayList<Event> list = this.getAllEventsFromDate(date);
+		list.sort(null);
+		
+		for(Event event : list )
 		{			
 			eventsList.addElement(event);
 		}
-	
+		
 		return eventsList;
 	}
 	
@@ -293,34 +283,4 @@ public class LogicLayer
 		
 		return list;
 	}
-	
-	/*
-	/////////////////////////////////////////////////////
-	// Exporters
-	/////////////////////////////////////////////////////
-	
-	private void exportData(String fileName, Exporter exporter) throws ExportException
-	{
-		exporter.save(fileName, data);
-	}
-	
-	public void exportToXML(String fileName) throws ExportException
-	{
-		this.exportData(fileName, new XMLExporter());
-	}
-
-	/////////////////////////////////////////////////////
-	// Importers
-	/////////////////////////////////////////////////////
-	
-	private void importData(String fileName, Importer importer) throws ImportException
-	{
-		data = importer.importData(fileName);
-	}
-
-	public void importFromXML(String fileName) throws ImportException
-	{
-		this.importData(fileName, new XMLImporter());
-	}
-	*/
 }

@@ -32,7 +32,8 @@ import dataLayer.Event;
 import dataLayer.Person;
 import logicLayer.ExportException;
 import logicLayer.LogicLayerException;
-import logicLayer.XMLSerializer;
+import logicLayer.XMLSettingsSerializer;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
@@ -69,9 +70,7 @@ public class MainWindow extends JFrame
 	private JMenuItem mntmExportToData;
 	private JMenuItem mntmImportFromDatabase;
 	private JMenu mnEvents;
-	private JMenuItem mntmShowAllEvents;
 	private JMenuItem mntmDeleteOldEvents;
-	private JMenuItem mntmShowFiltredEvents;
 	private JSeparator separator;
 	private JMenuItem mntmExportToFormat;
 
@@ -118,7 +117,7 @@ public class MainWindow extends JFrame
 		DefaultListModel<Person> peopleDLM = Main.ll.getAllPeopleFromEventDLM(event);
 		
 		listPeople = new JList<Person>(peopleDLM);
-		//		spPeople.setViewportView(listPeople);
+		spPeople.setViewportView(listPeople);
 	}
 
 	void clearEventFields()
@@ -127,8 +126,7 @@ public class MainWindow extends JFrame
 		tpDescription.setText("");
 		tpPlace.setText("");
 		tpTime.setText("");
-		listPeople = null;
-		//		spPeople.setViewportView(listPeople);
+		spPeople.setViewportView(null);
 	}
 	
 	
@@ -144,7 +142,8 @@ public class MainWindow extends JFrame
 			public void windowClosing(WindowEvent we) {
 				try
 				{
-					Main.ll.getSerializer().exportData(Main.ll.getFileName(), Main.ll.getDataService());
+					XMLSettingsSerializer.exportData(Main.ll.getSettings());
+					Main.ll.getSerializer().exportData(Main.ll.getFinalFileName(), Main.ll.getDataService());
 				}
 				catch (ExportException e)
 				{
@@ -193,12 +192,6 @@ public class MainWindow extends JFrame
 		
 		mnEvents = new JMenu("Events");
 		menuBar.add(mnEvents);
-		
-		mntmShowAllEvents = new JMenuItem("Show all events");
-		mnEvents.add(mntmShowAllEvents);
-		
-		mntmShowFiltredEvents = new JMenuItem("Show filtred events");
-		mnEvents.add(mntmShowFiltredEvents);
 		
 		mntmDeleteOldEvents = new JMenuItem("Delete old events");
 		mntmDeleteOldEvents.addMouseListener(new MouseAdapter() {

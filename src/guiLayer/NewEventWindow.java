@@ -12,7 +12,6 @@ import javax.swing.JLabel;
 
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.ListModel;
 import javax.swing.SpinnerNumberModel;
 
 
@@ -39,8 +38,6 @@ import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
 
 
 @SuppressWarnings("serial")
