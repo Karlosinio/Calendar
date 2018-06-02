@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 
 @SuppressWarnings("serial")
 public class Event implements Comparable<Event>, Serializable
@@ -99,6 +100,12 @@ public class Event implements Comparable<Event>, Serializable
 	public void addPerson(Person person)
 	{
 		peopleList.add(person);
+	}
+	
+	public void addPeopleList(ArrayList<Person> people)
+	{
+		for(Person person : peopleList)
+			peopleList.add(person);
 	}
 	
 	public String getStringDate()

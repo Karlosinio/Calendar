@@ -18,7 +18,7 @@ public class DataService implements Serializable
 		dataContext.eventsList.add(event);
 	}
 
-	public void updateEvent(Event event, String name, Calendar calendar, String description, String place) throws DataServiceException
+	public void updateEvent(Event event, String name, Calendar calendar, String description, String place, ArrayList<Person> people) throws DataServiceException
 	{
 		if(dataContext.eventsList.contains(event))
 		{
@@ -26,6 +26,7 @@ public class DataService implements Serializable
 			event.setCalendar(calendar);
 			event.setDescription(description);
 			event.setPlace(place);
+			event.setPeopleList(people);
 		}
 		else
 			throw new DataServiceException("Event not found");		
