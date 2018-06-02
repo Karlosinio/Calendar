@@ -24,8 +24,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.TreeMap;
-import java.util.ArrayList;
 
 import javax.swing.JList;
 import javax.swing.JScrollPane;
@@ -41,33 +39,30 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 import javax.swing.ButtonGroup;
-import javax.swing.DefaultListModel;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
+
 
 @SuppressWarnings("serial")
 public class NewEventWindow extends JDialog
 {
 	private static NewEventWindow dialog;
-
+	
 	private final JPanel contentPanel = new JPanel();
+	private final JPanel buttonPane = new JPanel();
+
+	private static JCalendar jCalendar;
+	private static JSpinner spinnerHour;
+	private static JSpinner spinnerMinute;
+
 	private static JTextField tfName;
 	private static JTextField tfDescription;
 	private static JTextField tfPlace;
 
-	private static JCalendar jCalendar;
+	private static JList<Person> listEventPeople;
+	private static JList<Person> listAllPeople;
 	
-	
-	private static JSpinner spinnerHour;
-	private static JSpinner spinnerMinute;
-	private JButton button;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	
-	private JList list = new JList();
-	private ArrayList<Person> people = Main.ll.getAllPeople();
-	private DefaultListModel modelList = Main.ll.getAllPeopleDLM();
-	private static ArrayList<Person> peopleArray = new ArrayList<Person>();
-	
+
 	public static void openWindow()
 	{
 		try
@@ -99,42 +94,31 @@ public class NewEventWindow extends JDialog
 		}	
 	}
 	
-	public static Calendar createEvent()
+	private void setFields(Event event)
 	{
-		Calendar calendar = GregorianCalendar.getInstance();
-
-		try
-		{
-			calendar = jCalendar.getCalendar();							
-
-			calendar.set(Calendar.HOUR_OF_DAY, (int) spinnerHour.getValue());
-			calendar.set(Calendar.MINUTE, (int) spinnerMinute.getValue());
-
-			Main.ll.createEventWithPeople(tfName.getText(), calendar, tfDescription.getText(), tfPlace.getText(), peopleArray);							
-		}
-		catch(Exception e)
-		{
-			ExceptionWindow.openWindow(e.getMessage());
-		}
-		
-		return calendar;
+		spinnerHour.setValue(event.getHour());
+		spinnerMinute.setValue(event.getMinute());
+		jCalendar.setCalendar(event.getCalendar());
+		tfName.setText(event.getName());
+		tfDescription.setText(event.getDescription());
+		tfPlace.setText(event.getPlace());
 	}
 	
-	public static Calendar createEvent(Event event)
+	private Calendar createCalendar()
 	{
-		event.setName(tfName.getText());
-		event.setDescription(tfDescription.getText());
-		event.setPlace(tfPlace.getText());
+		Calendar calendar = GregorianCalendar.getInstance();	
 		
-		event.setCalendar(jCalendar.getCalendar());
-		event.setHour((int) spinnerHour.getValue());
-		event.setMinute((int) spinnerMinute.getValue());	
+		calendar = jCalendar.getCalendar();							
+
+		calendar.set(Calendar.HOUR_OF_DAY, (int) spinnerHour.getValue());
+		calendar.set(Calendar.MINUTE, (int) spinnerMinute.getValue());	
 		
-		return event.getCalendar();
+		return calendar;		
 	}
 	
 	public NewEventWindow(Event event)
-	{	
+	{
+		getContentPane().setLocation(0, 16);	
 		addWindowListener(new WindowAdapter()
         {	@Override
             public void windowClosing(WindowEvent e)
@@ -142,11 +126,14 @@ public class NewEventWindow extends JDialog
         });
 		
 		setTitle("Add Event");
-		setBounds(100, 100, 575, 326);
+		setBounds(100, 100, 900, 350);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
+		
+		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
 				
 		/////////////////////////////////////////////////////
@@ -154,12 +141,12 @@ public class NewEventWindow extends JDialog
 		/////////////////////////////////////////////////////
 		
 		JLabel lblHour = new JLabel("Hour:");
-		lblHour.setBounds(22, 11, 32, 16);
+		lblHour.setBounds(18, 33, 32, 16);
 		contentPanel.add(lblHour);
 
 		spinnerHour = new JSpinner();
 		spinnerHour.setModel(new SpinnerNumberModel(12, 0, 23, 1));
-		spinnerHour.setBounds(59, 8, 38, 22);
+		spinnerHour.setBounds(55, 30, 38, 22);
 		contentPanel.add(spinnerHour);
 
 		
@@ -168,12 +155,12 @@ public class NewEventWindow extends JDialog
 		/////////////////////////////////////////////////////
 
 		JLabel lblMinute = new JLabel("Minute:");
-		lblMinute.setBounds(120, 11, 43, 16);
+		lblMinute.setBounds(116, 33, 43, 16);
 		contentPanel.add(lblMinute);
 
 		spinnerMinute = new JSpinner();
 		spinnerMinute.setModel(new SpinnerNumberModel(0, 0, 55, 5));
-		spinnerMinute.setBounds(164, 8, 38, 22);
+		spinnerMinute.setBounds(160, 30, 38, 22);
 		contentPanel.add(spinnerMinute);		
 		
 		
@@ -182,7 +169,7 @@ public class NewEventWindow extends JDialog
 		/////////////////////////////////////////////////////	
 		
 		jCalendar = new JCalendar();
-		jCalendar.setBounds(22, 43, 180, 159);
+		jCalendar.setBounds(18, 65, 180, 159);
 		contentPanel.add(jCalendar);
 
 		
@@ -191,11 +178,11 @@ public class NewEventWindow extends JDialog
 		/////////////////////////////////////////////////////
 		
 		JLabel lblName = new JLabel("Name:");
-		lblName.setBounds(260, 16, 38, 16);
+		lblName.setBounds(256, 38, 38, 16);
 		contentPanel.add(lblName);
 		
 		tfName = new JTextField();
-		tfName.setBounds(303, 13, 235, 22);
+		tfName.setBounds(299, 35, 235, 22);
 		tfName.setColumns(10);
 		contentPanel.add(tfName);
 
@@ -205,11 +192,11 @@ public class NewEventWindow extends JDialog
 		/////////////////////////////////////////////////////
 		
 		JLabel lblDescription = new JLabel("Description:");
-		lblDescription.setBounds(230, 73, 68, 16);
+		lblDescription.setBounds(226, 95, 68, 16);
 		contentPanel.add(lblDescription);
 
 		tfDescription = new JTextField();
-		tfDescription.setBounds(303, 70, 235, 22);
+		tfDescription.setBounds(299, 92, 235, 22);
 		tfDescription.setColumns(10);
 		contentPanel.add(tfDescription);
 		
@@ -219,88 +206,167 @@ public class NewEventWindow extends JDialog
 		/////////////////////////////////////////////////////
 		
 		JLabel lblPlace = new JLabel("Place:");
-		lblPlace.setBounds(263, 100, 35, 16);
+		lblPlace.setBounds(259, 122, 35, 16);
 		contentPanel.add(lblPlace);
 
 		tfPlace = new JTextField();
-		tfPlace.setBounds(303, 97, 235, 22);
+		tfPlace.setBounds(299, 119, 235, 22);
 		tfPlace.setColumns(10);
 		contentPanel.add(tfPlace);
 
 		
 		/////////////////////////////////////////////////////
-		// People: label, list (with scroll pane) & button
+		// List of all People: label, list (with scroll pane)
+		////////////////////////////////////////////////////
+		
+		JLabel lblListOfAll = new JLabel("List of all People:");
+		lblListOfAll.setBounds(620, 95, 106, 16);
+		contentPanel.add(lblListOfAll);
+	
+		JScrollPane spAllPeople = new JScrollPane();
+		spAllPeople.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		spAllPeople.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		spAllPeople.setBounds(620, 114, 235, 110);
+		contentPanel.add(spAllPeople);
+
+		listAllPeople = new JList<Person>(Main.ll.getAllPeopleDLM());
+		spAllPeople.setViewportView(listAllPeople);
+		
+		
+		/////////////////////////////////////////////////////
+		// People: label, list (with scroll pane)
 		/////////////////////////////////////////////////////
 		
-		JLabel label = new JLabel("People:");
-		label.setBounds(255, 127, 43, 16);
-		contentPanel.add(label);
+		JLabel lblPeople = new JLabel("People:");
+		lblPeople.setBounds(251, 149, 43, 16);
+		contentPanel.add(lblPeople);
 
-
-		JButton btnAddNewPeople = new JButton("Add new people");
-		btnAddNewPeople.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				dialog.dispose();
-				SelectPeopleWindow.openWindow();
-			}
-		});
-		btnAddNewPeople.setBounds(413, 177, 125, 25);
-		contentPanel.add(btnAddNewPeople);
-
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setBounds(303, 124, 235, 45);
-		contentPanel.add(scrollPane);
-
-							
-		JList listPeople = new JList(modelList);	
+		JScrollPane spEventPeople = new JScrollPane();
+		spEventPeople.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		spEventPeople.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		spEventPeople.setBounds(299, 146, 235, 78);
+		contentPanel.add(spEventPeople);
+			
+		listEventPeople = new JList<Person>();
 		
+		if (event != null)
+			listEventPeople = new JList<Person>(Main.ll.getAllPeopleFromEventDLM(event));	
+			
 		// adding people to event
-		listPeople.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				for(Person person : people)
+		listEventPeople.addMouseListener(new MouseAdapter()
+		{	@Override
+			public void mouseClicked(MouseEvent e)
+			{
+			/*	for(Person person : people)
 				{
-					if(person.toString().equals((String)listPeople.getSelectedValue()))
+					if(person.toString().equals((String)listEventPeople.getSelectedValue()))
 						peopleArray.add(person);
-				}
+				} */
+			}
+		});	
+		spEventPeople.setViewportView(listEventPeople);
+
+		
+		/////////////////////////////////////////////////////
+		// People buttons: add and remove ppl from event
+		/////////////////////////////////////////////////////
+		
+		JButton btnAddToEvent = new JButton("<<");
+		btnAddToEvent.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent arg0) {
 			}
 		});
+		btnAddToEvent.setBounds(546, 155, 60, 25);
+		contentPanel.add(btnAddToEvent);
 		
-		scrollPane.setViewportView(listPeople);
+		JButton btnRemoveFromEvent = new JButton(">>");
+		btnRemoveFromEvent.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+		});
+		btnRemoveFromEvent.setBounds(546, 190, 60, 25);
+		contentPanel.add(btnRemoveFromEvent);		
 
-
-		JPanel buttonPane = new JPanel();
-		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		getContentPane().add(buttonPane, BorderLayout.SOUTH);
+	
+		/////////////////////////////////////////////////////
+		// Reminders: radio buttons
+		/////////////////////////////////////////////////////
 		
-		JButton okButton = new JButton("Add Event");
+		JLabel lblReminder = new JLabel("Reminder:");
+		lblReminder.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblReminder.setBounds(554, 37, 78, 16);
+		contentPanel.add(lblReminder);
+		
+		JRadioButton rdbtnNone = new JRadioButton("None");
+		rdbtnNone.setSelected(true);
+		buttonGroup.add(rdbtnNone);
+		rdbtnNone.setBounds(636, 34, 68, 24);
+		contentPanel.add(rdbtnNone);
+		
+		JRadioButton rdbtnMin = new JRadioButton("5 min");
+		buttonGroup.add(rdbtnMin);
+		rdbtnMin.setBounds(716, 34, 68, 24);
+		contentPanel.add(rdbtnMin);
+		
+		JRadioButton rdbtnMin_1 = new JRadioButton("30 min");
+		buttonGroup.add(rdbtnMin_1);
+		rdbtnMin_1.setBounds(796, 35, 78, 24);
+		contentPanel.add(rdbtnMin_1);
+		
+		JRadioButton rdbtnHour = new JRadioButton("1 hour");
+		buttonGroup.add(rdbtnHour);
+		rdbtnHour.setBounds(636, 55, 68, 24);
+		contentPanel.add(rdbtnHour);
+		
+		JRadioButton rdbtnHours = new JRadioButton("2 hours");
+		buttonGroup.add(rdbtnHours);
+		rdbtnHours.setBounds(716, 55, 78, 24);
+		contentPanel.add(rdbtnHours);
+		
+		JRadioButton rdbtnDay = new JRadioButton("1 day");
+		buttonGroup.add(rdbtnDay);
+		rdbtnDay.setBounds(796, 55, 59, 24);
+		contentPanel.add(rdbtnDay);
+		
+		/////////////////////////////////////////////////////
+		// OK button - accept new event / changes to old event
+		/////////////////////////////////////////////////////
+		
+		JButton okButton = new JButton("OK");
 		okButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0)
-			{			
-				if (event != null)
-				{
-					createEvent(event);
-					MainWindow.openWindow(event.getCalendar());
-				}
-					
-				else
-				{
-					createEvent();
-					MainWindow.openWindow(jCalendar.getCalendar());
-				}
-					
-				dialog.dispose();				
-			}
-		});
+			{
+				Calendar cal = createCalendar();
 		
+				try
+				{
+					if (event == null)
+						Main.ll.createEvent(tfName.getText(), cal, tfDescription.getText(), tfPlace.getText());
+
+					else
+						Main.ll.updateEvent(event, tfName.getText(), cal, tfDescription.getText(), tfPlace.getText());
+					
+					MainWindow.openWindow(cal);
+					dialog.dispose();	
+				}
+				catch (LogicLayerException e)
+				{
+					ExceptionWindow.openWindow(e.getMessage());
+				}
+					
+							
+			}
+		});		
 		okButton.setActionCommand("OK");
 		buttonPane.add(okButton);
 		getRootPane().setDefaultButton(okButton);
 		
+		/////////////////////////////////////////////////////
+		// Cancel button - discard all changes
+		/////////////////////////////////////////////////////
 
 		JButton cancelButton = new JButton("Cancel");
 		cancelButton.addMouseListener(new MouseAdapter() {
@@ -313,63 +379,12 @@ public class NewEventWindow extends JDialog
 		cancelButton.setActionCommand("Cancel");
 		buttonPane.add(cancelButton);
 
-
-
-		
-		/////////////////////////////////////////////////////
-		// Reminders: radio buttons
-		/////////////////////////////////////////////////////
-		
-		JLabel lblReminder = new JLabel("Reminder:");
-		lblReminder.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblReminder.setBounds(12, 213, 78, 16);
-		contentPanel.add(lblReminder);
-		
-		JRadioButton rdbtnNone = new JRadioButton("None");
-		rdbtnNone.setSelected(true);
-		buttonGroup.add(rdbtnNone);
-		rdbtnNone.setBounds(98, 209, 68, 25);
-		contentPanel.add(rdbtnNone);
-		
-		JRadioButton rdbtnMin = new JRadioButton("5 min");
-		buttonGroup.add(rdbtnMin);
-		rdbtnMin.setBounds(167, 209, 68, 25);
-		contentPanel.add(rdbtnMin);
-		
-		JRadioButton rdbtnMin_1 = new JRadioButton("30 min");
-		buttonGroup.add(rdbtnMin_1);
-		rdbtnMin_1.setBounds(239, 209, 78, 25);
-		contentPanel.add(rdbtnMin_1);
-		
-		JRadioButton rdbtnHour = new JRadioButton("1 hour");
-		buttonGroup.add(rdbtnHour);
-		rdbtnHour.setBounds(314, 209, 68, 25);
-		contentPanel.add(rdbtnHour);
-		
-		JRadioButton rdbtnHours = new JRadioButton("2 hours");
-		buttonGroup.add(rdbtnHours);
-		rdbtnHours.setBounds(386, 209, 78, 25);
-		contentPanel.add(rdbtnHours);
-		
-		JRadioButton rdbtnDay = new JRadioButton("1 day");
-		buttonGroup.add(rdbtnDay);
-		rdbtnDay.setBounds(464, 209, 59, 25);
-		contentPanel.add(rdbtnDay);
-		
 		/////////////////////////////////////////////////////
 		// Set fields for edited event
 		/////////////////////////////////////////////////////
 		
 		if (event != null)
-		{
-			okButton.setText("Change Event");
-			spinnerHour.setValue(event.getHour());
-			spinnerMinute.setValue(event.getMinute());
-			jCalendar.setCalendar(event.getCalendar());
-			tfName.setText(event.getName());
-			tfDescription.setText(event.getDescription());
-			tfPlace.setText(event.getPlace());
-		}
-	}	
+			setFields(event);
 
+	}	
 }

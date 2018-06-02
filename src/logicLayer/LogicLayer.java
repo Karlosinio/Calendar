@@ -2,8 +2,6 @@ package logicLayer;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.TreeMap;
-
 import javax.swing.DefaultListModel;
 
 import dataLayer.DataLayerException;
@@ -30,6 +28,11 @@ public class LogicLayer
 	// Events
 	/////////////////////////////////////////////////////
 
+	public void createEvent(Event event) throws LogicLayerException
+	{
+		dataService.createEvent(event);	
+	}
+	
 	public void createEvent(String name, Calendar date, String description, String place) throws LogicLayerException
 	{
 		try
@@ -55,18 +58,19 @@ public class LogicLayer
 		}
 		
 	}
-	
-	public void updateEvent(Event initialEvent, Event finalEvent) throws LogicLayerException
+
+	public void updateEvent(Event event, String name, Calendar calendar, String description, String place) throws LogicLayerException
 	{
 		try
 		{
-			dataService.updateEvent(initialEvent, finalEvent);
+			dataService.updateEvent(event, name, calendar, description, place);
 		}
 		catch (DataServiceException e)
 		{
 			throw new LogicLayerException(e.getMessage());
 		}		
 	}
+
 	
 	public void deleteEvent(Event event) throws LogicLayerException
 	{
@@ -92,6 +96,19 @@ public class LogicLayer
 		}
 	}
 	
+	public void addPeopleToEvent(Event event, DefaultListModel<Person> people) throws LogicLayerException
+	{
+/*		try
+		{
+//			for(Person person : people)
+//				list.addElement(person);
+		}
+		catch (DataServiceException e)
+		{
+			throw new LogicLayerException(e.getMessage());
+		} */
+	}
+	
 	public ArrayList<Event> getAllEvents()
 	{
 		return dataService.getAllEvents();
@@ -112,6 +129,21 @@ public class LogicLayer
 		}
 	
 		return eventsList;
+	}
+
+	public ArrayList<Person> getAllPeopleFromEvent(Event event)
+	{
+		return event.getPeopleList();
+	}
+	
+	public DefaultListModel<Person> getAllPeopleFromEventDLM(Event event)
+	{
+		DefaultListModel<Person> list = new DefaultListModel<Person>();
+		
+		for(Person person : this.getAllPeopleFromEvent(event))
+			list.addElement(person);
+		
+		return list;
 	}
 		
 	/////////////////////////////////////////////////////
@@ -160,12 +192,12 @@ public class LogicLayer
 	}
 	
 	
-	public DefaultListModel getAllPeopleDLM()
+	public DefaultListModel<Person> getAllPeopleDLM()
 	{
-		DefaultListModel list = new DefaultListModel();
+		DefaultListModel<Person> list = new DefaultListModel<Person>();
 		
 		for(Person person : this.getAllPeople())
-			list.addElement(person.toString());
+			list.addElement(person);
 		
 		return list;
 	}
