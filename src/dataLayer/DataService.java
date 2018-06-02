@@ -2,6 +2,7 @@ package dataLayer;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 @SuppressWarnings("serial")
 public class DataService implements Serializable
@@ -17,11 +18,14 @@ public class DataService implements Serializable
 		dataContext.eventsList.add(event);
 	}
 
-	public void updateEvent(Event initialEvent, Event finalEvent) throws DataServiceException
+	public void updateEvent(Event event, String name, Calendar calendar, String description, String place) throws DataServiceException
 	{
-		if(dataContext.eventsList.contains(initialEvent))
+		if(dataContext.eventsList.contains(event))
 		{
-			dataContext.eventsList.set(dataContext.eventsList.indexOf(initialEvent), finalEvent);
+			event.setName(name);
+			event.setCalendar(calendar);
+			event.setDescription(description);
+			event.setPlace(place);
 		}
 		else
 			throw new DataServiceException("Event not found");		
