@@ -123,11 +123,11 @@ public class LogicLayer
 		
 	}
 
-	public void updateEvent(Event event, String name, Calendar calendar, String description, String place) throws LogicLayerException
+	public void updateEvent(Event event, String name, Calendar calendar, String description, String place, ArrayList<Person> people) throws LogicLayerException
 	{
 		try
 		{
-			dataService.updateEvent(event, name, calendar, description, place);
+			dataService.updateEvent(event, name, calendar, description, place, people);
 		}
 		catch (DataServiceException e)
 		{

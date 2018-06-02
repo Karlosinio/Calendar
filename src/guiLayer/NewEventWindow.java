@@ -12,9 +12,7 @@ import javax.swing.JLabel;
 
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-
-
-
+import javax.swing.ListModel;
 import javax.swing.SpinnerNumberModel;
 
 
@@ -22,6 +20,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -39,6 +38,9 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultListModel;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 
 @SuppressWarnings("serial")
@@ -230,6 +232,7 @@ public class NewEventWindow extends JDialog
 		contentPanel.add(spAllPeople);
 
 		listAllPeople = new JList<Person>(Main.ll.getAllPeopleDLM());
+		
 		spAllPeople.setViewportView(listAllPeople);
 		
 		
@@ -248,22 +251,15 @@ public class NewEventWindow extends JDialog
 		contentPanel.add(spEventPeople);
 			
 		listEventPeople = new JList<Person>();
+		ArrayList<Person> peopleToEvent = new ArrayList<Person>();
+		DefaultListModel<Person> peopleDLM = new DefaultListModel<Person>();
+		
+		
 		
 		if (event != null)
 			listEventPeople = new JList<Person>(Main.ll.getAllPeopleFromEventDLM(event));	
 			
-		// adding people to event
-		listEventPeople.addMouseListener(new MouseAdapter()
-		{	@Override
-			public void mouseClicked(MouseEvent e)
-			{
-			/*	for(Person person : people)
-				{
-					if(person.toString().equals((String)listEventPeople.getSelectedValue()))
-						peopleArray.add(person);
-				} */
-			}
-		});	
+		
 		spEventPeople.setViewportView(listEventPeople);
 
 		
@@ -275,15 +271,37 @@ public class NewEventWindow extends JDialog
 		btnAddToEvent.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
+				String str = new String();
+
+				for(Person person : peopleToEvent)
+					str += person.toString();
+					
+				if(str.contains(listAllPeople.getSelectedValue().toString()))	{}
+				
+				else
+				{
+					peopleToEvent.add(listAllPeople.getSelectedValue());
+					peopleDLM.addElement(listAllPeople.getSelectedValue());
+					listEventPeople.setModel(peopleDLM);
+				}				
 			}
-		});
+		});		
 		btnAddToEvent.setBounds(546, 155, 60, 25);
 		contentPanel.add(btnAddToEvent);
+		
 		
 		JButton btnRemoveFromEvent = new JButton(">>");
 		btnRemoveFromEvent.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
+				
+				if(listEventPeople.getSelectedValue()!=null)
+				{
+					peopleToEvent.remove(listEventPeople.getSelectedValue());
+					peopleDLM.removeElement(listEventPeople.getSelectedValue());
+					listEventPeople.setModel(peopleDLM);	
+				}
+			
 			}
 		});
 		btnRemoveFromEvent.setBounds(546, 190, 60, 25);
@@ -344,10 +362,10 @@ public class NewEventWindow extends JDialog
 				try
 				{
 					if (event == null)
-						Main.ll.createEvent(tfName.getText(), cal, tfDescription.getText(), tfPlace.getText());
+						Main.ll.createEventWithPeople(tfName.getText(), cal, tfDescription.getText(), tfPlace.getText(), peopleToEvent);
 
 					else
-						Main.ll.updateEvent(event, tfName.getText(), cal, tfDescription.getText(), tfPlace.getText());
+						Main.ll.updateEvent(event, tfName.getText(), cal, tfDescription.getText(), tfPlace.getText(), peopleToEvent);
 					
 					MainWindow.openWindow(cal);
 					dialog.dispose();	
