@@ -2,66 +2,70 @@ package guiLayer;
 
 import com.toedter.calendar.JCalendar;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.EventQueue;
+import java.awt.Font;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+import java.util.Calendar;
+
+import javax.swing.border.EmptyBorder;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
+
 import dataLayer.DataLayerException;
 import dataLayer.Event;
 import dataLayer.Person;
 import logicLayer.ExportException;
 import logicLayer.LogicLayerException;
 import logicLayer.XMLSerializer;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-
-import javax.swing.border.EmptyBorder;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JList;
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-
-import java.awt.EventQueue;
-import java.awt.Font;
-import javax.swing.JLabel;
-import javax.swing.JTextPane;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JMenuBar;
 
 @SuppressWarnings("serial")
-public class MainWindow extends JFrame {
-	private JPanel contentPane;
+public class MainWindow extends JFrame
+{
 	private static MainWindow frame;
 	private static JCalendar jCalendar;
-	private JLabel lblName;
-	private JLabel lblDescription;
-	private JLabel lblPlace;
-	private JLabel lblPeople;
-	private JLabel lblTime;
-	private JLabel lblReminder;
-	private JTextPane tpName;
-	private JTextPane tpDescription;
-	private JTextPane tpPlace;
-	private JTextPane tpTime;
-	private JTextPane tpReminder;
-	private JLabel lblNewLabel;
+	
 	private JScrollPane spEvents;
+	private JLabel lblEventsList;
 	private JList<Event> listEvents;
-	private JScrollPane spPeople;
-	private JList<Person> listPeople;
-	private JButton btnAllPeople;
 
-	private static ArrayList<Event> eventsList;
-	private static DefaultListModel<Event> eventsDLM;
+	private JLabel lblName;
+	private JTextPane tpName;
+
+	private JLabel lblTime;
+	private JTextPane tpTime;
+	
+	private JLabel lblReminder;
+	private JTextPane tpReminder;
+	
+	private JLabel lblDescription;
+	private JTextPane tpDescription;
+	
+	private JLabel lblPlace;
+	private JTextPane tpPlace;
+	
+	private JScrollPane spPeople;
+	private JLabel lblPeople;
+	private JList<Person> listPeople;
+
 
 	/**
 	 * Launch the application.
@@ -83,15 +87,11 @@ public class MainWindow extends JFrame {
 
 	void dateSelection()
 	{
-		eventsList = Main.ll.getAllEventsFromDate(jCalendar.getCalendar());
-		eventsDLM = new DefaultListModel<Event>();
-
-		for (Event event : eventsList)
-			eventsDLM.addElement(event);
+		DefaultListModel<Event> eventsDLM = Main.ll.getAllEventsFromDateDLM(jCalendar.getCalendar());
 
 		listEvents = new JList<Event>(eventsDLM);
-		listEvents.addMouseListener(new MouseAdapter() {
-			@Override
+		listEvents.addMouseListener(new MouseAdapter()
+		{	@Override
 			public void mousePressed(MouseEvent arg0) {
 				eventSelection(listEvents.getSelectedValue());
 			}
@@ -106,15 +106,10 @@ public class MainWindow extends JFrame {
 		tpPlace.setText(event.getPlace());
 		tpTime.setText(event.getTime());
 		
-		ArrayList<Person> array = event.getPeopleList();
-		DefaultListModel peopleDLM = new DefaultListModel();
+		DefaultListModel<Person> peopleDLM = Main.ll.getAllPeopleFromEventDLM(event);
 		
-		for(int i=0; i<array.size(); i++)
-			peopleDLM.addElement(array.get(i));
-		
-		
-		JList<Person> list = new JList(peopleDLM);
-		spPeople.setViewportView(list);
+		listPeople = new JList<Person>(peopleDLM);
+		//		spPeople.setViewportView(listPeople);
 	}
 
 	void clearEventFields()
@@ -123,9 +118,8 @@ public class MainWindow extends JFrame {
 		tpDescription.setText("");
 		tpPlace.setText("");
 		tpTime.setText("");
-		DefaultListModel clean = new DefaultListModel();
-		JList j = new JList(clean);
-		spPeople.setViewportView(j);
+		listPeople = null;
+		//		spPeople.setViewportView(listPeople);
 	}
 	
 	
@@ -151,7 +145,7 @@ public class MainWindow extends JFrame {
 
 		setTitle("Calendar");
 		setBounds(0, -18, 1200, 775);
-		contentPane = new JPanel();
+		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -163,6 +157,24 @@ public class MainWindow extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 1222, 26);
 		contentPane.add(menuBar);
+		
+		JMenu mnSettings = new JMenu("New menu");
+		menuBar.add(mnSettings);
+		
+		JMenu mnHelp = new JMenu("Help");
+		menuBar.add(mnHelp);
+		
+		
+		JMenuItem mnHelpAbout = new JMenuItem("About");
+		mnHelpAbout.addMouseListener(new MouseAdapter()
+		{
+			@Override
+			public void mousePressed(MouseEvent e)
+			{
+				AboutWindow.openWindow();
+			}
+		});
+		mnHelp.add(mnHelpAbout);
 		
 		
 		/////////////////////////////////////////////////////
@@ -177,27 +189,29 @@ public class MainWindow extends JFrame {
 		jCalendar.setBounds(44, 58, 581, 375);
 		contentPane.add(jCalendar);
 
-		lblNewLabel = new JLabel("Events list:");
-		lblNewLabel.setBounds(852, 58, 98, 25);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		contentPane.add(lblNewLabel);
-
-		jCalendar.addPropertyChangeListener("calendar", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent e) {
+		jCalendar.addPropertyChangeListener("calendar", new PropertyChangeListener()
+		{	@Override
+			public void propertyChange(PropertyChangeEvent e)
+			{
 				clearEventFields();
 				dateSelection();
 			}
 		});
 
-		spEvents = new JScrollPane();
+		/////////////////////////////////////////////////////
+		// Events list: label & list with scroll pane
+		/////////////////////////////////////////////////////
+		
+		lblEventsList = new JLabel("Events list:");
+		lblEventsList.setBounds(852, 58, 98, 25);
+		lblEventsList.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		contentPane.add(lblEventsList);
 
+		spEvents = new JScrollPane();
 		spEvents.setBounds(700, 88, 402, 415);
 		spEvents.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		spEvents.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		contentPane.add(spEvents);
-
-		// eventSelection(list.getSelectedValue());
 
 		dateSelection();
 
@@ -280,15 +294,9 @@ public class MainWindow extends JFrame {
 		spPeople.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		contentPane.add(spPeople);
 
-		listPeople = new JList();
+		listPeople = new JList<Person>();
 		spPeople.setViewportView(listPeople);
-		// DefaultListModel dml = new DefaultListModel();
-
-		// for (Event event : eventsList )
-		// {
-		// dml.addElement(event.toString());
-		// }
-
+		
 		
 		/////////////////////////////////////////////////////
 		// Edit event: button
@@ -357,7 +365,7 @@ public class MainWindow extends JFrame {
 		// People list: button
 		/////////////////////////////////////////////////////
 		
-		btnAllPeople = new JButton("People List");
+		JButton btnAllPeople = new JButton("People List");
 		btnAllPeople.addMouseListener(new MouseAdapter()
 		{	@Override
 			public void mousePressed(MouseEvent e)
