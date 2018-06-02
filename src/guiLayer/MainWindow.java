@@ -54,10 +54,10 @@ public class MainWindow extends JFrame {
 	private JTextPane tpTime;
 	private JTextPane tpReminder;
 	private JLabel lblNewLabel;
-	private JScrollPane scrollPane;
-	private JList<Event> list;
-	private JScrollPane scrollPane_1;
-	private JList<Person> list_1;
+	private JScrollPane spEvents;
+	private JList<Event> listEvents;
+	private JScrollPane spPeople;
+	private JList<Person> listPeople;
 	private JButton btnAllPeople;
 
 	private static ArrayList<Event> eventsList;
@@ -89,14 +89,14 @@ public class MainWindow extends JFrame {
 		for (Event event : eventsList)
 			eventsDLM.addElement(event);
 
-		list = new JList<Event>(eventsDLM);
-		list.addMouseListener(new MouseAdapter() {
+		listEvents = new JList<Event>(eventsDLM);
+		listEvents.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				eventSelection(list.getSelectedValue());
+				eventSelection(listEvents.getSelectedValue());
 			}
 		});
-		scrollPane.setViewportView(list);
+		spEvents.setViewportView(listEvents);
 	}
 
 	void eventSelection(Event event)
@@ -114,7 +114,7 @@ public class MainWindow extends JFrame {
 		
 		
 		JList<Person> list = new JList(peopleDLM);
-		scrollPane_1.setViewportView(list);
+		spPeople.setViewportView(list);
 	}
 
 	void clearEventFields()
@@ -125,7 +125,7 @@ public class MainWindow extends JFrame {
 		tpTime.setText("");
 		DefaultListModel clean = new DefaultListModel();
 		JList j = new JList(clean);
-		scrollPane_1.setViewportView(j);
+		spPeople.setViewportView(j);
 	}
 	
 	
@@ -134,7 +134,7 @@ public class MainWindow extends JFrame {
 	 * 
 	 * @throws DataLayerException
 	 */
-	public MainWindow(Calendar calendar) throws DataLayerException
+	private MainWindow(Calendar calendar) throws DataLayerException
 	{
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -156,6 +156,19 @@ public class MainWindow extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
+		/////////////////////////////////////////////////////
+		// Menu bar
+		/////////////////////////////////////////////////////		
+		
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBounds(0, 0, 1222, 26);
+		contentPane.add(menuBar);
+		
+		
+		/////////////////////////////////////////////////////
+		// Calendar: date selection -> filling events list
+		/////////////////////////////////////////////////////	
+		
 		jCalendar = new JCalendar();
 		
 		if (calendar != null)
@@ -177,17 +190,21 @@ public class MainWindow extends JFrame {
 			}
 		});
 
-		scrollPane = new JScrollPane();
+		spEvents = new JScrollPane();
 
-		scrollPane.setBounds(700, 88, 402, 415);
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		contentPane.add(scrollPane);
+		spEvents.setBounds(700, 88, 402, 415);
+		spEvents.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		spEvents.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		contentPane.add(spEvents);
 
 		// eventSelection(list.getSelectedValue());
 
 		dateSelection();
 
+		/////////////////////////////////////////////////////
+		// Name: label & text field
+		/////////////////////////////////////////////////////
+		
 		lblName = new JLabel("Name:");
 		lblName.setBounds(74, 484, 38, 16);
 		contentPane.add(lblName);
@@ -197,6 +214,10 @@ public class MainWindow extends JFrame {
 		tpName.setBounds(117, 481, 258, 22);
 		contentPane.add(tpName);
 
+		/////////////////////////////////////////////////////
+		// Time: label & text field
+		/////////////////////////////////////////////////////
+		
 		lblTime = new JLabel("Time:");
 		lblTime.setBounds(420, 484, 34, 16);
 		contentPane.add(lblTime);
@@ -206,6 +227,10 @@ public class MainWindow extends JFrame {
 		tpTime.setBounds(459, 481, 146, 22);
 		contentPane.add(tpTime);
 
+		/////////////////////////////////////////////////////
+		// Reminder: label & text field
+		/////////////////////////////////////////////////////
+		
 		lblReminder = new JLabel("Reminder:");
 		lblReminder.setBounds(394, 514, 60, 16);
 		contentPane.add(lblReminder);
@@ -215,6 +240,10 @@ public class MainWindow extends JFrame {
 		tpReminder.setBounds(459, 511, 146, 22);
 		contentPane.add(tpReminder);
 
+		/////////////////////////////////////////////////////
+		// Description: label & text field
+		/////////////////////////////////////////////////////
+		
 		lblDescription = new JLabel("Description:");
 		lblDescription.setBounds(44, 544, 68, 16);
 		contentPane.add(lblDescription);
@@ -224,6 +253,10 @@ public class MainWindow extends JFrame {
 		tpDescription.setBounds(117, 541, 488, 22);
 		contentPane.add(tpDescription);
 
+		/////////////////////////////////////////////////////
+		// Place: label & text field
+		/////////////////////////////////////////////////////
+		
 		lblPlace = new JLabel("Place:");
 		lblPlace.setBounds(77, 574, 35, 16);
 		contentPane.add(lblPlace);
@@ -233,18 +266,22 @@ public class MainWindow extends JFrame {
 		tpPlace.setBounds(117, 571, 488, 22);
 		contentPane.add(tpPlace);
 
+		/////////////////////////////////////////////////////
+		// People: label & list (with scroll pane)
+		/////////////////////////////////////////////////////
+		
 		lblPeople = new JLabel("People:");
 		lblPeople.setBounds(69, 604, 43, 16);
 		contentPane.add(lblPeople);
 
-		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(117, 601, 488, 75);
-		scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		contentPane.add(scrollPane_1);
+		spPeople = new JScrollPane();
+		spPeople.setBounds(117, 601, 488, 75);
+		spPeople.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		spPeople.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		contentPane.add(spPeople);
 
-		list_1 = new JList();
-		scrollPane_1.setViewportView(list_1);
+		listPeople = new JList();
+		spPeople.setViewportView(listPeople);
 		// DefaultListModel dml = new DefaultListModel();
 
 		// for (Event event : eventsList )
@@ -252,26 +289,41 @@ public class MainWindow extends JFrame {
 		// dml.addElement(event.toString());
 		// }
 
-		btnAllPeople = new JButton("All People");
-		btnAllPeople.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				AllEventsWindow.openWindow();
+		
+		/////////////////////////////////////////////////////
+		// Edit event: button
+		/////////////////////////////////////////////////////
+		
+		JButton btnEditEvent = new JButton("Edit Event");
+		btnEditEvent.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnEditEvent.setBounds(700, 516, 180, 75);
+		btnEditEvent.addMouseListener(new MouseAdapter()
+		{	@Override
+			public void mousePressed(MouseEvent arg0)
+			{
+				if (listEvents.getSelectedValue() != null)
+				{
+					NewEventWindow.openWindow(listEvents.getSelectedValue());
+					frame.dispose();				
+				}
 			}
 		});
-		btnAllPeople.setBounds(922, 606, 180, 75);
-		btnAllPeople.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		contentPane.add(btnAllPeople);
+		contentPane.add(btnEditEvent);
+		
+	
+		/////////////////////////////////////////////////////
+		// Delete event: button
+		/////////////////////////////////////////////////////
 		
 		JButton btnDeleteEvent = new JButton("Delete Event");
 		btnDeleteEvent.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnDeleteEvent.setBounds(700, 516, 180, 75);
-		btnDeleteEvent.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				try
+		btnDeleteEvent.setBounds(700, 606, 180, 75);
+		btnDeleteEvent.addMouseListener(new MouseAdapter()
+		{	@Override
+			public void mousePressed(MouseEvent arg0)
+			{	try
 				{
-					Main.ll.deleteEvent(list.getSelectedValue());
+					Main.ll.deleteEvent(listEvents.getSelectedValue());
 					dateSelection();
 					clearEventFields();
 				}
@@ -282,42 +334,41 @@ public class MainWindow extends JFrame {
 			}
 		});
 		contentPane.add(btnDeleteEvent);
+	
+		
+		/////////////////////////////////////////////////////
+		// Create event: button
+		/////////////////////////////////////////////////////
 		
 		JButton btnCreateEvent = new JButton("Create Event");
 		btnCreateEvent.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnCreateEvent.setBounds(922, 516, 180, 75);
-		btnCreateEvent.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				NewEventWindow.openWindow();
+		btnCreateEvent.addMouseListener(new MouseAdapter()
+		{	@Override
+			public void mousePressed(MouseEvent arg0)
+			{	NewEventWindow.openWindow();
 				frame.dispose();
 			}
 		});
-
 		contentPane.add(btnCreateEvent);
 		
-		JButton btnEditEvent = new JButton("Edit Event");
-		btnEditEvent.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnEditEvent.setBounds(700, 606, 180, 75);
-		btnEditEvent.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				if (list.getSelectedValue() != null)
-				{
-					NewEventWindow.openWindow(list.getSelectedValue());
-					frame.dispose();				
-				}
-
+	
+		/////////////////////////////////////////////////////
+		// People list: button
+		/////////////////////////////////////////////////////
+		
+		btnAllPeople = new JButton("People List");
+		btnAllPeople.addMouseListener(new MouseAdapter()
+		{	@Override
+			public void mousePressed(MouseEvent e)
+			{
+				frame.dispose();
+				PeopleListWindow.openWindow();
 			}
 		});
-		
-		
-		
-		contentPane.add(btnEditEvent);
-		
-		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBounds(0, 0, 1222, 26);
-		contentPane.add(menuBar);
+		btnAllPeople.setBounds(922, 606, 180, 75);
+		btnAllPeople.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		contentPane.add(btnAllPeople);
 
 	}
 }

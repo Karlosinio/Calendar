@@ -17,9 +17,7 @@ import java.awt.event.KeyEvent;
 @SuppressWarnings("serial")
 public class AboutWindow extends JDialog
 {
-
 	private final JPanel contentPanel = new JPanel();
-
 	private static AboutWindow dialog;
 	
 	/**
@@ -41,8 +39,17 @@ public class AboutWindow extends JDialog
 	/**
 	 * Create the dialog.
 	 */
-	public AboutWindow()
+	private AboutWindow()
 	{
+		addKeyListener(new KeyAdapter()
+		{	@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if (e.getKeyCode()==KeyEvent.VK_ESCAPE || e.getKeyCode()==KeyEvent.VK_ENTER)
+				{	dialog.dispose();	}
+			}
+		});	
+		
 		setTitle("About");
 		setBounds(100, 100, 249, 225);
 		getContentPane().setLayout(new BorderLayout());
@@ -61,15 +68,6 @@ public class AboutWindow extends JDialog
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
 	
 		JButton okButton = new JButton("OK");
-		okButton.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e)
-			{
-				if (e.getKeyCode()==KeyEvent.VK_ENTER || e.getKeyCode()==KeyEvent.VK_ESCAPE){
-					dialog.dispose();
-				}
-			}
-		});
 		okButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e)

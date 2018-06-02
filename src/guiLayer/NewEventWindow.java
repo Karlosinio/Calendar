@@ -116,7 +116,7 @@ public class NewEventWindow extends JDialog
 		return calendar;		
 	}
 	
-	public NewEventWindow(Event event)
+	private NewEventWindow(Event event)
 	{
 		getContentPane().setLocation(0, 16);	
 		addWindowListener(new WindowAdapter()
@@ -331,7 +331,7 @@ public class NewEventWindow extends JDialog
 		contentPanel.add(rdbtnDay);
 		
 		/////////////////////////////////////////////////////
-		// OK button - accept new event / changes to old event
+		// OK button - add new event / accept changes to old event
 		/////////////////////////////////////////////////////
 		
 		JButton okButton = new JButton("OK");

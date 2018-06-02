@@ -58,7 +58,7 @@ public class AllEventsWindow extends JDialog
 	/**
 	 * Create the dialog.
 	 */
-	public AllEventsWindow()
+	private AllEventsWindow()
 	{		
 		setTitle("All Events");
 		setBounds(100, 100, 300, 350);
