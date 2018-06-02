@@ -268,7 +268,7 @@ public class NewEventWindow extends JDialog
 
 		
 		/////////////////////////////////////////////////////
-		// People buttons: add and remove ppl from event
+		// People buttons: add and remove people from event
 		/////////////////////////////////////////////////////
 		
 		JButton btnAddToEvent = new JButton("<<");
