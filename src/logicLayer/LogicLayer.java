@@ -220,6 +220,22 @@ public class LogicLayer
 		return eventsList;
 	}
 	
+	public DefaultListModel<Event> getAllEventsFromDateWithPlaceDLM(Calendar date)
+	{
+		DefaultListModel<Event> eventsList = new DefaultListModel<Event>();
+		
+		ArrayList<Event> list = this.getAllEventsFromDate(date);
+		list.sort(null);
+		
+		for(Event event : list )
+		{
+			if (event.getPlace() != "")
+				eventsList.addElement(event);
+		}
+		
+		return eventsList;
+	}
+	
 	public ArrayList<Person> getAllPeopleFromEvent(Event event)
 	{
 		return event.getPeopleList();

@@ -1,5 +1,7 @@
 package guiLayer;
 
+import javax.swing.JOptionPane;
+
 import logicLayer.ExportException;
 import logicLayer.LogicLayer;
 import logicLayer.LogicLayerException;
@@ -26,7 +28,7 @@ public class Main
 			}
 			catch (ExportException e1)
 			{
-				ExceptionWindow.openWindow(e1.getMessage());
+				JOptionPane.showMessageDialog(null, e.getMessage());
 			}
 		}
 		
@@ -36,7 +38,7 @@ public class Main
 		}
 		catch (LogicLayerException e)
 		{
-			ExceptionWindow.openWindow(e.getMessage());
+			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 		finally
 		{			

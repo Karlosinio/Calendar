@@ -24,6 +24,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
 
@@ -414,7 +415,7 @@ public class NewEventWindow extends JDialog
 				}
 				catch (LogicLayerException e)
 				{
-					ExceptionWindow.openWindow(e.getMessage());
+					JOptionPane.showMessageDialog(null, e.getMessage());
 				}
 					
 							

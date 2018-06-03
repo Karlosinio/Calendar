@@ -38,8 +38,11 @@ import logicLayer.XMLSettingsSerializer;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.JCheckBox;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 
 @SuppressWarnings("serial")
@@ -51,6 +54,7 @@ public class MainWindow extends JFrame
 	private JScrollPane spEvents;
 	private JLabel lblEventsList;
 	private JList<Event> listEvents;
+	private JCheckBox cbPlace;
 
 	private JLabel lblName;
 	private JTextPane tpName;
@@ -97,8 +101,13 @@ public class MainWindow extends JFrame
 
 	void dateSelection()
 	{
-		DefaultListModel<Event> eventsDLM = Main.ll.getAllEventsFromDateDLM(jCalendar.getCalendar());
-
+		DefaultListModel<Event> eventsDLM;
+		
+		if (cbPlace.isSelected() == false)
+			eventsDLM = Main.ll.getAllEventsFromDateDLM(jCalendar.getCalendar());
+		else
+			eventsDLM = Main.ll.getAllEventsFromDateWithPlaceDLM(jCalendar.getCalendar());
+		
 		listEvents = new JList<Event>(eventsDLM);
 		listEvents.addMouseListener(new MouseAdapter()
 		{	@Override
@@ -153,7 +162,7 @@ public class MainWindow extends JFrame
 				}
 				catch (ExportException e)
 				{
-					ExceptionWindow.openWindow(e.getMessage());
+					JOptionPane.showMessageDialog(null, e.getMessage());
 				} finally {
 					frame.dispose();
 				}
@@ -245,7 +254,7 @@ public class MainWindow extends JFrame
 		});
 
 		/////////////////////////////////////////////////////
-		// Events list: label & list with scroll pane
+		// Events list: label, check box & list with scroll pane
 		/////////////////////////////////////////////////////
 		
 		lblEventsList = new JLabel("Events list:");
@@ -253,6 +262,14 @@ public class MainWindow extends JFrame
 		lblEventsList.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		contentPane.add(lblEventsList);
 
+		cbPlace = new JCheckBox("Show only events with place");
+		cbPlace.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0)
+			{	dateSelection();	}
+		});
+		cbPlace.setBounds(910, 58, 191, 25);
+		contentPane.add(cbPlace);
+		
 		spEvents = new JScrollPane();
 		spEvents.setBounds(700, 88, 402, 415);
 		spEvents.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -365,7 +382,7 @@ public class MainWindow extends JFrame
 				}
 				else
 				{
-					ExceptionWindow.openWindow("Event not selected");
+					JOptionPane.showMessageDialog(null, "Event not selected");
 				}
 			}
 		});
@@ -390,7 +407,7 @@ public class MainWindow extends JFrame
 				}
 				catch (LogicLayerException e)
 				{
-					ExceptionWindow.openWindow("Event not selected");
+					JOptionPane.showMessageDialog(null, "Event not selected");
 				}
 			}
 		});
@@ -430,10 +447,5 @@ public class MainWindow extends JFrame
 		btnAllPeople.setBounds(922, 606, 180, 75);
 		btnAllPeople.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		contentPane.add(btnAllPeople);
-		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("Show only events with people");
-		chckbxNewCheckBox.setBounds(903, 58, 199, 25);
-		contentPane.add(chckbxNewCheckBox);
-
 	}
 }
