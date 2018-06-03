@@ -10,12 +10,13 @@ import dataLayer.DataService;
 import dataLayer.DataServiceException;
 import dataLayer.Event;
 import dataLayer.Person;
+import dataLayer.Reminder;
 import dataLayer.Settings;
 
 public class LogicLayer
 {
-	DataService dataService = new DataService();
-	Settings settings = new Settings();
+	private DataService dataService = new DataService();
+	private Settings settings = new Settings();
 		
 	public void setDataService(DataService dataService)
 	{
@@ -90,12 +91,6 @@ public class LogicLayer
 	/////////////////////////////////////////////////////
 	// Events
 	/////////////////////////////////////////////////////
-
-
-	public void createEvent(Event event) throws LogicLayerException
-	{
-		dataService.createEvent(event);	
-	}
 	
 	public void createEvent(String name, Calendar date, String description, String place) throws LogicLayerException
 	{
@@ -239,6 +234,11 @@ public class LogicLayer
 		
 		return list;
 	}
+	
+	public String getReminderForEvent(Event event)
+	{
+		return dataService.getReminderForEvent(event);
+	}
 		
 	/////////////////////////////////////////////////////
 	// People
@@ -294,5 +294,36 @@ public class LogicLayer
 			list.addElement(person);
 		
 		return list;
+	}
+	
+	/////////////////////////////////////////////////////
+	// Reminders
+	/////////////////////////////////////////////////////
+	
+	public void createReminder(Calendar calendar, Event event) throws LogicLayerException
+	{
+		try
+		{
+			dataService.createReminder(new Reminder(calendar, event));
+		}
+		catch (DataLayerException e)
+		{
+			throw new LogicLayerException(e.getMessage());
+		}
+	}
+	
+	public void deleteReminder(Reminder reminder)
+	{
+		dataService.deleteReminder(reminder);
+	}
+	
+	public Reminder getReminder(int index)
+	{
+		return dataService.getReminder(index);
+	}
+	
+	public ArrayList<Reminder> getAllReminders()
+	{
+		return dataService.getAllReminders();
 	}
 }

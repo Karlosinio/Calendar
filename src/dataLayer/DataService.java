@@ -52,6 +52,16 @@ public class DataService implements Serializable
 			dataContext.eventsList.get(dataContext.eventsList.indexOf(event)).addPerson(person);
 	}
 	
+	public String getReminderForEvent(Event event)
+	{		
+		for(Reminder r : dataContext.remindersList)
+		{
+			if(r.getEvent().equals(event))
+				return r.toString();
+		}
+		
+		return "";
+	}
 	
 	/////////////////////////////////////////////////////
 	// People
@@ -87,6 +97,30 @@ public class DataService implements Serializable
 	public ArrayList<Person> getAllPeople()
 	{
 		return dataContext.peopleList;
+	}
+	
+	/////////////////////////////////////////////////////
+	// Reminders
+	/////////////////////////////////////////////////////
+	
+	public void createReminder(Reminder reminder)
+	{
+		dataContext.remindersList.add(reminder);
+	}
+	
+	public void deleteReminder(Reminder reminder)
+	{
+		dataContext.remindersList.remove(reminder);
+	}
+	
+	public Reminder getReminder(int index)
+	{
+		return dataContext.remindersList.get(index);
+	}
+	
+	public ArrayList<Reminder> getAllReminders()
+	{
+		return dataContext.remindersList;
 	}
 
 }

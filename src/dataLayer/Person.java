@@ -1,6 +1,9 @@
 package dataLayer;
 
-public class Person
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class Person implements Serializable
 {
 	private String firstName;
 	private String lastName;

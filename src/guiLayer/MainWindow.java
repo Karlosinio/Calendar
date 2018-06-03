@@ -13,6 +13,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import java.util.Calendar;
+import java.util.Timer;
 
 import javax.swing.border.EmptyBorder;
 import javax.swing.DefaultListModel;
@@ -32,6 +33,7 @@ import dataLayer.Event;
 import dataLayer.Person;
 import logicLayer.ExportException;
 import logicLayer.LogicLayerException;
+import logicLayer.ReminderChecker;
 import logicLayer.XMLSettingsSerializer;
 
 import javax.swing.JMenu;
@@ -112,6 +114,7 @@ public class MainWindow extends JFrame
 		tpDescription.setText(event.getDescription());
 		tpPlace.setText(event.getPlace());
 		tpTime.setText(event.getTime());
+		tpReminder.setText(Main.ll.getReminderForEvent(event));
 				
 		listPeople = new JList<Person>(Main.ll.getAllPeopleFromEventDLM(event));
 		spPeople.setViewportView(listPeople);
@@ -123,7 +126,8 @@ public class MainWindow extends JFrame
 		tpDescription.setText("");
 		tpPlace.setText("");
 		tpTime.setText("");
-		spPeople.setViewportView(null);
+		tpReminder.setText("");
+		spPeople.setViewportView(listPeople);
 	}
 	
 	
@@ -133,7 +137,7 @@ public class MainWindow extends JFrame
 	 * @throws DataLayerException
 	 */
 	private MainWindow(Calendar calendar) throws DataLayerException
-	{
+	{		
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent we) {
@@ -279,7 +283,7 @@ public class MainWindow extends JFrame
 		contentPane.add(tpTime);
 
 		/////////////////////////////////////////////////////
-		// Reminder: label & text field
+		// Reminder: label, text field and timer
 		/////////////////////////////////////////////////////
 		
 		lblReminder = new JLabel("Reminder:");
@@ -290,6 +294,9 @@ public class MainWindow extends JFrame
 		tpReminder.setEditable(false);
 		tpReminder.setBounds(459, 511, 146, 22);
 		contentPane.add(tpReminder);
+		
+		Timer clock = new Timer();
+		clock.schedule(new ReminderChecker(Main.ll), 0, 600000);
 
 		/////////////////////////////////////////////////////
 		// Description: label & text field

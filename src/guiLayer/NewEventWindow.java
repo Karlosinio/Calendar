@@ -274,7 +274,6 @@ public class NewEventWindow extends JDialog
 			{
 				if (! dlmEventPeople.contains(listAllPeople.getSelectedValue()))
 				{
-					System.out.println("test");
 					dlmEventPeople.addElement(listAllPeople.getSelectedValue());
 					listEventPeople.setModel(dlmEventPeople);		
 					spEventPeople.setViewportView(listEventPeople);
@@ -314,25 +313,25 @@ public class NewEventWindow extends JDialog
 		rdbtnNone.setBounds(636, 34, 68, 24);
 		contentPanel.add(rdbtnNone);
 		
-		JRadioButton rdbtnMin = new JRadioButton("5 min");
-		buttonGroup.add(rdbtnMin);
-		rdbtnMin.setBounds(716, 34, 68, 24);
-		contentPanel.add(rdbtnMin);
+		JRadioButton rdbtn5Min = new JRadioButton("5 min");
+		buttonGroup.add(rdbtn5Min);
+		rdbtn5Min.setBounds(716, 34, 68, 24);
+		contentPanel.add(rdbtn5Min);
 		
-		JRadioButton rdbtnMin_1 = new JRadioButton("30 min");
-		buttonGroup.add(rdbtnMin_1);
-		rdbtnMin_1.setBounds(796, 35, 78, 24);
-		contentPanel.add(rdbtnMin_1);
+		JRadioButton rdbtn30Min = new JRadioButton("30 min");
+		buttonGroup.add(rdbtn30Min);
+		rdbtn30Min.setBounds(796, 35, 78, 24);
+		contentPanel.add(rdbtn30Min);
 		
-		JRadioButton rdbtnHour = new JRadioButton("1 hour");
-		buttonGroup.add(rdbtnHour);
-		rdbtnHour.setBounds(636, 55, 68, 24);
-		contentPanel.add(rdbtnHour);
+		JRadioButton rdbtn1Hour = new JRadioButton("1 hour");
+		buttonGroup.add(rdbtn1Hour);
+		rdbtn1Hour.setBounds(636, 55, 68, 24);
+		contentPanel.add(rdbtn1Hour);
 		
-		JRadioButton rdbtnHours = new JRadioButton("2 hours");
-		buttonGroup.add(rdbtnHours);
-		rdbtnHours.setBounds(716, 55, 78, 24);
-		contentPanel.add(rdbtnHours);
+		JRadioButton rdbtn2Hours = new JRadioButton("2 hours");
+		buttonGroup.add(rdbtn2Hours);
+		rdbtn2Hours.setBounds(716, 55, 78, 24);
+		contentPanel.add(rdbtn2Hours);
 		
 		JRadioButton rdbtnDay = new JRadioButton("1 day");
 		buttonGroup.add(rdbtnDay);
@@ -349,7 +348,8 @@ public class NewEventWindow extends JDialog
 			public void mousePressed(MouseEvent arg0)
 			{
 				Calendar cal = createCalendar();
-		
+				Calendar cal_rem = (Calendar) cal.clone();
+				
 				try
 				{
 					if (event == null)
@@ -357,6 +357,31 @@ public class NewEventWindow extends JDialog
 
 					else
 						Main.ll.updateEvent(event, tfName.getText(), cal, tfDescription.getText(), tfPlace.getText(), createArrayList());
+					
+					if(rdbtn5Min.isSelected() == true)
+						cal_rem.add(Calendar.MINUTE, -5);
+						
+					else if(rdbtn30Min.isSelected() == true)
+						cal_rem.add(Calendar.MINUTE, -30);
+
+					else if(rdbtn1Hour.isSelected() == true) 
+						cal_rem.add(Calendar.HOUR, -1);
+
+					else if(rdbtn2Hours.isSelected() == true) 
+						cal_rem.add(Calendar.HOUR, -2);
+					
+					else if(rdbtnDay.isSelected() == true) 
+						cal_rem.add(Calendar.DATE, -1);
+					
+					if(rdbtnNone.isSelected() == false)
+					{						
+						if (event != null)							
+							Main.ll.createReminder(cal_rem, event);
+
+						else
+							Main.ll.createReminder(cal_rem, Main.ll.getAllEvents().get(Main.ll.getAllEvents().size() -1));	
+					
+					}
 					
 					MainWindow.openWindow(cal);
 					dialog.dispose();	
@@ -393,7 +418,10 @@ public class NewEventWindow extends JDialog
 		/////////////////////////////////////////////////////
 		
 		if (event != null)
+		{
 			setFields(event);
+			spEventPeople.setViewportView(listEventPeople);
+		}
 		else
 		{
 			dlmEventPeople = new DefaultListModel<Person>();
