@@ -56,6 +56,7 @@ public class NewEventWindow extends JDialog
 	private static JTextField tfDescription;
 	private static JTextField tfPlace;
 
+	private static DefaultListModel<Person> dlmEventPeople;
 	private static JList<Person> listEventPeople;
 	private static JList<Person> listAllPeople;
 	
@@ -101,6 +102,9 @@ public class NewEventWindow extends JDialog
 		tfName.setText(event.getName());
 		tfDescription.setText(event.getDescription());
 		tfPlace.setText(event.getPlace());
+	
+		dlmEventPeople = Main.ll.getAllPeopleFromEventDLM(event);
+		listEventPeople = new JList<Person>(Main.ll.getAllPeopleFromEventDLM(event));
 	}
 	
 	private Calendar createCalendar()
@@ -113,6 +117,16 @@ public class NewEventWindow extends JDialog
 		calendar.set(Calendar.MINUTE, (int) spinnerMinute.getValue());	
 		
 		return calendar;		
+	}
+	
+	private ArrayList<Person> createArrayList()
+	{
+		ArrayList<Person> list = new ArrayList<Person>();
+
+		for(int i = 0; i < dlmEventPeople.getSize(); i++)
+			list.add(dlmEventPeople.getElementAt(i));
+		
+		return list;
 	}
 	
 	private NewEventWindow(Event event)
@@ -158,7 +172,7 @@ public class NewEventWindow extends JDialog
 		contentPanel.add(lblMinute);
 
 		spinnerMinute = new JSpinner();
-		spinnerMinute.setModel(new SpinnerNumberModel(0, 0, 55, 5));
+		spinnerMinute.setModel(new SpinnerNumberModel(0, 0, 59, 5));
 		spinnerMinute.setBounds(160, 30, 38, 22);
 		contentPanel.add(spinnerMinute);		
 		
@@ -229,7 +243,6 @@ public class NewEventWindow extends JDialog
 		contentPanel.add(spAllPeople);
 
 		listAllPeople = new JList<Person>(Main.ll.getAllPeopleDLM());
-		
 		spAllPeople.setViewportView(listAllPeople);
 		
 		
@@ -247,16 +260,6 @@ public class NewEventWindow extends JDialog
 		spEventPeople.setBounds(299, 146, 235, 78);
 		contentPanel.add(spEventPeople);
 			
-		listEventPeople = new JList<Person>();
-		ArrayList<Person> peopleToEvent = new ArrayList<Person>();
-		DefaultListModel<Person> peopleDLM = new DefaultListModel<Person>();
-		
-		
-		
-		if (event != null)
-			listEventPeople = new JList<Person>(Main.ll.getAllPeopleFromEventDLM(event));	
-			
-		
 		spEventPeople.setViewportView(listEventPeople);
 
 		
@@ -265,22 +268,17 @@ public class NewEventWindow extends JDialog
 		/////////////////////////////////////////////////////
 		
 		JButton btnAddToEvent = new JButton("<<");
-		btnAddToEvent.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				String str = new String();
-
-				for(Person person : peopleToEvent)
-					str += person.toString();
-					
-				if(str.contains(listAllPeople.getSelectedValue().toString()))	{}
-				
-				else
+		btnAddToEvent.addMouseListener(new MouseAdapter()
+		{	@Override
+			public void mousePressed(MouseEvent arg0)
+			{
+				if (! dlmEventPeople.contains(listAllPeople.getSelectedValue()))
 				{
-					peopleToEvent.add(listAllPeople.getSelectedValue());
-					peopleDLM.addElement(listAllPeople.getSelectedValue());
-					listEventPeople.setModel(peopleDLM);
-				}				
+					System.out.println("test");
+					dlmEventPeople.addElement(listAllPeople.getSelectedValue());
+					listEventPeople.setModel(dlmEventPeople);		
+					spEventPeople.setViewportView(listEventPeople);
+				}
 			}
 		});		
 		btnAddToEvent.setBounds(546, 155, 60, 25);
@@ -290,19 +288,15 @@ public class NewEventWindow extends JDialog
 		JButton btnRemoveFromEvent = new JButton(">>");
 		btnRemoveFromEvent.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mousePressed(MouseEvent e) {
-				
-				if(listEventPeople.getSelectedValue()!=null)
-				{
-					peopleToEvent.remove(listEventPeople.getSelectedValue());
-					peopleDLM.removeElement(listEventPeople.getSelectedValue());
-					listEventPeople.setModel(peopleDLM);	
-				}
-			
+			public void mousePressed(MouseEvent e)
+			{
+				dlmEventPeople.removeElement(listEventPeople.getSelectedValue());	
+				listEventPeople.setModel(dlmEventPeople);
+				spEventPeople.setViewportView(listEventPeople);
 			}
 		});
 		btnRemoveFromEvent.setBounds(546, 190, 60, 25);
-		contentPanel.add(btnRemoveFromEvent);		
+		contentPanel.add(btnRemoveFromEvent);	
 
 	
 		/////////////////////////////////////////////////////
@@ -350,8 +344,8 @@ public class NewEventWindow extends JDialog
 		/////////////////////////////////////////////////////
 		
 		JButton okButton = new JButton("OK");
-		okButton.addMouseListener(new MouseAdapter() {
-			@Override
+		okButton.addMouseListener(new MouseAdapter()
+		{	@Override
 			public void mousePressed(MouseEvent arg0)
 			{
 				Calendar cal = createCalendar();
@@ -359,10 +353,10 @@ public class NewEventWindow extends JDialog
 				try
 				{
 					if (event == null)
-						Main.ll.createEventWithPeople(tfName.getText(), cal, tfDescription.getText(), tfPlace.getText(), peopleToEvent);
+						Main.ll.createEvent(tfName.getText(), cal, tfDescription.getText(), tfPlace.getText(), createArrayList());
 
 					else
-						Main.ll.updateEvent(event, tfName.getText(), cal, tfDescription.getText(), tfPlace.getText(), peopleToEvent);
+						Main.ll.updateEvent(event, tfName.getText(), cal, tfDescription.getText(), tfPlace.getText(), createArrayList());
 					
 					MainWindow.openWindow(cal);
 					dialog.dispose();	
@@ -400,6 +394,12 @@ public class NewEventWindow extends JDialog
 		
 		if (event != null)
 			setFields(event);
+		else
+		{
+			dlmEventPeople = new DefaultListModel<Person>();
+			listEventPeople = new JList<Person>(dlmEventPeople);
+			spEventPeople.setViewportView(listEventPeople);
+		}
 
 	}	
 }
