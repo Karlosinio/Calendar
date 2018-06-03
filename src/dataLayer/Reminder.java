@@ -46,6 +46,26 @@ public class Reminder implements Comparable<Calendar>, Serializable
 	{
 		this.event = event;
 	}
+	
+	public int getDateDiffrence()
+	{
+		return (int) (event.getCalendar().getTimeInMillis() - calendar.getTimeInMillis()) / 60000;
+	}
+
+	
+	public String getDatabaseDate()
+	{
+		String dateDescription = "";
+		
+		dateDescription += getCalendar().get(Calendar.YEAR) + "-";
+		dateDescription += (getCalendar().get(Calendar.MONTH) + 1) + "-";		
+		dateDescription += getCalendar().get(Calendar.DAY_OF_MONTH) + " ";
+		dateDescription += getCalendar().get(Calendar.HOUR_OF_DAY) + ":";
+		dateDescription += getCalendar().get(Calendar.MINUTE) + ":";
+		dateDescription += getCalendar().get(Calendar.SECOND);
+		
+		return dateDescription;
+	}
 
 	@Override
 	public int compareTo(Calendar anotherCalendar) {
@@ -62,6 +82,20 @@ public class Reminder implements Comparable<Calendar>, Serializable
 	
 	public String toString()
 	{		
-		return String.valueOf(calendar.getTime());
+		String dateDescription = new String();
+
+		if (getCalendar().get(Calendar.HOUR_OF_DAY) < 10) 
+			dateDescription += "0";
+		dateDescription += getCalendar().get(Calendar.HOUR_OF_DAY) + ":";
+		
+		if (getCalendar().get(Calendar.MINUTE) < 10) 
+			dateDescription += "0";
+		dateDescription += getCalendar().get(Calendar.MINUTE) + "      ";
+		
+		dateDescription += calendar.get(Calendar.DAY_OF_MONTH) + ".";
+		dateDescription += calendar.get(Calendar.MONTH) + ".";		
+		dateDescription += calendar.get(Calendar.YEAR);
+
+		return dateDescription;
 	}
 }

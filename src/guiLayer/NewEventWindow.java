@@ -62,7 +62,14 @@ public class NewEventWindow extends JDialog
 	
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	
-
+	  private static JRadioButton rdbtnNone;
+	  private static JRadioButton rdbtn5Min;
+	  private static JRadioButton rdbtn30Min;
+	  private static JRadioButton rdbtn1Hour;
+	  private static JRadioButton rdbtn2Hours;
+	  private static JRadioButton rdbtnDay;
+	 
+	
 	public static void openWindow()
 	{
 		try
@@ -102,6 +109,20 @@ public class NewEventWindow extends JDialog
 		tfName.setText(event.getName());
 		tfDescription.setText(event.getDescription());
 		tfPlace.setText(event.getPlace());
+		
+	    if(Main.ll.reminderExists(event))
+	    {      
+	      rdbtnNone.setSelected(false);
+	      
+	      switch (Main.ll.getReminderForEvent(event).getDateDiffrence())
+	      {
+	        case 5:    rdbtn5Min.setSelected(true);  break;
+	        case 30:  rdbtn30Min.setSelected(true);  break;
+	        case 60:  rdbtn1Hour.setSelected(true);  break;
+	        case 120:  rdbtn2Hours.setSelected(true);  break;
+	        case 1440:  rdbtnDay.setSelected(true);    break;
+	      }
+	    }
 	
 		dlmEventPeople = Main.ll.getAllPeopleFromEventDLM(event);
 		listEventPeople = new JList<Person>(Main.ll.getAllPeopleFromEventDLM(event));
@@ -307,33 +328,33 @@ public class NewEventWindow extends JDialog
 		lblReminder.setBounds(554, 37, 78, 16);
 		contentPanel.add(lblReminder);
 		
-		JRadioButton rdbtnNone = new JRadioButton("None");
+		rdbtnNone = new JRadioButton("None");
 		rdbtnNone.setSelected(true);
 		buttonGroup.add(rdbtnNone);
 		rdbtnNone.setBounds(636, 34, 68, 24);
 		contentPanel.add(rdbtnNone);
 		
-		JRadioButton rdbtn5Min = new JRadioButton("5 min");
+		rdbtn5Min = new JRadioButton("5 min");
 		buttonGroup.add(rdbtn5Min);
 		rdbtn5Min.setBounds(716, 34, 68, 24);
 		contentPanel.add(rdbtn5Min);
 		
-		JRadioButton rdbtn30Min = new JRadioButton("30 min");
+		rdbtn30Min = new JRadioButton("30 min");
 		buttonGroup.add(rdbtn30Min);
 		rdbtn30Min.setBounds(796, 35, 78, 24);
 		contentPanel.add(rdbtn30Min);
 		
-		JRadioButton rdbtn1Hour = new JRadioButton("1 hour");
+		rdbtn1Hour = new JRadioButton("1 hour");
 		buttonGroup.add(rdbtn1Hour);
 		rdbtn1Hour.setBounds(636, 55, 68, 24);
 		contentPanel.add(rdbtn1Hour);
 		
-		JRadioButton rdbtn2Hours = new JRadioButton("2 hours");
+		rdbtn2Hours = new JRadioButton("2 hours");
 		buttonGroup.add(rdbtn2Hours);
 		rdbtn2Hours.setBounds(716, 55, 78, 24);
 		contentPanel.add(rdbtn2Hours);
 		
-		JRadioButton rdbtnDay = new JRadioButton("1 day");
+		rdbtnDay = new JRadioButton("1 day");
 		buttonGroup.add(rdbtnDay);
 		rdbtnDay.setBounds(796, 55, 59, 24);
 		contentPanel.add(rdbtnDay);
@@ -372,11 +393,16 @@ public class NewEventWindow extends JDialog
 					
 					else if(rdbtnDay.isSelected() == true) 
 						cal_rem.add(Calendar.DATE, -1);
+	
+					if (Main.ll.reminderExists(event))
+						Main.ll.deleteReminder(Main.ll.getReminderForEvent(event));
 					
 					if(rdbtnNone.isSelected() == false)
 					{						
-						if (event != null)							
+						if (event != null)	
+						{
 							Main.ll.createReminder(cal_rem, event);
+						}
 
 						else
 							Main.ll.createReminder(cal_rem, Main.ll.getAllEvents().get(Main.ll.getAllEvents().size() -1));	

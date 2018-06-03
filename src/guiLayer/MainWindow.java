@@ -39,6 +39,7 @@ import logicLayer.XMLSettingsSerializer;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
+import javax.swing.JCheckBox;
 
 
 @SuppressWarnings("serial")
@@ -114,7 +115,11 @@ public class MainWindow extends JFrame
 		tpDescription.setText(event.getDescription());
 		tpPlace.setText(event.getPlace());
 		tpTime.setText(event.getTime());
-		tpReminder.setText(Main.ll.getReminderForEvent(event));
+		
+	    if(Main.ll.reminderExists(event))
+	    	tpReminder.setText(Main.ll.getReminderForEvent(event).toString());
+	    else
+	    	tpReminder.setText("");
 				
 		listPeople = new JList<Person>(Main.ll.getAllPeopleFromEventDLM(event));
 		spPeople.setViewportView(listPeople);
@@ -244,7 +249,7 @@ public class MainWindow extends JFrame
 		/////////////////////////////////////////////////////
 		
 		lblEventsList = new JLabel("Events list:");
-		lblEventsList.setBounds(852, 58, 98, 25);
+		lblEventsList.setBounds(700, 58, 98, 25);
 		lblEventsList.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		contentPane.add(lblEventsList);
 
@@ -425,6 +430,10 @@ public class MainWindow extends JFrame
 		btnAllPeople.setBounds(922, 606, 180, 75);
 		btnAllPeople.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		contentPane.add(btnAllPeople);
+		
+		JCheckBox chckbxNewCheckBox = new JCheckBox("Show only events with people");
+		chckbxNewCheckBox.setBounds(903, 58, 199, 25);
+		contentPane.add(chckbxNewCheckBox);
 
 	}
 }

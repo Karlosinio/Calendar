@@ -13,6 +13,7 @@ import dataLayer.DataLayerException;
 import dataLayer.DataService;
 import dataLayer.Event;
 import dataLayer.Person;
+import dataLayer.Reminder;
 
 public class DBSerializer extends Serializer
 {
@@ -127,14 +128,13 @@ public class DBSerializer extends Serializer
 			}
 		}
 		
-		/*
 		for (Reminder reminder : data.getAllReminders())
 		{
 			querry = "INSERT INTO reminders VALUES(?, ?);";
 			
 			try (PreparedStatement stmt = con.prepareStatement(querry))
 			{
-				stmt.setInt(1, data.getAllPeople().indexOf(reminder.getEvent()));
+				stmt.setInt(1, data.getAllEvents().indexOf(reminder.getEvent()));
 				stmt.setString(2, reminder.getDatabaseDate());
 				
 				stmt.executeUpdate();	
@@ -144,8 +144,6 @@ public class DBSerializer extends Serializer
 				e.printStackTrace();
 			}			
 		}
-		*/
-
 
 		disconnect();
 	}
@@ -185,6 +183,17 @@ public class DBSerializer extends Serializer
 		
 	        while (rs.next())
 	        	data.addPeopleToEvent(data.getAllEvents().get(rs.getInt(1)), data.getAllPeople().get(rs.getInt(2)));
+
+			querry = "SELECT * FROM reminders";
+	        rs = stmt.executeQuery(querry);  
+	        
+	        while (rs.next())
+	        {	        	
+	        	Calendar calendar = GregorianCalendar.getInstance();
+	        	calendar.setTimeInMillis(rs.getTimestamp(2).getTime());
+	        	
+	        	data.createReminder(new Reminder(calendar, data.getAllEvents().get(rs.getInt(1))));
+	        }
 		}
 		catch (SQLException e)
 		{

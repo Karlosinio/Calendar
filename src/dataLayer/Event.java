@@ -9,12 +9,12 @@ import java.util.ArrayList;
 public class Event implements Comparable<Event>, Serializable
 {	
 	private String name;
-	private Calendar date = GregorianCalendar.getInstance();
+	private Calendar calendar = GregorianCalendar.getInstance();
 	private String description;
 	private String place;
 	private ArrayList<Person> peopleList = new ArrayList<Person>();
 		
-	public Event(String name, Calendar date, String description, String place) throws DataLayerException
+	public Event(String name, Calendar calendar, String description, String place) throws DataLayerException
 	{
 		if (name.isEmpty())
 			throw new DataLayerException("Name cannot be empty");
@@ -22,13 +22,13 @@ public class Event implements Comparable<Event>, Serializable
 		else
 		{			
 			this.name = name;
-			this.date = date;
+			this.calendar = calendar;
 			this.description = description;
 			this.place = place;
 		}
 	}
 	
-	public Event(String name, Calendar date, String description, String place, ArrayList<Person> people) throws DataLayerException
+	public Event(String name, Calendar calendar, String description, String place, ArrayList<Person> people) throws DataLayerException
 	{
 		if (name.isEmpty())
 			throw new DataLayerException("Name cannot be empty");
@@ -36,7 +36,7 @@ public class Event implements Comparable<Event>, Serializable
 		else
 		{			
 			this.name = name;
-			this.date = date;
+			this.calendar = calendar;
 			this.description = description;
 			this.place = place;
 			
@@ -57,12 +57,12 @@ public class Event implements Comparable<Event>, Serializable
 
 	public Calendar getCalendar()
 	{
-		return date;
+		return calendar;
 	}
 
-	public void setCalendar(Calendar date)
+	public void setCalendar(Calendar calendar)
 	{
-		this.date = date;
+		this.calendar = calendar;
 	}
 
 	
@@ -111,12 +111,12 @@ public class Event implements Comparable<Event>, Serializable
 	{
 		String dateDescription = "";
 		
-		dateDescription += date.get(Calendar.YEAR) + "-";
-		dateDescription += (date.get(Calendar.MONTH) + 1) + "-";		
-		dateDescription += date.get(Calendar.DAY_OF_MONTH) + " ";
-		dateDescription += date.get(Calendar.HOUR_OF_DAY) + ":";
-		dateDescription += date.get(Calendar.MINUTE) + ":";
-		dateDescription += date.get(Calendar.SECOND);
+		dateDescription += calendar.get(Calendar.YEAR) + "-";
+		dateDescription += (calendar.get(Calendar.MONTH) + 1) + "-";		
+		dateDescription += calendar.get(Calendar.DAY_OF_MONTH) + " ";
+		dateDescription += calendar.get(Calendar.HOUR_OF_DAY) + ":";
+		dateDescription += calendar.get(Calendar.MINUTE) + ":";
+		dateDescription += calendar.get(Calendar.SECOND);
 		
 		return dateDescription;
 	}
@@ -133,12 +133,12 @@ public class Event implements Comparable<Event>, Serializable
 	
 	public void setHour(int hour)
 	{
-		date.set(Calendar.HOUR_OF_DAY, hour);
+		calendar.set(Calendar.HOUR_OF_DAY, hour);
 	}
 	
 	public void setMinute(int minute)
 	{
-		date.set(Calendar.MINUTE, minute);
+		calendar.set(Calendar.MINUTE, minute);
 	}
 	
 	public String getTime()
@@ -165,9 +165,9 @@ public class Event implements Comparable<Event>, Serializable
 	{
 		String dateDescription = new String();
 		
-		dateDescription += date.get(Calendar.DAY_OF_MONTH) + ".";
-		dateDescription += date.get(Calendar.MONTH) + ".";		
-		dateDescription += date.get(Calendar.YEAR) + "   ";
+		dateDescription += calendar.get(Calendar.DAY_OF_MONTH) + ".";
+		dateDescription += calendar.get(Calendar.MONTH) + ".";		
+		dateDescription += calendar.get(Calendar.YEAR) + "   ";
 
 		dateDescription += getTime();
 		
@@ -177,7 +177,7 @@ public class Event implements Comparable<Event>, Serializable
 	
 	public int compareTo(Event event)
 	{
-		int dataComparision = date.compareTo(event.date);
+		int dataComparision = calendar.compareTo(event.calendar);
 		
 		if(dataComparision == 0)
 			return name.compareTo(event.name);

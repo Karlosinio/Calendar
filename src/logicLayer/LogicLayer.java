@@ -235,11 +235,23 @@ public class LogicLayer
 		return list;
 	}
 	
-	public String getReminderForEvent(Event event)
+	public Reminder getReminderForEvent(Event event) 
 	{
 		return dataService.getReminderForEvent(event);
 	}
 		
+	public boolean reminderExists(Event event) 
+	{
+	    for (Reminder reminder : this.getAllReminders())
+	    {
+	      if (reminder.getEvent().equals(event))
+	        return true;
+	    }
+	 
+	    return false; 
+	}
+	 
+	
 	/////////////////////////////////////////////////////
 	// People
 	/////////////////////////////////////////////////////

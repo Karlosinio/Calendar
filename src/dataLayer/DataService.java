@@ -52,15 +52,15 @@ public class DataService implements Serializable
 			dataContext.eventsList.get(dataContext.eventsList.indexOf(event)).addPerson(person);
 	}
 	
-	public String getReminderForEvent(Event event)
+	public Reminder getReminderForEvent(Event event)
 	{		
 		for(Reminder r : dataContext.remindersList)
 		{
 			if(r.getEvent().equals(event))
-				return r.toString();
+				return r;
 		}
 		
-		return "";
+		return null;
 	}
 	
 	/////////////////////////////////////////////////////
