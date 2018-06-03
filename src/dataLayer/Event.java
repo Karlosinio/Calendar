@@ -107,12 +107,12 @@ public class Event implements Comparable<Event>, Serializable
 			peopleList.add(person);
 	}
 	
-	public String getStringDate()
+	public String getDatabaseDate()
 	{
 		String dateDescription = "";
 		
 		dateDescription += date.get(Calendar.YEAR) + "-";
-		dateDescription += date.get(Calendar.MONTH) + "-";		
+		dateDescription += (date.get(Calendar.MONTH) + 1) + "-";		
 		dateDescription += date.get(Calendar.DAY_OF_MONTH) + " ";
 		dateDescription += date.get(Calendar.HOUR_OF_DAY) + ":";
 		dateDescription += date.get(Calendar.MINUTE) + ":";

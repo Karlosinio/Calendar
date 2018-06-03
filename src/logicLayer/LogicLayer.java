@@ -110,7 +110,7 @@ public class LogicLayer
 		
 	}
 	
-	public void createEventWithPeople(String name, Calendar date, String description, String place, ArrayList<Person> people) throws LogicLayerException
+	public void createEvent(String name, Calendar date, String description, String place, ArrayList<Person> people) throws LogicLayerException
 	{
 		try
 		{
@@ -123,6 +123,18 @@ public class LogicLayer
 		
 	}
 
+	public void updateEvent(Event event, String name, Calendar calendar, String description, String place) throws LogicLayerException
+	{
+		try
+		{
+			dataService.updateEvent(event, name, calendar, description, place, null);
+		}
+		catch (DataServiceException e)
+		{
+			throw new LogicLayerException(e.getMessage());
+		}		
+	}
+	
 	public void updateEvent(Event event, String name, Calendar calendar, String description, String place, ArrayList<Person> people) throws LogicLayerException
 	{
 		try
@@ -244,11 +256,11 @@ public class LogicLayer
 		}					
 	}
 	
-	public void updatePerson(Person initialPerson, Person finalPerson) throws LogicLayerException
+	public void updatePerson(Person person, String firstName, String lastName) throws LogicLayerException
 	{
 		try
 		{
-			dataService.updatePerson(initialPerson, finalPerson);
+			dataService.updatePerson(person, firstName, lastName);
 		}
 		catch (DataServiceException e)
 		{

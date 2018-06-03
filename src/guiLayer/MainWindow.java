@@ -68,7 +68,6 @@ public class MainWindow extends JFrame
 	private JLabel lblPeople;
 	private JList<Person> listPeople;
 	private JMenuItem mntmExportToData;
-	private JMenuItem mntmImportFromDatabase;
 	private JMenu mnEvents;
 	private JMenuItem mntmDeleteOldEvents;
 	private JSeparator separator;
@@ -113,10 +112,8 @@ public class MainWindow extends JFrame
 		tpDescription.setText(event.getDescription());
 		tpPlace.setText(event.getPlace());
 		tpTime.setText(event.getTime());
-		
-		DefaultListModel<Person> peopleDLM = Main.ll.getAllPeopleFromEventDLM(event);
-		
-		listPeople = new JList<Person>(peopleDLM);
+				
+		listPeople = new JList<Person>(Main.ll.getAllPeopleFromEventDLM(event));
 		spPeople.setViewportView(listPeople);
 	}
 
@@ -172,16 +169,13 @@ public class MainWindow extends JFrame
 		JMenu mnSettings = new JMenu("File");
 		menuBar.add(mnSettings);
 		
-		mntmExportToData = new JMenuItem("Export to...");
+		mntmExportToData = new JMenuItem("Export to PDF");
 		mnSettings.add(mntmExportToData);
-		
-		mntmImportFromDatabase = new JMenuItem("Import from...");
-		mnSettings.add(mntmImportFromDatabase);
 		
 		separator = new JSeparator();
 		mnSettings.add(separator);
 		
-		mntmExportToFormat = new JMenuItem("Settings");
+		mntmExportToFormat = new JMenuItem("Export/Import Settings");
 		mntmExportToFormat.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {

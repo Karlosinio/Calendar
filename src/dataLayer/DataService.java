@@ -62,10 +62,13 @@ public class DataService implements Serializable
 		dataContext.peopleList.add(person);
 	}
 	
-	public void updatePerson(Person initialPerson, Person finalPerson) throws DataServiceException
+	public void updatePerson(Person person, String firstName, String lastName) throws DataServiceException
 	{
-		if(dataContext.peopleList.contains(initialPerson))
-			dataContext.peopleList.set(dataContext.peopleList.indexOf(initialPerson), finalPerson);
+		if(dataContext.peopleList.contains(person))
+		{
+			person.setFirstName(firstName);
+			person.setLastName(lastName);
+		}
 
 		else
 			throw new DataServiceException("Person not found");		
