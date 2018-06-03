@@ -15,6 +15,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 import logicLayer.BinarySerializer;
+import logicLayer.DBSerializer;
 import logicLayer.Serializer;
 import logicLayer.XMLSerializer;
 
@@ -69,7 +70,7 @@ public class SettingsWindow extends JDialog
 			public void mousePressed(MouseEvent e)
 			{
 				comboBox.setSelectedIndex(0);
-				tfLocation.setText(fileName + serializer.getFileFormat());
+				tfLocation.setText(Main.ll.getDefaultFileName() + serializer.getFileFormat());
 			}
 		});
 
@@ -81,6 +82,7 @@ public class SettingsWindow extends JDialog
 		contentPanel.add(lblFileName);
 		
 		tfLocation = new TextField(fileName + serializer.getFileFormat());
+
 		tfLocation.setBounds(78, 44, 294, 24);
 		contentPanel.add(tfLocation);
 		
@@ -107,19 +109,41 @@ public class SettingsWindow extends JDialog
 		comboBox.setBounds(108, 72, 98, 24);
 		comboBox.addItem(new XMLSerializer());
 		comboBox.addItem(new BinarySerializer());
+		comboBox.addItem(new DBSerializer());
 		contentPanel.add(comboBox);
 		comboBox.addItemListener(new ItemListener()
 		{
 	        public void itemStateChanged(ItemEvent arg0)
 	        {
-	        	fileName = tfLocation.getText().split("\\.")[0];
-				serializer = (Serializer) comboBox.getSelectedItem();
-				tfLocation.setText(fileName + serializer.getFileFormat());
+	        	serializer = (Serializer) comboBox.getSelectedItem();
+				
+	        	if(! tfLocation.getText().equals(""))
+	        		fileName = tfLocation.getText().split("\\.")[0];
+	        	
+				if(serializer instanceof DBSerializer)
+				{
+					tfLocation.setText("");
+					tfLocation.setEnabled(false);
+					tfLocation.setEditable(false);
+				}
+				else
+				{
+					tfLocation.setText(fileName + serializer.getFileFormat());
+					tfLocation.setEnabled(true);
+					tfLocation.setEditable(true);
+				}
 	        }
 	    });
 		
 		if(serializer instanceof BinarySerializer)
 			comboBox.setSelectedIndex(1);
+		
+		if(serializer instanceof DBSerializer)
+		{
+			comboBox.setSelectedIndex(2);
+			tfLocation.setEnabled(false);
+			tfLocation.setEditable(false);
+		}
 	
 		/////////////////////////////////////////////////////
 		// Ok / Cancel Pane
@@ -134,7 +158,11 @@ public class SettingsWindow extends JDialog
 			@Override
 			public void mousePressed(MouseEvent e)
 			{
-				Main.ll.setFileName(tfLocation.getText().split("\\.")[0]);
+	        	if(! tfLocation.getText().equals(""))			
+	        		Main.ll.setFileName(tfLocation.getText().split("\\.")[0]);
+	        	else
+	        		Main.ll.setFileName(fileName);
+	        	
 				Main.ll.setSerializer((Serializer) comboBox.getSelectedItem());
 				dialog.dispose();
 			}
