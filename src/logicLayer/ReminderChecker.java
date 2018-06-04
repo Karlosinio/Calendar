@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 import dataLayer.Reminder;
 
 /**
- * ReminderChecker is responsible for checking upcoming @see Event.
+ * ReminderChecker is responsible for checking upcoming Event.
  */
 public class ReminderChecker extends TimerTask
 {	
@@ -24,7 +24,7 @@ public class ReminderChecker extends TimerTask
 	}
 	
 	/**
-	 * Compares actual time with time of upcoming @see Reminder. If they're equal, shows message dialog with information about upcoming @see Event.
+	 * Compares actual time with time of upcoming Reminder. If they're equal, shows message dialog with information about upcoming Event.
 	 */
 	@Override
 	public void run()

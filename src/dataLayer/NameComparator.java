@@ -3,7 +3,7 @@ package dataLayer;
 import java.util.Comparator;
 
 /**
- *
+ * NameComparator represents comparator, which compares two Events names.
  */
 public class NameComparator implements Comparator<Event>
 {
