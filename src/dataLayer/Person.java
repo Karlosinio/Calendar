@@ -2,12 +2,21 @@ package dataLayer;
 
 import java.io.Serializable;
 
+/**
+ * Person represents a person with first name and last name. It can be add to peopleList in Event.
+ */
 @SuppressWarnings("serial")
 public class Person implements Serializable
 {
 	private String firstName;
 	private String lastName;
 	
+	/**
+	 * Initializes a newly created Person object with specified first name and last name.
+	 * @param firstName
+	 * @param lastName
+	 * @throws DataLayerException
+	 */
 	public Person(String firstName, String lastName) throws DataLayerException
 	{
 		super();
@@ -23,23 +32,45 @@ public class Person implements Serializable
 		
 	}
 	
+	/**
+	 * Getter for String firstName.
+	 * @return Person's firstName.
+	 */
 	public String getFirstName()
 	{
 		return firstName;
 	}
+	
+	/**
+	 * Set a new Person's firstName.  
+	 * @param firstName.
+	 */
 	public void setFirstName(String firstName)
 	{
 		this.firstName = firstName;
 	}
+	
+	/**
+	 * Getter for Person's last name.
+	 * @return lastName.
+	 */
 	public String getLastName()
 	{
 		return lastName;
 	}
+	
+	/**
+	 * Set a new Person's last name.
+	 * @param lastName.
+	 */
 	public void setLastName(String lastName)
 	{
 		this.lastName = lastName;
 	}
 
+	/**
+	 * Concatenates Person's first name and last name and converts to String.
+	 */
 	@Override
 	public String toString()
 	{

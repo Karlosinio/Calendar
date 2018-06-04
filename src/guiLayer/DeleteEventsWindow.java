@@ -26,7 +26,9 @@ import javax.swing.SwingConstants;
 import dataLayer.Event;
 import logicLayer.LogicLayerException;
 
-
+/**
+ * Class responsible for deleting events.
+ */
 @SuppressWarnings("serial")
 public class DeleteEventsWindow extends JDialog
 {
@@ -39,6 +41,9 @@ public class DeleteEventsWindow extends JDialog
 	private static JSpinner spinnerHour;
 	private static JSpinner spinnerMinute;
 	
+	/**
+	 * Launch the application.
+	 */
 	public static void openWindow()
 	{
 		try

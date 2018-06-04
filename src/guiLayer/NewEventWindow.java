@@ -40,7 +40,9 @@ import javax.swing.SwingConstants;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 
-
+/**
+ * Class responsible for a new event view and update event view. Allows creating and updating events.
+ */
 @SuppressWarnings("serial")
 public class NewEventWindow extends JDialog
 {
@@ -70,7 +72,9 @@ public class NewEventWindow extends JDialog
 	  private static JRadioButton rdbtn2Hours;
 	  private static JRadioButton rdbtnDay;
 	 
-	
+	/**
+	 * Launch the application.
+	 */
 	public static void openWindow()
 	{
 		try
@@ -86,7 +90,10 @@ public class NewEventWindow extends JDialog
 		}
 	}
 	
-	
+	/**
+	 * Launch the application with specified Event.
+	 * @param event
+	 */
 	public static void openWindow(Event event)
 	{
 		try
@@ -102,6 +109,10 @@ public class NewEventWindow extends JDialog
 		}	
 	}
 	
+	/**
+	 * Fills fields with event's details.
+	 * @param event
+	 */
 	private void setFields(Event event)
 	{
 		spinnerHour.setValue(event.getHour());

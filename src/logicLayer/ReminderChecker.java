@@ -7,15 +7,25 @@ import javax.swing.JOptionPane;
 
 import dataLayer.Reminder;
 
+/**
+ * ReminderChecker is responsible for checking upcoming @see Event.
+ */
 public class ReminderChecker extends TimerTask
 {	
 	private LogicLayer ll;
 	
+	/**
+	 * Initializes a newly created ReminderChecker object with specified LogicLayer.
+	 * @param ll
+	 */
 	public ReminderChecker(LogicLayer ll)
 	{
 		this.ll = ll;
 	}
 	
+	/**
+	 * Compares actual time with time of upcoming @see Reminder. If they're equal, shows message dialog with information about upcoming @see Event.
+	 */
 	@Override
 	public void run()
 	{

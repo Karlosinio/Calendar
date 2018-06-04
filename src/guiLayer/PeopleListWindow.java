@@ -25,6 +25,9 @@ import javax.swing.ScrollPaneConstants;
 import dataLayer.Person;
 import logicLayer.LogicLayerException;
 
+/**
+ * Class responsible for list of people view.
+ */
 @SuppressWarnings("serial")
 public class PeopleListWindow extends JDialog
 {

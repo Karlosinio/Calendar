@@ -1,5 +1,9 @@
 package logicLayer;
 
+/**
+ * Important exception to throw in LogicLayer.
+ *
+ */
 @SuppressWarnings("serial")
 public class ImportException extends LogicLayerException
 {

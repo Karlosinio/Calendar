@@ -14,6 +14,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+/**
+ * Class responsible for an information about program view.
+ */
 @SuppressWarnings("serial")
 public class AboutWindow extends JDialog
 {

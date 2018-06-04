@@ -44,6 +44,11 @@ import javax.swing.JCheckBox;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
+/**
+ * Class responsible for a main window view. 
+ * It's possible to add, delete, update, Event and see Event's details.
+ * It's also possible to add Person. 
+ */
 
 @SuppressWarnings("serial")
 public class MainWindow extends JFrame
@@ -99,6 +104,9 @@ public class MainWindow extends JFrame
 		});
 	}
 
+	/**
+	 * Shows clicked Event's details in MainWindow.
+	 */
 	void dateSelection()
 	{
 		DefaultListModel<Event> eventsDLM;
@@ -118,6 +126,10 @@ public class MainWindow extends JFrame
 		spEvents.setViewportView(listEvents);
 	}
 
+	/**
+	 * Gets specified Event's details, such as name, description, place, time, reminder.
+	 * @param event
+	 */
 	void eventSelection(Event event)
 	{
 		tpName.setText(event.getName());
@@ -134,6 +146,9 @@ public class MainWindow extends JFrame
 		spPeople.setViewportView(listPeople);
 	}
 
+	/**
+	 * Clears fields witch Event's details.
+	 */
 	void clearEventFields()
 	{
 		tpName.setText("");

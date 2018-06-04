@@ -2,6 +2,9 @@ package logicLayer;
 
 import dataLayer.DataService;
 
+/**
+ *
+ */
 public abstract class Serializer
 {
 	public void exportData(String fileName, DataService data) throws ExportException

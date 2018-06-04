@@ -5,8 +5,14 @@ import java.io.*;
 
 import dataLayer.DataService;
 
+/**
+ * BinarySerializer is responsible for serializing binary data.
+ */
 public class BinarySerializer extends Serializer
 {
+	/**
+	 * Exports data from DataService and creates new binary file.
+	 */
 	public void exportData(String filename, DataService data) throws ExportException
 	{
 		FileOutputStream fileOut = null;
@@ -49,6 +55,9 @@ public class BinarySerializer extends Serializer
 
 	}
 	
+	/**
+	 * Imports data from binary file.
+	 */
 	public DataService importData(String fileName) throws ImportException
 	{
 		DataService data = null;
@@ -99,11 +108,18 @@ public class BinarySerializer extends Serializer
 		return data;
 	}
 	
+	/**
+	 * Return String "Binary".
+	 */
 	public String toString()
 	{
 		return "Binary";
 	}
 
+	/**
+	 * Getter for fileFormat.
+	 * @return String ".bin".
+	 */
 	public String getFileFormat()
 	{
 		return ".bin";

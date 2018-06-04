@@ -10,8 +10,14 @@ import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 import dataLayer.DataService;
 
+/**
+ * XMLSerializer is responsible for XML serialization.
+ */
 public class XMLSerializer extends Serializer
 {
+	/**
+	 * Exports data to XML.
+	 */
 	public void exportData(String fileName, DataService data) throws ExportException
 	{
 		XStream xstream = new XStream(new StaxDriver());
@@ -26,7 +32,9 @@ public class XMLSerializer extends Serializer
 		}
 	}
 
-	
+	/**
+	 * Imports data from XML.
+	 */
 	public DataService importData(String fileName) throws ImportException
 	{
 		FileInputStream fileInput = null;
@@ -46,11 +54,17 @@ public class XMLSerializer extends Serializer
 		return data;
 	}
 	
+	/**
+	 * Returns String "XML".
+	 */
 	public String toString()
 	{
 		return "XML";
 	}
 	
+	/**
+	 * Returns fileFormat in String ".xml".
+	 */
 	public String getFileFormat()
 	{
 		return ".xml";

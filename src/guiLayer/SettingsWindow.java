@@ -19,7 +19,9 @@ import logicLayer.DBSerializer;
 import logicLayer.Serializer;
 import logicLayer.XMLSerializer;
 
-
+/**
+ * Class responsible for settings view.
+ */
 @SuppressWarnings("serial")
 public class SettingsWindow extends JDialog
 {

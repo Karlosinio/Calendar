@@ -4,15 +4,27 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+/**
+ * Reminder represents reminder for an Event.
+ */
 @SuppressWarnings("serial")
 public class Reminder implements Comparable<Calendar>, Serializable
 {
 	private Calendar calendar = GregorianCalendar.getInstance();
 	private Event event;
 	
+	/**
+	 * Constructs a Reminder with no detail date and event.
+	 */
 	public Reminder()
 	{	}
 	
+	/**
+	 * Constructs a Reminder with specified date and event.
+	 * @param date.
+	 * @param event.
+	 * @throws DataLayerException.
+	 */
 	public Reminder(Calendar date, Event event) throws DataLayerException
 	{
 		if(date == null || event == null)
@@ -25,34 +37,55 @@ public class Reminder implements Comparable<Calendar>, Serializable
 		}
 	}
 	
+	/**
+	 * Getter for Reminder's calendar.
+	 * @return calendar.
+	 */
 	public Calendar getCalendar() 
 	{
 		return calendar;
 	}
 
-
+	/**
+	 * Set a new specified Reminder's calendar.
+	 * @param calendar.
+	 */
 	public void setDate(Calendar calendar) 
 	{
 		this.calendar = calendar;
 	}
 
-
+	/**
+	 * Getter for Reminder's event.
+	 * @return event.
+	 */
 	public Event getEvent() 
 	{
 		return event;
 	}
 
+	/**
+	 * Set a new Reminder's event.
+	 * @param event.
+	 */
 	public void setEvent(Event event) 
 	{
 		this.event = event;
 	}
 	
+	/**
+	 * Counts difference between start of reminder's event and reminder's date. 
+	 * @return Amount of minutes between two dates converted to integer.
+	 */
 	public int getDateDiffrence()
 	{
 		return (int) (event.getCalendar().getTimeInMillis() - calendar.getTimeInMillis()) / 60000;
 	}
 
-	
+	/**
+	 * Concatenates Reminder's year, month, day, hour, minute, second and converts to String.
+	 * @return String with Reminder's date description in smalldatetime format for MSSQL Data Base.
+	 */
 	public String getDatabaseDate()
 	{
 		String dateDescription = "";
@@ -67,6 +100,10 @@ public class Reminder implements Comparable<Calendar>, Serializable
 		return dateDescription;
 	}
 
+	/**
+	 * Compares Reminder's calendar with another calendar.
+	 * @return 0 if dates are equal, 1 if not.
+	 */
 	@Override
 	public int compareTo(Calendar anotherCalendar) {
 		if(	calendar.get(Calendar.YEAR) == anotherCalendar.get(Calendar.YEAR)
@@ -80,6 +117,10 @@ public class Reminder implements Comparable<Calendar>, Serializable
 			return calendar.compareTo(anotherCalendar);
 	}
 	
+	/**
+	 * Converts to String and concatenates Reminder's hour, minute, day, month, year.
+	 * @return String which describes Reminder's date description.
+	 */
 	public String toString()
 	{		
 		String dateDescription = new String();

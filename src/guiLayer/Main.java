@@ -7,10 +7,17 @@ import logicLayer.LogicLayer;
 import logicLayer.LogicLayerException;
 import logicLayer.XMLSettingsSerializer;
 
+/**
+ * Main class.
+ */
 public class Main
 {
 	public static LogicLayer ll;
 	
+	/**
+	 * Main method. 
+	 * @param args
+	 */
 	public static void main(String[] args)
 	{
 		ll = new LogicLayer();

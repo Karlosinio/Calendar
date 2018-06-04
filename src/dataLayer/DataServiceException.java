@@ -1,5 +1,9 @@
 package dataLayer;
 
+
+/**
+ *Exception to throw in DataService.
+ */
 @SuppressWarnings("serial")
 public class DataServiceException extends DataLayerException
 {

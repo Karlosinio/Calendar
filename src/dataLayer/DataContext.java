@@ -3,6 +3,9 @@ package dataLayer;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * DataContext contains data for DataService.
+ */
 @SuppressWarnings("serial")
 public class DataContext implements Serializable
 {

@@ -15,6 +15,9 @@ import dataLayer.Event;
 import dataLayer.Person;
 import dataLayer.Reminder;
 
+/**
+ * DBSerializer is responsible for data base serialization.
+ */
 public class DBSerializer extends Serializer
 {
 	private static final String connectionUrl = "jdbc:sqlserver://localhost:1433;" + "databaseName=calendar;integratedSecurity=true;";
@@ -54,7 +57,9 @@ public class DBSerializer extends Serializer
 	}
 	
 
-	
+	/**
+	 * Exports data to data base.
+	 */
 	public void exportData(String fileName, DataService data) throws ExportException
 	{
 		connect();
@@ -150,7 +155,9 @@ public class DBSerializer extends Serializer
 
 	
 	
-	
+	/**
+	 * Imports data from data base.
+	 */
 	public DataService importData(String fileName) throws ImportException
 	{
 		DataService data = new DataService();
@@ -208,11 +215,17 @@ public class DBSerializer extends Serializer
 		return data;
 	}
 	
+	/**
+	 * Return String "Database".
+	 */
 	public String toString()
 	{
 		return "Database";
 	}
 
+	/**
+	 * Return empty String.
+	 */
 	public String getFileFormat()
 	{
 		return "";
