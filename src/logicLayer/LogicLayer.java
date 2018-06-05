@@ -2,6 +2,7 @@ package logicLayer;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
 import javax.swing.DefaultListModel;
 
@@ -256,18 +257,18 @@ public class LogicLayer
 	 */
 	public void deleteOldEvents(Calendar calendar) throws LogicLayerException
 	{
-		try
+		ArrayList<Integer> toRemove = new ArrayList<Integer>();
+		
+		for (Event event : this.getAllEvents())
 		{
-			for (Event event : dataService.getAllEvents())
-			{
-				if (0 > event.getCalendar().compareTo(calendar))
-					dataService.deleteEvent(event);				
-			}
+			if (0 > event.getCalendar().compareTo(calendar))
+				toRemove.add(this.getAllEvents().indexOf(event));
 		}
-		catch (DataServiceException e)
-		{
-			throw new LogicLayerException(e.getMessage());
-		}
+		
+		Collections.reverse(toRemove);
+		
+		for (int index : toRemove)
+			this.deleteEvent(this.getAllEvents().get(index));
 	}
 	
 	/**
@@ -347,13 +348,13 @@ public class LogicLayer
 	public DefaultListModel<Event> getAllEventsFromDateWithPlaceDLM(Calendar date)
 	{
 		DefaultListModel<Event> eventsList = new DefaultListModel<Event>();
-		
+			
 		ArrayList<Event> list = this.getAllEventsFromDate(date);
 		list.sort(null);
 		
 		for(Event event : list )
 		{
-			if (event.getPlace() != "")
+			if (! event.getPlace().isEmpty())
 				eventsList.addElement(event);
 		}
 		
