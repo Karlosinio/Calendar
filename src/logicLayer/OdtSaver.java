@@ -12,7 +12,7 @@ public class OdtSaver extends Serializer
 {
 	/**
 	 * Concatenates all Events with their assigned people and converts to String.
-	 * @param dataService
+	 * @param dataService, which represents DataService.
 	 * @return String with Event and their assigned peopleList.
 	 */
 	private static String EventsToString(DataService dataService)
@@ -23,7 +23,9 @@ public class OdtSaver extends Serializer
 		for(Event event : dataService.getAllEvents())
 		{
 			result += event.toString();
+			result += "\t People: ";
 			result += event.getPeopleList();
+			result += "\n";
 		}
 
 		return result;
@@ -31,7 +33,7 @@ public class OdtSaver extends Serializer
 	
 	/**
 	 * Concatenates all people and converts to String.
-	 * @param dataService
+	 * @param dataService, which represents DataService.
 	 * @return String with all people.
 	 */
 	private static String PeopleToString(DataService dataService)
@@ -40,14 +42,15 @@ public class OdtSaver extends Serializer
 		
 		result += "\nList of People\n";
 		result += dataService.getAllPeople();
+		result += "\n";
 		
 		return result;
 	}
 	
 	/**
 	 * Saves in Odt format all Events with their assigned people and all people.
-	 * @param filename
-	 * @param dataService
+	 * @param filename, which represents name of file.
+	 * @param dataService, which represents DataService.
 	 * @throws LogicLayerException
 	 */
 	@SuppressWarnings("deprecation")
@@ -62,8 +65,8 @@ public class OdtSaver extends Serializer
 			outputOdt.addParagraph("Simple java app");
 			outputOdt.addText(EventsToString(dataService));
 			outputOdt.addText(PeopleToString(dataService));
-			
-			outputOdt.save(filename);
+
+			outputOdt.save(filename.split("\\.")[0] + ".odt");
 			
 		} 
 		

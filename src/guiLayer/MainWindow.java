@@ -16,9 +16,11 @@ import java.util.Calendar;
 import java.util.Timer;
 
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -114,6 +116,7 @@ public class MainWindow extends JFrame
 		
 		if (cbPlace.isSelected() == false)
 			eventsDLM = Main.ll.getAllEventsFromDateDLM(jCalendar.getCalendar());
+		
 		else
 			eventsDLM = Main.ll.getAllEventsFromDateWithPlaceDLM(jCalendar.getCalendar());
 		
@@ -205,17 +208,23 @@ public class MainWindow extends JFrame
 		menuBar.add(mnSettings);
 		
 		mntmExportToData = new JMenuItem("Export to ODT");
-		mntmExportToData.addMouseListener(new MouseAdapter() {
-			@Override
+		mntmExportToData.addMouseListener(new MouseAdapter()
+		{	@Override
 			public void mousePressed(MouseEvent arg0)
 			{
 				try
 				{
-					OdtSaver.Save("export.odt", Main.ll.getDataService());
+				    JFileChooser fileChooser = new JFileChooser();				
+				    fileChooser.setFileFilter(new FileNameExtensionFilter("Open Document Format for Office Applications (.odt)", "odt"));
+				    fileChooser.showSaveDialog(null);
+				    OdtSaver.Save(fileChooser.getSelectedFile().getAbsolutePath(), Main.ll.getDataService());
 				} catch (LogicLayerException e)
 				{
 					JOptionPane.showMessageDialog(null, e.getMessage());
 				}
+				catch (java.lang.NullPointerException e)
+				{}
+
 			}
 		});
 		mnSettings.add(mntmExportToData);
