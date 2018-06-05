@@ -15,7 +15,7 @@ public class OdtSaver extends Serializer
 	 * @param dataService
 	 * @return String with Event and their assigned peopleList.
 	 */
-	private String EventsToString(DataService dataService)
+	private static String EventsToString(DataService dataService)
 	{
 		String result = new String("");
 		
@@ -34,7 +34,7 @@ public class OdtSaver extends Serializer
 	 * @param dataService
 	 * @return String with all people.
 	 */
-	private String PeopleToString(DataService dataService)
+	private static String PeopleToString(DataService dataService)
 	{
 		String result = new String("");
 		
@@ -51,7 +51,7 @@ public class OdtSaver extends Serializer
 	 * @throws LogicLayerException
 	 */
 	@SuppressWarnings("deprecation")
-	public void Save(String filename, DataService dataService) throws LogicLayerException
+	public static void Save(String filename, DataService dataService) throws LogicLayerException
 	{
 		TextDocument outputOdt;
 		

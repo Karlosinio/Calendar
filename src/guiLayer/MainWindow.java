@@ -33,6 +33,7 @@ import dataLayer.Event;
 import dataLayer.Person;
 import logicLayer.ExportException;
 import logicLayer.LogicLayerException;
+import logicLayer.OdtSaver;
 import logicLayer.ReminderChecker;
 import logicLayer.XMLSettingsSerializer;
 
@@ -180,6 +181,7 @@ public class MainWindow extends JFrame
 					JOptionPane.showMessageDialog(null, e.getMessage());
 				} finally {
 					frame.dispose();
+					Runtime.getRuntime().exit(0);
 				}
 			}
 		});
@@ -203,6 +205,19 @@ public class MainWindow extends JFrame
 		menuBar.add(mnSettings);
 		
 		mntmExportToData = new JMenuItem("Export to ODT");
+		mntmExportToData.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent arg0)
+			{
+				try
+				{
+					OdtSaver.Save("export.odt", Main.ll.getDataService());
+				} catch (LogicLayerException e)
+				{
+					JOptionPane.showMessageDialog(null, e.getMessage());
+				}
+			}
+		});
 		mnSettings.add(mntmExportToData);
 		
 		separator = new JSeparator();
