@@ -348,13 +348,13 @@ public class LogicLayer
 	public DefaultListModel<Event> getAllEventsFromDateWithPlaceDLM(Calendar date)
 	{
 		DefaultListModel<Event> eventsList = new DefaultListModel<Event>();
-		
+			
 		ArrayList<Event> list = this.getAllEventsFromDate(date);
 		list.sort(null);
 		
 		for(Event event : list )
 		{
-			if (event.getPlace() != "")
+			if (! event.getPlace().isEmpty())
 				eventsList.addElement(event);
 		}
 		
