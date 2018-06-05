@@ -14,8 +14,8 @@ public class Settings implements Serializable
 	private Serializer serializer;
 
 	/**
-	 * Getter for a Setting's fileName.
-	 * @return fileName.
+	 * Getter for a Settings fileName.
+	 * @return Settings fileName.
 	 */
 	public String getFileName()
 	{
@@ -24,7 +24,7 @@ public class Settings implements Serializable
 
 	/**
 	 * Set a new fileName.
-	 * @param fileName
+	 * @param Settings fileName.
 	 */
 	public void setFileName(String fileName)
 	{
@@ -32,8 +32,8 @@ public class Settings implements Serializable
 	}
 
 	/**
-	 * Getter for a Setting's serializer.
-	 * @return serializer.
+	 * Getter for a Settings serializer.
+	 * @return Settings serializer.
 	 */
 	public Serializer getSerializer()
 	{
@@ -41,8 +41,8 @@ public class Settings implements Serializable
 	}
 
 	/**
-	 * Set a new Setting's serializer.
-	 * @param serializer
+	 * Set a new Settings serializer.
+	 * @param Settings serializer
 	 */
 	public void setSerializer(Serializer serializer)
 	{

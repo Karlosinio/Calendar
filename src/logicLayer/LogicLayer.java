@@ -23,7 +23,7 @@ public class LogicLayer
 		
 	/**
 	 * Sets a dataService.
-	 * @param dataService
+	 * @param dataService, which a LogicLayer's DataService.
 	 */
 	public void setDataService(DataService dataService)
 	{
@@ -81,7 +81,7 @@ public class LogicLayer
 	
 	/**
 	 * Sets a new settings fileName.
-	 * @param fileName
+	 * @param fileName, which represents settings fileName.
 	 */
 	public void setFileName(String fileName)
 	{
@@ -90,7 +90,7 @@ public class LogicLayer
 	
 	/**
 	 * Sets a new settings serializer.
-	 * @param serializer
+	 * @param serializer, which represents settings serializer.
 	 */
 	public void setSerializer(Serializer serializer )
 	{
@@ -99,7 +99,7 @@ public class LogicLayer
 	
 	/**
 	 * Sets a new settings.
-	 * @param settings
+	 * @param settings, which represents settings serializer.
 	 */
 	public void setSettings(Settings settings)
 	{
@@ -117,7 +117,7 @@ public class LogicLayer
 	
 	/**
 	 * Getter for a default serializer.
-	 * @return  XMLSerializer.
+	 * @return  XMLSerializer, which right now is a default serializer.
 	 */
 	public Serializer getDefaultSerializer()
 	{
@@ -148,10 +148,10 @@ public class LogicLayer
 	
 	/**
 	 * Creates  Event by setting new name, date, description, place.
-	 * @param name
-	 * @param date
-	 * @param description
-	 * @param place
+	 * @param name, which represents Event's name.
+	 * @param date, which represents Event's date.
+	 * @param description, which represents Event's description.
+	 * @param place, which represents Event's place.
 	 * @throws LogicLayerException
 	 */
 	public void createEvent(String name, Calendar date, String description, String place) throws LogicLayerException
@@ -169,11 +169,11 @@ public class LogicLayer
 	
 	/**
 	 * Creates  Event by setting new name, date, description, place and ArrayList of people.
-	 * @param name
-	 * @param date
-	 * @param description
-	 * @param place
-	 * @param people
+	 * @param name, which represents Event's name.
+	 * @param date, which represents Event's date.
+	 * @param description, which represents Event's description.
+	 * @param place, which represents Event's place.
+	 * @param people, which represents Event's list of assigned people.
 	 * @throws LogicLayerException
 	 */
 	public void createEvent(String name, Calendar date, String description, String place, ArrayList<Person> people) throws LogicLayerException
@@ -191,11 +191,11 @@ public class LogicLayer
 
 	/**
 	 * Updates Event by setting a new name, date, description, place.
-	 * @param event
-	 * @param name
-	 * @param calendar
-	 * @param description
-	 * @param place
+	 * @param event, which represents Event.
+	 * @param name, which represents Event's name.
+	 * @param calendar, which represents Event's calendar.
+	 * @param description, which represents Event's description.
+	 * @param place, which represents Event's place.
 	 * @throws LogicLayerException
 	 */
 	public void updateEvent(Event event, String name, Calendar calendar, String description, String place) throws LogicLayerException
@@ -212,12 +212,12 @@ public class LogicLayer
 	
 	/**
 	 * Updates Event by setting a new name, date, description, place and ArrayList of people.
-	 * @param event
-	 * @param name
-	 * @param calendar
-	 * @param description
-	 * @param place
-	 * @param people
+	 * @param event, which represents Event.
+	 * @param name, which represents Event's name.
+	 * @param calendar, which represents Event's calendar.
+	 * @param description, which represents Event's description.
+	 * @param place, which represents Event's place.
+	 * @param people, which represents Event's list of assigned people.
 	 * @throws LogicLayerException
 	 */
 	public void updateEvent(Event event, String name, Calendar calendar, String description, String place, ArrayList<Person> people) throws LogicLayerException
@@ -234,7 +234,7 @@ public class LogicLayer
 
 	/**
 	 * Deletes an Event.
-	 * @param event
+	 * @param event, which represents specified Event.
 	 * @throws LogicLayerException
 	 */
 	public void deleteEvent(Event event) throws LogicLayerException
@@ -251,7 +251,7 @@ public class LogicLayer
 
 	/**
 	 * Deletes an Event with specified calendar.
-	 * @param calendar
+	 * @param calendar, which specified Event's calendar.
 	 * @throws LogicLayerException
 	 */
 	public void deleteOldEvents(Calendar calendar) throws LogicLayerException
@@ -272,8 +272,8 @@ public class LogicLayer
 	
 	/**
 	 * Adds Person to Event.
-	 * @param event
-	 * @param people
+	 * @param event, which represents specified Event.
+	 * @param people, which represents specified Person. 
 	 * @throws LogicLayerException
 	 */
 	public void addPeopleToEvent(Event event, Person...people) throws LogicLayerException
@@ -299,7 +299,7 @@ public class LogicLayer
 	
 	/**
 	 * Getter for an all Events with specified calendar.
-	 * @param date
+	 * @param date, which represents Event's calendar.
 	 * @return ArrayList of all Events with specified calendar.
 	 */
 	public ArrayList<Event> getAllEventsFromDate(Calendar date)
@@ -321,7 +321,7 @@ public class LogicLayer
 
 	/**
 	 * Getter for an all Events with specified calendar.
-	 * @param date
+	 * @param date, which represents Event's calendar.
 	 * @return  DefaultListModel of all Events with specified calendar.
 	 */
 	public DefaultListModel<Event> getAllEventsFromDateDLM(Calendar date)
@@ -341,7 +341,7 @@ public class LogicLayer
 	
 	/**
 	 * Getter for all Events with specified calendar and place.
-	 * @param date
+	 * @param date, which represents Event's calendar.
 	 * @return DefaultListModel of Event with specified calendar and place.
 	 */
 	public DefaultListModel<Event> getAllEventsFromDateWithPlaceDLM(Calendar date)
@@ -362,7 +362,7 @@ public class LogicLayer
 	
 	/**
 	 * Getter for all  Person from specified Event.
-	 * @param event
+	 * @param event, which represents specified Event.
 	 * @return ArrayList of people from specified Event.
 	 */
 	public ArrayList<Person> getAllPeopleFromEvent(Event event)
@@ -372,7 +372,7 @@ public class LogicLayer
 	
 	/**
 	 * Getter for all people from specified  Event.
-	 * @param event
+	 * @param event, which represents specified Event.
 	 * @return DefaultModelList of people from specified  Event.
 	 */
 	public DefaultListModel<Person> getAllPeopleFromEventDLM(Event event)
@@ -387,7 +387,7 @@ public class LogicLayer
 	
 	/**
 	 * Getter for a Reminder with specified  Event.
-	 * @param event
+	 * @param event, which represents specified Event.
 	 * @return Reminder for specified  Event.
 	 */
 	public Reminder getReminderForEvent(Event event) 
@@ -397,7 +397,7 @@ public class LogicLayer
 		
 	/**
 	 * Checks if a specified  Event has a  Reminder.
-	 * @param event
+	 * @param event, which represents specified Event.
 	 * @return true, if Event has a Reminder, false, if not.
 	 */
 	public boolean reminderExists(Event event) 
@@ -418,8 +418,8 @@ public class LogicLayer
 	
 	/**
 	 * Creates a new Person with specified firstName and lastName.
-	 * @param firstName
-	 * @param lastName
+	 * @param firstName, which represents Person's firstName.
+	 * @param lastName, which represents Person's lastName.
 	 * @throws LogicLayerException
 	 */
 	public void createPerson(String firstName, String lastName) throws LogicLayerException
@@ -436,9 +436,9 @@ public class LogicLayer
 	
 	/**
 	 * Updates Person by setting a new firstName and lastName.
-	 * @param person
-	 * @param firstName
-	 * @param lastName
+	 * @param person, which represents Person.
+	 * @param firstName, which represents Person's firstName.
+	 * @param lastName, which represents Person's lastName.
 	 * @throws LogicLayerException
 	 */
 	public void updatePerson(Person person, String firstName, String lastName) throws LogicLayerException
@@ -455,7 +455,7 @@ public class LogicLayer
 	
 	/**
 	 * Deletes a Person.
-	 * @param person
+	 * @param person, which represents specified Person.
 	 * @throws LogicLayerException
 	 */
 	public void deletePerson(Person person) throws LogicLayerException
@@ -499,8 +499,8 @@ public class LogicLayer
 	
 	/**
 	 * Creates a new Reminder with specified calendar and  Event.
-	 * @param calendar
-	 * @param event
+	 * @param calendar, which represents Reminder's calendar.
+	 * @param event, which represents Reminder's event.
 	 * @throws LogicLayerException
 	 */
 	public void createReminder(Calendar calendar, Event event) throws LogicLayerException
@@ -517,7 +517,7 @@ public class LogicLayer
 	
 	/**
 	 * Deletes a specified Reminder.
-	 * @param reminder
+	 * @param reminder, which represents specified Reminder.
 	 */
 	public void deleteReminder(Reminder reminder)
 	{
@@ -526,7 +526,7 @@ public class LogicLayer
 	
 	/**
 	 * Getter for Reminder.
-	 * @param index
+	 * @param index, which is index in remindersList in DataContext.
 	 * @return Reminder with specified index.
 	 */
 	public Reminder getReminder(int index)

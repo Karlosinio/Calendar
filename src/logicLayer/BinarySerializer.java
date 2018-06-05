@@ -12,8 +12,8 @@ public class BinarySerializer extends Serializer
 {
 	/**
 	 * Exports data from DataService and creates new binary file.
-	 * @param String fileName
-	 * @param DataService data
+	 * @param fileName, which is name of our file.
+	 * @param data, which represents DataService.
 	 */
 	public void exportData(String fileName, DataService data) throws ExportException
 	{
@@ -59,8 +59,8 @@ public class BinarySerializer extends Serializer
 	
 	/**
 	 * Imports data from binary file.
-	 * @param String fileName
-	 * @return DataService
+	 * @param fileName, which is name of our file.
+	 * @return data, which represents DataService.
 	 */
 	public DataService importData(String fileName) throws ImportException
 	{

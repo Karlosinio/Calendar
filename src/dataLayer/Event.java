@@ -19,10 +19,10 @@ public class Event implements Comparable<Event>, Serializable
 		
 	/**
 	 * Initializes a newly created Event object with specified name, calendar, description, place.
-	 * @param name
-	 * @param calendar
-	 * @param description
-	 * @param place
+	 * @param name, which represents Event's name.
+	 * @param calendar, which represents Event's calendar.
+	 * @param description, which represents Event's description.
+	 * @param place, which represents Event's place.
 	 * @throws DataLayerException
 	 */
 	public Event(String name, Calendar calendar, String description, String place) throws DataLayerException
@@ -41,11 +41,11 @@ public class Event implements Comparable<Event>, Serializable
 	
 	/**
 	 * Initializes a newly created Event object with specified name, calendar, description, place and people.
-	 * @param name
-	 * @param calendar
-	 * @param description
-	 * @param place
-	 * @param people
+	 * @param name, which represents Event's name.
+	 * @param calendar, which represents Event's calendar.
+	 * @param description, which represents Event's description.
+	 * @param place, which represents Event's place.
+	 * @param people, which represents Event's list of assigned people.
 	 * @throws DataLayerException
 	 */
 	public Event(String name, Calendar calendar, String description, String place, ArrayList<Person> people) throws DataLayerException
@@ -67,7 +67,7 @@ public class Event implements Comparable<Event>, Serializable
 	
 	/**
 	 * Getter for Event's name.
-	 * @return name.
+	 * @return Event's name.
 	 */
 	public String getName()
 	{
@@ -76,7 +76,7 @@ public class Event implements Comparable<Event>, Serializable
 
 	/**
 	 * Sets a new Event's name.
-	 * @param name
+	 * @param Event's name
 	 */
 	public void setName(String name)
 	{
@@ -85,7 +85,7 @@ public class Event implements Comparable<Event>, Serializable
 
 	/**
 	 * Getter for a Event's calendar.
-	 * @return calendar
+	 * @return Event's calendar, which represents date.
 	 */
 	public Calendar getCalendar()
 	{
@@ -94,7 +94,7 @@ public class Event implements Comparable<Event>, Serializable
 
 	/**
 	 * Sets a new Event's calendar
-	 * @param calendar.
+	 * @param Event's calendar, which represents date.
 	 */
 	public void setCalendar(Calendar calendar)
 	{
@@ -103,7 +103,7 @@ public class Event implements Comparable<Event>, Serializable
 
 	/**
 	 * Getter for Event's description.
-	 * @return description.
+	 * @return Event's description.
 	 */
 	public String getDescription()
 	{
@@ -112,7 +112,7 @@ public class Event implements Comparable<Event>, Serializable
 
 	/**
 	 * Sets a new Event's description.
-	 * @param description
+	 * @param Event's description.
 	 */
 	public void setDescription(String description)
 	{
@@ -121,7 +121,7 @@ public class Event implements Comparable<Event>, Serializable
 
 	/**
 	 * Getter for Event's place.
-	 * @return place.
+	 * @return Event's place.
 	 */
 	public String getPlace()
 	{
@@ -130,7 +130,7 @@ public class Event implements Comparable<Event>, Serializable
 
 	/**
 	 * Sets a new Event's place.
-	 * @param place
+	 * @param Event's place.
 	 */
 	public void setPlace(String place)
 	{
@@ -139,7 +139,7 @@ public class Event implements Comparable<Event>, Serializable
 	
 	/**
 	 * Getter for list of people in Event.
-	 * @return peopleList.
+	 * @return Event's list of assigned people.
 	 */
 	public ArrayList<Person> getPeopleList()
 	{
@@ -148,7 +148,7 @@ public class Event implements Comparable<Event>, Serializable
 
 	/**
 	 * Sets a new list of people in Event.
-	 * @param peopleList
+	 * @param Event's list of assigned people.
 	 */
 	public void setPeopleList(ArrayList<Person> peopleList)
 	{
@@ -157,7 +157,7 @@ public class Event implements Comparable<Event>, Serializable
 	
 	/**
 	 * Adds a new  Person in peopleList.
-	 * @param person
+	 * @param person, which represents Person.
 	 */
 	public void addPerson(Person person)
 	{
@@ -166,7 +166,7 @@ public class Event implements Comparable<Event>, Serializable
 	
 	/**
 	 * Adds a new list of  Person 
-	 * @param people
+	 * @param people, which represents Event's list of assigned people.
 	 */
 	public void addPeopleList(ArrayList<Person> people)
 	{

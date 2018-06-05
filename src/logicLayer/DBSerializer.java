@@ -59,8 +59,8 @@ public class DBSerializer extends Serializer
 
 	/**
 	 * Exports data to data base.
-	 * @param String fileName
-	 * @param DataService data
+	 * @param fileName, which is name of our file.
+	 * @param  data, which represents DataService.
 	 */
 	public void exportData(String fileName, DataService data) throws ExportException
 	{
@@ -159,8 +159,8 @@ public class DBSerializer extends Serializer
 	
 	/**
 	 * Imports data from data base.
-	 * @param String fileName
-	 * @return DataService
+	 * @param fileName, which is name of our file.
+	 * @return  data, which represents DataService.
 	 */
 	public DataService importData(String fileName) throws ImportException
 	{

@@ -16,7 +16,7 @@ public class ReminderChecker extends TimerTask
 	
 	/**
 	 * Initializes a newly created ReminderChecker object with specified LogicLayer.
-	 * @param ll
+	 * @param ll, which represents LogicLayer.
 	 */
 	public ReminderChecker(LogicLayer ll)
 	{

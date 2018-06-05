@@ -9,30 +9,30 @@ public abstract class Serializer
 {
 	/**
 	 * Exports data to file.
-	 * @param String fileName
-	 * @param DataService data
+	 * @param fileName, which is name of file.
+	 * @param data, which represents DataService.
 	 */
 	public void exportData(String fileName, DataService data) throws ExportException
 	{}
 
 	/**
 	 * Imports data from file.
-	 * @param String fileName
-	 * @return DataService
+	 * @param fileName, which is name of file.
+	 * @return data, which represents DataService.
 	 */
 	public DataService importData(String fileName) throws ImportException
 	{	return null; 	}
 
 	/**
 	 * Returns Strings used for settings menu.
-	 * @return String
+	 * @return null.
 	 */
 	public String toString()
 	{	return null;	}
 	
 	/**
 	 * Getter for fileFormat.
-	 * @return String
+	 * @return null.
 	 */
 	public String getFileFormat()
 	{	return null;	}
