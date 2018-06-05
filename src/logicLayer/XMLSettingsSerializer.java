@@ -10,9 +10,15 @@ import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 import dataLayer.Settings;
 
-
+/**
+ * XMLSettingsSerializer is used to import and export settings data.
+ */
 public class XMLSettingsSerializer
 {
+	/**
+	 * Exports settings data to XML.
+	 * @param Settings settings
+	 */
 	public static void exportData(Settings settings) throws ExportException
 	{
 		XStream xstream = new XStream(new StaxDriver());
@@ -27,7 +33,10 @@ public class XMLSettingsSerializer
 		}
 	}
 
-	
+	/**
+	 * Imports settings data from XML.
+	 * @return Settings settings
+	 */
 	public static Settings importData() throws ImportException
 	{
 		FileInputStream fileInput = null;

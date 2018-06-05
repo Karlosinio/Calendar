@@ -202,7 +202,7 @@ public class MainWindow extends JFrame
 		JMenu mnSettings = new JMenu("File");
 		menuBar.add(mnSettings);
 		
-		mntmExportToData = new JMenuItem("Export to PDF");
+		mntmExportToData = new JMenuItem("Export to ODT");
 		mnSettings.add(mntmExportToData);
 		
 		separator = new JSeparator();

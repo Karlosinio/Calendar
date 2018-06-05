@@ -15,7 +15,7 @@ public class Main
 	public static LogicLayer ll;
 	
 	/**
-	 * Main method. 
+	 * Main method, used to launch calendar.
 	 * @param args
 	 */
 	public static void main(String[] args)

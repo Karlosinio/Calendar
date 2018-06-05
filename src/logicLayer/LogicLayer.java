@@ -14,7 +14,7 @@ import dataLayer.Reminder;
 import dataLayer.Settings;
 
 /**
- * Class that implements all important methods for aplplication's logic layer.
+ * Class that implements all important methods for aplplication's logic layer - this class operates on program data (events, people, reminders) and settings
  */
 public class LogicLayer
 {

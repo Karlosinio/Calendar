@@ -5,15 +5,13 @@ import java.io.Serializable;
 import logicLayer.Serializer;
 
 /**
- * 
- * 
- *
+ * Settings is used to store information about serializer type and file name to load events, people and reminders.
  */
 @SuppressWarnings("serial")
 public class Settings implements Serializable
 {
-	String fileName;
-	Serializer serializer;
+	private String fileName;
+	private Serializer serializer;
 
 	/**
 	 * Getter for a Setting's fileName.

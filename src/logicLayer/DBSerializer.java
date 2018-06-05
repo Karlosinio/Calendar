@@ -16,7 +16,7 @@ import dataLayer.Person;
 import dataLayer.Reminder;
 
 /**
- * DBSerializer is responsible for data base serialization.
+ * DBSerializer is responsible for exporting and importing data from database.
  */
 public class DBSerializer extends Serializer
 {
@@ -59,6 +59,8 @@ public class DBSerializer extends Serializer
 
 	/**
 	 * Exports data to data base.
+	 * @param String fileName
+	 * @param DataService data
 	 */
 	public void exportData(String fileName, DataService data) throws ExportException
 	{
@@ -157,6 +159,8 @@ public class DBSerializer extends Serializer
 	
 	/**
 	 * Imports data from data base.
+	 * @param String fileName
+	 * @return DataService
 	 */
 	public DataService importData(String fileName) throws ImportException
 	{
@@ -216,7 +220,8 @@ public class DBSerializer extends Serializer
 	}
 	
 	/**
-	 * Return String "Database".
+	 * Return String used for settings menu.
+	 * @return String "Database".
 	 */
 	public String toString()
 	{
@@ -224,7 +229,8 @@ public class DBSerializer extends Serializer
 	}
 
 	/**
-	 * Return empty String.
+	 * Getter for fileFormat - in this case its empty string.
+	 * @return String "".
 	 */
 	public String getFileFormat()
 	{

@@ -6,20 +6,22 @@ import java.io.*;
 import dataLayer.DataService;
 
 /**
- * BinarySerializer is responsible for serializing binary data.
+ * BinarySerializer is responsible for serializing data to binary format.
  */
 public class BinarySerializer extends Serializer
 {
 	/**
 	 * Exports data from DataService and creates new binary file.
+	 * @param String fileName
+	 * @param DataService data
 	 */
-	public void exportData(String filename, DataService data) throws ExportException
+	public void exportData(String fileName, DataService data) throws ExportException
 	{
 		FileOutputStream fileOut = null;
 		ObjectOutputStream out = null;
 		try
 		{
-			fileOut = new FileOutputStream(filename);
+			fileOut = new FileOutputStream(fileName);
 			out = new ObjectOutputStream(fileOut);
 			out.writeObject(data);
 		}
@@ -57,6 +59,8 @@ public class BinarySerializer extends Serializer
 	
 	/**
 	 * Imports data from binary file.
+	 * @param String fileName
+	 * @return DataService
 	 */
 	public DataService importData(String fileName) throws ImportException
 	{
@@ -109,7 +113,8 @@ public class BinarySerializer extends Serializer
 	}
 	
 	/**
-	 * Return String "Binary".
+	 * Return String used for settings menu.
+	 * @return String "Binary".
 	 */
 	public String toString()
 	{
