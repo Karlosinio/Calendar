@@ -23,7 +23,9 @@ public class OdtSaver extends Serializer
 		for(Event event : dataService.getAllEvents())
 		{
 			result += event.toString();
+			result += "\t People: ";
 			result += event.getPeopleList();
+			result += "\n";
 		}
 
 		return result;
@@ -40,6 +42,7 @@ public class OdtSaver extends Serializer
 		
 		result += "\nList of People\n";
 		result += dataService.getAllPeople();
+		result += "\n";
 		
 		return result;
 	}
