@@ -76,7 +76,7 @@ public class Event implements Comparable<Event>, Serializable
 
 	/**
 	 * Sets a new Event's name.
-	 * @param Event's name
+	 * @param String name
 	 */
 	public void setName(String name)
 	{
@@ -94,7 +94,7 @@ public class Event implements Comparable<Event>, Serializable
 
 	/**
 	 * Sets a new Event's calendar
-	 * @param Event's calendar, which represents date.
+	 * @param Calendar calendar
 	 */
 	public void setCalendar(Calendar calendar)
 	{
@@ -112,7 +112,7 @@ public class Event implements Comparable<Event>, Serializable
 
 	/**
 	 * Sets a new Event's description.
-	 * @param Event's description.
+	 * @param String description
 	 */
 	public void setDescription(String description)
 	{
@@ -130,7 +130,7 @@ public class Event implements Comparable<Event>, Serializable
 
 	/**
 	 * Sets a new Event's place.
-	 * @param Event's place.
+	 * @param String place
 	 */
 	public void setPlace(String place)
 	{
@@ -148,7 +148,7 @@ public class Event implements Comparable<Event>, Serializable
 
 	/**
 	 * Sets a new list of people in Event.
-	 * @param Event's list of assigned people.
+	 * @param ArrayList<Person> peopleList event's list of assigned people.
 	 */
 	public void setPeopleList(ArrayList<Person> peopleList)
 	{
@@ -212,7 +212,7 @@ public class Event implements Comparable<Event>, Serializable
 	
 	/**
 	 * Sets a new Event's hour.
-	 * @param hour
+	 * @param int hour
 	 */
 	public void setHour(int hour)
 	{
@@ -221,7 +221,7 @@ public class Event implements Comparable<Event>, Serializable
 	
 	/**
 	 * Sets a new Event's minute.
-	 * @param minute
+	 * @param int minute
 	 */
 	public void setMinute(int minute)
 	{

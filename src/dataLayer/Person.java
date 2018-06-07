@@ -43,7 +43,7 @@ public class Person implements Serializable
 	
 	/**
 	 * Set a new Person's firstName.  
-	 * @param Person's firstName.
+	 * @param String firstName Person's firstName.
 	 */
 	public void setFirstName(String firstName)
 	{
@@ -61,7 +61,7 @@ public class Person implements Serializable
 	
 	/**
 	 * Set a new Person's last name.
-	 * @param Person's lastName.
+	 * @param String lastName Person's lastName.
 	 */
 	public void setLastName(String lastName)
 	{

@@ -40,8 +40,6 @@ GO
 USE calendar
 GO
 
--- DELETE FROM events
-
 SELECT * FROM people
 SELECT * FROM events
 SELECT * FROM events_people
