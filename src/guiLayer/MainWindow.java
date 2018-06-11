@@ -91,6 +91,7 @@ public class MainWindow extends JFrame
 
 	/**
 	 * Launch the application.
+	 * @param calendar represents Calendar.
 	 */
 	public static void openWindow(Calendar calendar) {
 		EventQueue.invokeLater(new Runnable() {
@@ -132,7 +133,7 @@ public class MainWindow extends JFrame
 
 	/**
 	 * Gets specified Event's details, such as name, description, place, time, reminder.
-	 * @param event
+	 * @param event represents Event.
 	 */
 	void eventSelection(Event event)
 	{
@@ -167,7 +168,7 @@ public class MainWindow extends JFrame
 	/**
 	 * Create the frame.
 	 * 
-	 * @throws DataLayerException
+	 * @throws DataLayerException if something went wrong with data.
 	 */
 	private MainWindow(Calendar calendar) throws DataLayerException
 	{		

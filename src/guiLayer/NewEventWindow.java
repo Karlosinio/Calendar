@@ -92,7 +92,7 @@ public class NewEventWindow extends JDialog
 	
 	/**
 	 * Launch the application with specified Event.
-	 * @param Event event
+	 * @param event represents Event.
 	 */
 	public static void openWindow(Event event)
 	{
@@ -111,7 +111,7 @@ public class NewEventWindow extends JDialog
 	
 	/**
 	 * Fills fields with event's details.
-	 * @param event
+	 * @param event represents Event.
 	 */
 	private void setFields(Event event)
 	{

@@ -17,7 +17,8 @@ public class XMLSettingsSerializer
 {
 	/**
 	 * Exports settings data to XML.
-	 * @param settings, which represents Settings.
+	 * @param settings represents Settings.
+	 * @throws ExportException if file not found.
 	 */
 	public static void exportData(Settings settings) throws ExportException
 	{
@@ -36,6 +37,7 @@ public class XMLSettingsSerializer
 	/**
 	 * Imports settings data from XML.
 	 * @return settings, which represents Settings.
+	 * @throws ImportException if file not found.
 	 */
 	public static Settings importData() throws ImportException
 	{

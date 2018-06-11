@@ -16,7 +16,7 @@ public class Main
 	
 	/**
 	 * Main method, used to launch calendar.
-	 * @param String[] args
+	 * @param args array of string.
 	 */
 	public static void main(String[] args)
 	{

@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * DataContext contains data for DataService.
+ * DataContext contains data for DataService:
+ * eventsList - ArrayList of events,
+ * peopleList - ArrayList of people,
+ * remindersList - ArrayList of reminders.
  */
 @SuppressWarnings("serial")
 public class DataContext implements Serializable

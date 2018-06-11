@@ -24,7 +24,7 @@ public class Settings implements Serializable
 
 	/**
 	 * Set a new fileName.
-	 * @param String Settings fileName.
+	 * @param fileName settings fileName.
 	 */
 	public void setFileName(String fileName)
 	{
@@ -42,7 +42,7 @@ public class Settings implements Serializable
 
 	/**
 	 * Set a new Settings serializer.
-	 * @param Serializer serializer
+	 * @param serializer settings serializer.
 	 */
 	public void setSerializer(Serializer serializer)
 	{

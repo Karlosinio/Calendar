@@ -39,6 +39,7 @@ public class PeopleListWindow extends JDialog
 
 	/**
 	 * Launch the application.
+	 * @param calendar represents Calendar.
 	 */
 	public static void openWindow(Calendar calendar)
 	{

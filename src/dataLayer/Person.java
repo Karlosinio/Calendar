@@ -13,9 +13,9 @@ public class Person implements Serializable
 	
 	/**
 	 * Initializes a newly created Person object with specified first name and last name.
-	 * @param firstName, which represents Person's firstName.
-	 * @param lastName, which represents Person's lastName.
-	 * @throws DataLayerException
+	 * @param firstName represents Person's firstName.
+	 * @param lastName represents Person's lastName.
+	 * @throws DataLayerException if firstName or lastName is empty.
 	 */
 	public Person(String firstName, String lastName) throws DataLayerException
 	{
@@ -43,7 +43,7 @@ public class Person implements Serializable
 	
 	/**
 	 * Set a new Person's firstName.  
-	 * @param String firstName Person's firstName.
+	 * @param firstName Person's firstName.
 	 */
 	public void setFirstName(String firstName)
 	{
@@ -61,7 +61,7 @@ public class Person implements Serializable
 	
 	/**
 	 * Set a new Person's last name.
-	 * @param String lastName Person's lastName.
+	 * @param lastName Person's lastName.
 	 */
 	public void setLastName(String lastName)
 	{

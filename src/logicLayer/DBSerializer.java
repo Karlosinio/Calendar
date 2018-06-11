@@ -59,8 +59,9 @@ public class DBSerializer extends Serializer
 
 	/**
 	 * Exports data to data base.
-	 * @param fileName, which is name of our file.
+	 * @param fileName name of our file.
 	 * @param  data, which represents DataService.
+	 * @throws ExportException if 
 	 */
 	public void exportData(String fileName, DataService data) throws ExportException
 	{
@@ -159,8 +160,9 @@ public class DBSerializer extends Serializer
 	
 	/**
 	 * Imports data from data base.
-	 * @param fileName, which is name of our file.
+	 * @param fileName name of our file.
 	 * @return  data, which represents DataService.
+	 * @throws ImportException if 
 	 */
 	public DataService importData(String fileName) throws ImportException
 	{
@@ -230,7 +232,7 @@ public class DBSerializer extends Serializer
 
 	/**
 	 * Getter for fileFormat - in this case its empty string.
-	 * @return String "".
+	 * @return empty String.
 	 */
 	public String getFileFormat()
 	{

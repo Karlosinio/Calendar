@@ -19,7 +19,7 @@ public class DataService implements Serializable
 	
 	/**
 	 * Creates a new  Event and adds It to eventsList in  DataContext.
-	 * @param event, which represents Event.
+	 * @param event represents Event.
 	 */
 	public void createEvent(Event event)
 	{
@@ -28,13 +28,13 @@ public class DataService implements Serializable
 
 	/**
 	 * Updates an Event by setting a new name, calendar, description, place and list of people.
-	 * @param event, which represents specified Event.
-	 * @param name, which represent Event's name.
-	 * @param calendar, which represent Event's calendar.
-	 * @param description, which represent Event's description.
-	 * @param place, which represent Event's place.
-	 * @param people, which represent Event's assigned list of people.
-	 * @throws DataServiceException
+	 * @param event represents specified Event.
+	 * @param name represent Event's name.
+	 * @param calendar represent Event's calendar.
+	 * @param description represent Event's description.
+	 * @param place represent Event's place.
+	 * @param people represent Event's assigned list of people.
+	 * @throws DataServiceException if event doesn't exist.
 	 */
 	public void updateEvent(Event event, String name, Calendar calendar, String description, String place, ArrayList<Person> people) throws DataServiceException
 	{
@@ -52,8 +52,8 @@ public class DataService implements Serializable
 	
 	/**
 	 * Deletes an Event from DataContext.
-	 * @param event, which represents Event.
-	 * @throws DataServiceException
+	 * @param event represents Event.
+	 * @throws DataServiceException if event doesn't exist.
 	 */
 	public void deleteEvent(Event event) throws DataServiceException 
 	{
@@ -75,9 +75,9 @@ public class DataService implements Serializable
 	
 	/**
 	 * Adds people to an Event's peopleList.
-	 * @param event, which represents Event.
-	 * @param peopleList, which represents Event's list of assigned people.
-	 * @throws DataServiceException
+	 * @param event represents Event.
+	 * @param peopleList represents Event's list of assigned people.
+	 * @throws DataServiceException if event doesn't exist.
 	 */
 	public void addPeopleToEvent(Event event, Person...peopleList) throws DataServiceException
 	{
@@ -87,7 +87,7 @@ public class DataService implements Serializable
 	
 	/**
 	 * Getter for a Reminder for an Event.
-	 * @param event, which represents Event.
+	 * @param event represents Event.
 	 * @return If exists, Reminder for particular Event. If not, null.
 	 */
 	public Reminder getReminderForEvent(Event event)
@@ -107,7 +107,7 @@ public class DataService implements Serializable
 	
 	/**
 	 * Creates a new Person and adds It to peopleList in DataContext.
-	 * @param person, which represents Person.
+	 * @param person represents Person.
 	 */
 	public void createPerson(Person person)
 	{			
@@ -119,7 +119,7 @@ public class DataService implements Serializable
 	 * @param person, which represents Person.
 	 * @param firstName, which represents Person's firstName.
 	 * @param lastName, which represents Person's lastName.
-	 * @throws DataServiceException
+	 * @throws DataServiceException if person doesn't exist.
 	 */
 	public void updatePerson(Person person, String firstName, String lastName) throws DataServiceException
 	{
@@ -135,8 +135,8 @@ public class DataService implements Serializable
 
 	/**
 	 * Deletes a Person from DataContext.
-	 * @param person, which represents Person.
-	 * @throws DataServiceException
+	 * @param person represents Person.
+	 * @throws DataServiceException if person doesn't exist.
 	 */
 	public void deletePerson(Person person) throws DataServiceException
 	{
@@ -149,7 +149,7 @@ public class DataService implements Serializable
 	
 	/**
 	 * Getter for all people.
-	 * @return ArrayList<Person> with all people from DataContext.
+	 * @return ArrayList with all people from DataContext.
 	 */
 	public ArrayList<Person> getAllPeople()
 	{
@@ -162,7 +162,7 @@ public class DataService implements Serializable
 	
 	/**
 	 * Creates a new Reminder and adds It to remindersList in DataContext.
-	 * @param reminder, which represents Reminder.
+	 * @param reminder represents Reminder.
 	 */
 	public void createReminder(Reminder reminder)
 	{
@@ -171,7 +171,7 @@ public class DataService implements Serializable
 	
 	/**
 	 * Deletes a Reminder from DataContext.
-	 * @param reminder, which represents Reminder.
+	 * @param reminder represents Reminder.
 	 */
 	public void deleteReminder(Reminder reminder)
 	{
@@ -180,7 +180,7 @@ public class DataService implements Serializable
 	
 	/**
 	 * Getter for a Reminder.
-	 * @param index, which represents Reminder's index in reminderList in DataContext.
+	 * @param index represents Reminder's index in reminderList in DataContext.
 	 * @return A Reminder with specified index.
 	 */
 	public Reminder getReminder(int index)
@@ -190,7 +190,7 @@ public class DataService implements Serializable
 	
 	/**
 	 * Getter for all Reminders.
-	 * @return ArrayList<Reminder> with all Reminders from DataContext.
+	 * @return ArrayList with all Reminders from DataContext.
 	 */
 	public ArrayList<Reminder> getAllReminders()
 	{

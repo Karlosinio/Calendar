@@ -12,7 +12,7 @@ public class OdtSaver extends Serializer
 {
 	/**
 	 * Concatenates all Events with their assigned people and converts to String.
-	 * @param dataService, which represents DataService.
+	 * @param dataService represents DataService.
 	 * @return String with Event and their assigned peopleList.
 	 */
 	private static String EventsToString(DataService dataService)
@@ -33,7 +33,7 @@ public class OdtSaver extends Serializer
 	
 	/**
 	 * Concatenates all people and converts to String.
-	 * @param dataService, which represents DataService.
+	 * @param dataService represents DataService.
 	 * @return String with all people.
 	 */
 	private static String PeopleToString(DataService dataService)
@@ -49,9 +49,9 @@ public class OdtSaver extends Serializer
 	
 	/**
 	 * Saves in Odt format all Events with their assigned people and all people.
-	 * @param filename, which represents name of file.
-	 * @param dataService, which represents DataService.
-	 * @throws LogicLayerException
+	 * @param filename represents name of file.
+	 * @param dataService represents DataService.
+	 * @throws LogicLayerException if something went wrong with saving a file.
 	 */
 	@SuppressWarnings("deprecation")
 	public static void Save(String filename, DataService dataService) throws LogicLayerException

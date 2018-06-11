@@ -9,8 +9,8 @@ public class NameComparator implements Comparator<Event>
 {
 /**
  * Compares two Events names. 
- * @param Event event which represents one of the events.
- * @param Event anotherEvent which represents one of the events.
+ * @param ev1 event which represents one of the events, object to be compared with another event.
+ * @param ev2 event which represents one of the events, object to be compared with another event.
  */
 	public int compare(Event ev1, Event ev2)
 	{

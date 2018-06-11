@@ -17,8 +17,8 @@ public class XMLSerializer extends Serializer
 {
 	/**
 	 * Exports data to XML.
-	 * @param fileName, which is name of file.
-	 * @param data, which represents DataService.
+	 * @param fileName name of file.
+	 * @param data represents DataService.
 	 */
 	public void exportData(String fileName, DataService data) throws ExportException
 	{
@@ -36,8 +36,8 @@ public class XMLSerializer extends Serializer
 
 	/**
 	 * Imports data from XML.
-	 * @param fileName, which is name of file.
-	 * @return data, which represents DataService.
+	 * @param fileName name of file.
+	 * @return data represents DataService.
 	 */
 	public DataService importData(String fileName) throws ImportException
 	{

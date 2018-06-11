@@ -9,16 +9,18 @@ public abstract class Serializer
 {
 	/**
 	 * Exports data to file.
-	 * @param fileName, which is name of file.
-	 * @param data, which represents DataService.
+	 * @param fileName is name of file.
+	 * @param data represents DataService.
+	 * @throws ExportException if something go wrong with the file export.
 	 */
 	public void exportData(String fileName, DataService data) throws ExportException
 	{}
 
 	/**
 	 * Imports data from file.
-	 * @param fileName, which is name of file.
-	 * @return data, which represents DataService.
+	 * @param fileName is name of file.
+	 * @return data represents DataService.
+	 * @throws ImportException if something go wrong with the file inport.
 	 */
 	public DataService importData(String fileName) throws ImportException
 	{	return null; 	}

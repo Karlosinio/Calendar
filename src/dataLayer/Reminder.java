@@ -21,9 +21,9 @@ public class Reminder implements Comparable<Calendar>, Serializable
 	
 	/**
 	 * Constructs a Reminder with specified date and event.
-	 * @param date, which represents Reminder's calendar.
-	 * @param event, which represents specified Event.
-	 * @throws DataLayerException.
+	 * @param date represents Reminder's calendar.
+	 * @param event represents specified Event.
+	 * @throws DataLayerException if date or event is empty.
 	 */
 	public Reminder(Calendar date, Event event) throws DataLayerException
 	{
@@ -48,7 +48,7 @@ public class Reminder implements Comparable<Calendar>, Serializable
 
 	/**
 	 * Set a new specified Reminder's calendar.
-	 * @param calendar, which represents Reminder's calendar.
+	 * @param calendar represents Reminder's calendar.
 	 */
 	public void setDate(Calendar calendar) 
 	{
@@ -57,7 +57,7 @@ public class Reminder implements Comparable<Calendar>, Serializable
 
 	/**
 	 * Getter for Reminder's event.
-	 * @return event, which represents Reminder's event.
+	 * @return event represents Reminder's event.
 	 */
 	public Event getEvent() 
 	{
@@ -66,7 +66,7 @@ public class Reminder implements Comparable<Calendar>, Serializable
 
 	/**
 	 * Set a new Reminder's event.
-	 * @param event, which represents Reminder's event.
+	 * @param event represents Reminder's event.
 	 */
 	public void setEvent(Event event) 
 	{
